@@ -1,0 +1,27 @@
+# Path to your oh-my-zsh installation.
+export ZSH=/Users/PezCoder/.oh-my-zsh
+
+# Set name of the theme to load.
+ZSH_THEME="robbyrussell"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting)
+
+# User configuration
+export PATH="/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
+source $ZSH/oh-my-zsh.sh
+
+
+######### ALIAS
+
+# Use sublimetext for editing config files
+alias zshconfig="subl ~/.zshrc"
+# to use mysql command from terminal
+export PATH="/usr/local/mysql/bin:$PATH"
+# launch chrome without web security
+alias chromews='open -a Google\ Chrome --args --disable-web-security'
+
