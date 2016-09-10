@@ -97,3 +97,6 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
+" Control-p configs
+let g:ctrlp_custom_ignore = 'vendor\|node_modules\|DS_Store\|git'
+let g:ctrlp_working_path_mode = '' " Working directory in the search directory
