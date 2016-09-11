@@ -14,6 +14,7 @@ Plugin 'hail2u/vim-css3-syntax'      " CSS3 Syntax
 Plugin 'mhartington/oceanic-next'
 Plugin 'vim-airline/vim-airline'
 Plugin 'kien/ctrlp.vim'              " Fuzzy file/buffer search
+Plugin 'othree/html5.vim'            " Html5 syntax, indent
 
 call vundle#end()
 filetype plugin indent on
