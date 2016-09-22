@@ -1,8 +1,5 @@
-set nobackup          " get rid of anoying ~file
-set encoding=utf-8
-
+set nocompatible                    " don't need to be compatible with old vim
 "Load up vundle
-set nocompatible                  " don't need to be compatible with old vim
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -18,10 +15,9 @@ Plugin 'othree/html5.vim'            " Html5 syntax, indent
 
 call vundle#end()
 filetype plugin indent on
-" load up pathogen and all bundles
-" call pathogen#infect()
-" call pathogen#helptags()
 
+set nobackup                      " get rid of anoying ~file
+set encoding=utf-8
 runtime macros/matchit.vim        " autoload that extends % functionality
 syntax on                         " show syntax highlighting
 set autoindent                    " set auto indent
@@ -99,5 +95,6 @@ nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
 " Control-p configs
-let g:ctrlp_custom_ignore = 'vendor\|node_modules\|DS_Store\|git'
-let g:ctrlp_working_path_mode = '' " Working directory in the search directory
+let g:ctrlp_custom_ignore = 'dist\|assetic\|vendor\|node_modules\|DS_Store\|git'
+let g:ctrlp_working_path_mode = '' " Current working directory of vim
+let g:ctrlp_cmd = 'CtrlPMRU'       " File search by default
