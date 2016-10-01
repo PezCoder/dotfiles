@@ -13,6 +13,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'kien/ctrlp.vim'                 " Fuzzy file/buffer search
 Plugin 'othree/html5.vim'               " Html5 syntax, indent
 Plugin 'vim-airline/vim-airline-themes'
+Plugin 'mhartington/oceanic-next'
 
 call vundle#end()
 filetype plugin indent on
@@ -50,11 +51,15 @@ set background=dark
 let base16colorspace=256
 colorscheme base16-material
 
-" emmet key remap
-imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+
+" Emmet Plugin Configs
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,scss,html.twig EmmetInstall                      " Enable emmet for just few files
+autocmd FileType html,css,scss,html.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
-" Current Directory remap
+" Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
 
 " Set tabstop, softtabstop and shiftwidth to the same value
@@ -103,12 +108,10 @@ let g:ctrlp_working_path_mode = '' " Current working directory of vim
 
 " Airline setup
 let g:airline_powerline_fonts = 1                                               "Enable powerline fonts
-let g:airline_theme = "hybrid"                                                  "Set theme to powerline default theme
-let g:airline_section_y = '%{substitute(getcwd(), expand("$HOME"), "~", "g")}'  "Set relative path
-let g:airline#extensions#whitespace#enabled = 0                                 "Disable whitespace extension
 let g:airline#extensions#tabline#enabled = 1                                    "Enable tabline extension
 let g:airline#extensions#tabline#left_sep = ' '                                 "Left separator for tabline
 let g:airline#extensions#tabline#left_alt_sep = '│'                             "Right separator for tabline
+let g:airline_theme='oceanicnext'
 
 
 " ================ Auto commands ======================
@@ -117,3 +120,8 @@ augroup vimrc
 augroup END
 
 "autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2                      "Set 2 indent for html
+
+" ================ Custom Functions ======================
+function! MapTabForEmmetExpansion()
+  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+endfunc
