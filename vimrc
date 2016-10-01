@@ -104,7 +104,8 @@ nmap <silent> <leader><space> :nohlsearch<CR>
 
 " Control-p configs
 let g:ctrlp_custom_ignore = 'dist\|assetic\|vendor\|node_modules\|DS_Store\|git'
-let g:ctrlp_working_path_mode = '' " Current working directory of vim
+let g:ctrlp_working_path_mode = ''      " Current working directory of vim
+let g:ctrlp_cmd = 'CtrlP<c-d>'          " Search by file name when run
 
 " Airline setup
 let g:airline_powerline_fonts = 1                                               "Enable powerline fonts
