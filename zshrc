@@ -28,3 +28,16 @@ alias chromews='open -a Google\ Chrome --args --disable-web-security'
 # Base16 Shell (Needed for correct colors in base16 material theme)
 BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"
 [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+
+# Bind ctrl-z to switch between vim & terminal
+fancy-ctrl-z () {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N fancy-ctrl-z
+bindkey '^Z' fancy-ctrl-z
