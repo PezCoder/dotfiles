@@ -15,6 +15,9 @@ Plugin 'othree/html5.vim'               " Html5 syntax, indent
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'mhartington/oceanic-next'
 Plugin 'osyo-manga/vim-anzu'            " Show search results on vim-airline
+Plugin 'pangloss/vim-javascript'        " Better syntax highlighting & indent
+Plugin 'mxw/vim-jsx'                    " JSX highlighting (requires pangloss/vim-javascript)
+Plugin 'elzr/vim-json'                  " JSON highlighting
 
 call vundle#end()
 filetype plugin indent on
@@ -47,11 +50,17 @@ set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
 set t_Co=256                      " Coz my iterm2 supports it
 
+ " Enable true colors if available
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+if (has("termguicolors"))
+  set termguicolors
+endif
+
 " Color Scheme Settings
 set background=dark
 let base16colorspace=256
 colorscheme base16-material
-
+let g:jsx_ext_required = 0      "hightlight jsx in .js
 
 " Emmet Plugin Configs
 let g:user_emmet_install_global = 0
@@ -63,7 +72,7 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 " Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
 
-" Set tabstop, softtabstop and shiftwidth to the same value
+" Set tabstop, softtabstop and shiftwidth to the same value. ( Ex :Stab<CR>4 )
 command! -nargs=* Stab call Stab()
 function! Stab()
   let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
@@ -117,7 +126,6 @@ let g:airline_theme='oceanicnext'
 augroup vimrc
   autocmd!
 augroup END
-
 "autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2                      "Set 2 indent for html
 
 " Custom Functions
