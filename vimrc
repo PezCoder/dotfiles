@@ -14,6 +14,7 @@ Plugin 'kien/ctrlp.vim'                 " Fuzzy file/buffer search
 Plugin 'othree/html5.vim'               " Html5 syntax, indent
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'mhartington/oceanic-next'
+Plugin 'osyo-manga/vim-anzu'            " Show search results on vim-airline
 
 call vundle#end()
 filetype plugin indent on
@@ -99,30 +100,35 @@ nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 
-" Custom Leader mappings
-nmap <silent> <leader><space> :nohlsearch<CR>
-
 " Control-p configs
 let g:ctrlp_custom_ignore = 'dist\|assetic\|vendor\|node_modules\|DS_Store\|git'
 let g:ctrlp_working_path_mode = ''      " Current working directory of vim
 let g:ctrlp_cmd = 'CtrlP<c-d>'          " Search by file name when run
 
 " Airline setup
-let g:airline_powerline_fonts = 1                                               "Enable powerline fonts
-let g:airline#extensions#tabline#enabled = 1                                    "Enable tabline extension
-let g:airline#extensions#tabline#left_sep = ' '                                 "Left separator for tabline
-let g:airline#extensions#tabline#left_alt_sep = '│'                             "Right separator for tabline
+let g:airline_powerline_fonts = 1                                 "Enable powerline fonts
+let g:airline#extensions#tabline#enabled = 1                      "Enable tabline extension
+let g:airline#extensions#tabline#left_sep = ' '                   "Left separator for tabline
+let g:airline#extensions#tabline#left_alt_sep = '│'               "Right separator for tabline
 let g:airline_theme='oceanicnext'
 
 
-" ================ Auto commands ======================
+"Auto commands
 augroup vimrc
   autocmd!
 augroup END
 
 "autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2                      "Set 2 indent for html
 
-" ================ Custom Functions ======================
+" Custom Functions
 function! MapTabForEmmetExpansion()
   imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
 endfunc
+
+" Search Results on airline
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+nmap <silent> <leader><space> :nohlsearch<CR> <bar> <Plug>(anzu-clear-search-status)
+let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
