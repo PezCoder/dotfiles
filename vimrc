@@ -49,6 +49,7 @@ set clipboard=unnamed             " use the system clipboard
 set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
 set t_Co=256                      " Coz my iterm2 supports it
+set mouse=c                       " Disable cursor
 
  " Enable true colors if available
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -56,10 +57,16 @@ if (has("termguicolors"))
   set termguicolors
 endif
 
-" Color Scheme Settings
+" Color Scheme {"
 set background=dark
 let base16colorspace=256
-colorscheme base16-material
+if has("nvim")
+  colorscheme OceanicNext
+else
+  colorscheme base16-material
+endif
+" }
+
 let g:jsx_ext_required = 0      "hightlight jsx in .js
 
 " Emmet Plugin Configs

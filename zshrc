@@ -41,3 +41,6 @@ fancy-ctrl-z () {
 }
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
+
+# fix terminals to send ctrl-h to neovim correctly
+[[ -f "~/.$TERM.ti" ]] && tic ~/.$TERM.ti
