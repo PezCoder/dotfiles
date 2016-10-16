@@ -5,12 +5,11 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'ryanoasis/vim-webdevicons'
 Plugin 'mattn/emmet-vim'                " Emmet for html
 Plugin 'evidens/vim-twig'               " Twig Syntax highlighting
 Plugin 'hail2u/vim-css3-syntax'         " CSS3 Syntax
 Plugin 'vim-airline/vim-airline'
-Plugin 'kien/ctrlp.vim'                 " Fuzzy file/buffer search
+Plugin 'ctrlpvim/ctrlp.vim'             " Fuzzy file/buffer search
 Plugin 'othree/html5.vim'               " Html5 syntax, indent
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'mhartington/oceanic-next'
@@ -18,6 +17,7 @@ Plugin 'osyo-manga/vim-anzu'            " Show search results on vim-airline
 Plugin 'pangloss/vim-javascript'        " Better syntax highlighting & indent
 Plugin 'mxw/vim-jsx'                    " JSX highlighting (requires pangloss/vim-javascript)
 Plugin 'elzr/vim-json'                  " JSON highlighting
+Plugin 'ryanoasis/vim-devicons'
 
 call vundle#end()
 filetype plugin indent on
@@ -45,11 +45,13 @@ set scrolloff=2                   " minimum lines above/below cursor
 set laststatus=2                  " always show status bar
 set list listchars=tab:»·,trail:· " show extra space characters
 set nofoldenable                  " disable code folding
-set clipboard=unnamed             " use the system clipboard
 set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
 set t_Co=256                      " Coz my iterm2 supports it
 set mouse=c                       " Disable cursor
+
+" Remap leader key
+let mapleader = "\<Space>"
 
  " Enable true colors if available
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
@@ -81,6 +83,69 @@ cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
 
 " Set tabstop, softtabstop and shiftwidth to the same value. ( Ex :Stab<CR>4 )
 command! -nargs=* Stab call Stab()
+
+" Key Mappings {
+" Buffer Mappings
+nnoremap <leader>v <C-w>v<C-w>l
+nnoremap <leader>s <C-w>s<C-w>j
+nnoremap <leader>c <C-w>c
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+"Save file
+nnoremap <Leader>w :w<CR>
+" }
+
+" Control-p configs {
+" start in filesearch mode
+nnoremap <Leader>p :CtrlP<CR><c-d>
+let g:ctrlp_custom_ignore = {
+\ 'dir': '\v[\/]\.(dist|assetic|vendor|node_modules|DS_Store|git)$',
+\ 'file': '\v\.(exe|so|dll)$',
+\ }
+let g:ctrlp_working_path_mode = ''      " Current working directory of vim
+
+" Make Ctrl-P Faster
+let g:ctrlp_use_caching = 0
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+else
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
+  let g:ctrlp_prompt_mappings = {
+  \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
+  \ }
+endif
+" }
+
+" Airline setup
+let g:airline_powerline_fonts = 1                                 "Enable powerline fonts
+let g:airline#extensions#tabline#enabled = 1                      "Enable tabline extension
+let g:airline#extensions#tabline#left_sep = ' '                   "Left separator for tabline
+let g:airline#extensions#tabline#left_alt_sep = '│'               "Right separator for tabline
+let g:airline_theme='oceanicnext'
+
+"Auto commands
+augroup vimrc
+  autocmd!
+augroup END
+"autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2                      "Set 2 indent for html
+
+" Vim Anzu (Search results on vim-airline)
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+nmap <silent> <leader><space> :nohlsearch<CR><bar><Plug>(anzu-clear-search-status)
+let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
+
+" Custom Functions
+function! MapTabForEmmetExpansion()
+  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+endfunc
+
+" Helpers for changing tab settings {
 function! Stab()
   let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
   if l:tabstop > 0
@@ -106,44 +171,4 @@ function! SummarizeTabs()
     echohl None
   endtry
 endfunction
-
-" Buffer Mappings
-nnoremap <leader>v <C-w>v<C-w>l
-nnoremap <leader>s <C-w>s<C-w>j
-nnoremap <leader>c <C-w>c
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
-
-" Control-p configs
-let g:ctrlp_custom_ignore = 'dist\|assetic\|vendor\|node_modules\|DS_Store\|git'
-let g:ctrlp_working_path_mode = ''      " Current working directory of vim
-let g:ctrlp_cmd = 'CtrlP<c-d>'          " Search by file name when run
-
-" Airline setup
-let g:airline_powerline_fonts = 1                                 "Enable powerline fonts
-let g:airline#extensions#tabline#enabled = 1                      "Enable tabline extension
-let g:airline#extensions#tabline#left_sep = ' '                   "Left separator for tabline
-let g:airline#extensions#tabline#left_alt_sep = '│'               "Right separator for tabline
-let g:airline_theme='oceanicnext'
-
-
-"Auto commands
-augroup vimrc
-  autocmd!
-augroup END
-"autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2                      "Set 2 indent for html
-
-" Custom Functions
-function! MapTabForEmmetExpansion()
-  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
-endfunc
-
-" Search Results on airline
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
-nmap <silent> <leader><space> :nohlsearch<CR> <bar> <Plug>(anzu-clear-search-status)
-let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
+" }
