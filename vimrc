@@ -18,6 +18,7 @@ Plugin 'pangloss/vim-javascript'        " Better syntax highlighting & indent
 Plugin 'mxw/vim-jsx'                    " JSX highlighting (requires pangloss/vim-javascript)
 Plugin 'elzr/vim-json'                  " JSON highlighting
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'danro/rename.vim'               " Rename using :Rename {newname}
 
 call vundle#end()
 filetype plugin indent on
