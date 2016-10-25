@@ -19,6 +19,7 @@ Plugin 'mxw/vim-jsx'                    " JSX highlighting (requires pangloss/vi
 Plugin 'elzr/vim-json'                  " JSON highlighting
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'danro/rename.vim'               " Rename using :Rename {newname}
+Plugin 'stephpy/vim-yaml'               " Coz Vanilla yaml in vim is slow
 
 call vundle#end()
 filetype plugin indent on
@@ -62,10 +63,10 @@ endif
 
 " Color Scheme {"
 set background=dark
-let base16colorspace=256
 if has("nvim")
   colorscheme OceanicNext
 else
+  let base16colorspace=256
   colorscheme base16-material
 endif
 " }
@@ -74,8 +75,8 @@ let g:jsx_ext_required = 0      "hightlight jsx in .js
 
 " Emmet Plugin Configs
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss,html.twig EmmetInstall                      " Enable emmet for just few files
-autocmd FileType html,css,scss,html.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+autocmd FileType html,css,scss,html.twig,javascript.jsx EmmetInstall                      " Enable emmet for just few files
+autocmd FileType html,css,scss,html.twig,javascript.jsx :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
 let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
@@ -100,7 +101,7 @@ nnoremap <Leader>w :w<CR>
 
 " Control-p configs {
 " start in filesearch mode
-nnoremap <Leader>p :CtrlP<CR><c-d>
+let g:ctrlp_by_filename = 1
 let g:ctrlp_custom_ignore = {
 \ 'dir': '\v[\/]\.(dist|assetic|vendor|node_modules|DS_Store|git)$',
 \ 'file': '\v\.(exe|so|dll)$',
@@ -132,6 +133,7 @@ augroup vimrc
   autocmd!
 augroup END
 "autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2                      "Set 2 indent for html
+autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
 
 " Vim Anzu (Search results on vim-airline)
 nmap n <Plug>(anzu-n-with-echo)
@@ -140,6 +142,14 @@ nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
 nmap <silent> <leader><space> :nohlsearch<CR><bar><Plug>(anzu-clear-search-status)
 let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
+
+" One way behaviour for n & N
+nnoremap <expr> n  'Nn'[v:searchforward]
+nnoremap <expr> N  'nN'[v:searchforward]
+
+" Quickly add empty lines
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 " Custom Functions
 function! MapTabForEmmetExpansion()
