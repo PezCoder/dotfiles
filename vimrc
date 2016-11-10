@@ -155,10 +155,10 @@ nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 " Custom Functions
 function! MapTabForEmmetExpansion()
-  imap <expr> <tab> emmet#expandAbbrIntelligent("\<tab>")
+  imap <expr> <leader><tab> emmet#expandAbbrIntelligent("\<tab>")
 endfunc
 
-" Helpers for changing tab settings {
+" Helpers for changing tab space settings {
 function! Stab()
   let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
   if l:tabstop > 0
@@ -184,4 +184,17 @@ function! SummarizeTabs()
     echohl None
   endtry
 endfunction
+" }
+
+" multi-purpose tab key (auto-complete) {
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+inoremap <s-tab> <c-n>
 " }
