@@ -25,7 +25,9 @@ call vundle#end()
 filetype plugin indent on
 
 set nobackup                      " get rid of anoying ~file
-set encoding=utf-8
+if !has('nvim')
+  set encoding=utf-8
+end
 runtime macros/matchit.vim        " autoload that extends % functionality
 syntax on                         " show syntax highlighting
 set autoindent                    " set auto indent
@@ -140,7 +142,7 @@ nmap n <Plug>(anzu-n-with-echo)
 nmap N <Plug>(anzu-N-with-echo)
 nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
-nmap <silent> <leader><space> :nohlsearch<CR><bar><Plug>(anzu-clear-search-status)
+nmap <silent> <leader><space> :nohlsearch<CR><Plug>(anzu-clear-search-status)
 let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
 
 " One way behaviour for n & N
