@@ -101,6 +101,13 @@ nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 "Save file
 nnoremap <Leader>w :w<CR>
+"Tabs switch
+nmap <leader>[ :tabnext<CR>
+nmap <leader>] :tabprev<CR>
+
+" Quickly add empty lines
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 " }
 
 " Control-p configs {
@@ -150,10 +157,6 @@ let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with 
 " One way behaviour for n & N
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
-
-" Quickly add empty lines
-nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
-nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 
 " Custom Functions
 function! MapTabForEmmetExpansion()
