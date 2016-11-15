@@ -20,6 +20,8 @@ Plugin 'elzr/vim-json'                  " JSON highlighting
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'danro/rename.vim'               " Rename using :Rename {newname}
 Plugin 'stephpy/vim-yaml'               " Coz Vanilla yaml in vim is slow
+Plugin 'tpope/vim-surround'             " Change the surrounding
+Plugin 'tpope/vim-repeat'               " Repeat plugin commands
 
 call vundle#end()
 filetype plugin indent on
