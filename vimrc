@@ -22,6 +22,7 @@ Plugin 'danro/rename.vim'               " Rename using :Rename {newname}
 Plugin 'stephpy/vim-yaml'               " Coz Vanilla yaml in vim is slow
 Plugin 'tpope/vim-surround'             " Change the surrounding
 Plugin 'tpope/vim-repeat'               " Repeat plugin commands
+Plugin 'Raimondi/delimitMate'           " Auto close stuff in insert mode
 
 call vundle#end()
 filetype plugin indent on
@@ -77,6 +78,15 @@ endif
 
 let g:jsx_ext_required = 0      "hightlight jsx in .js
 
+" MatchPairs settings {
+" Put equivalent space/newline when <CR> or <space> is entered
+let delimitMate_jump_expansion = 1
+let delimitMate_expand_cr = 1
+let delimitMate_expand_space = 1
+" Won't insert duplicated brackets in some cases like |) > (|)
+let delimitMate_balance_matchpairs = 1
+"}
+
 " Emmet Plugin Configs
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,scss,html.twig,javascript.jsx EmmetInstall                      " Enable emmet for just few files
@@ -101,6 +111,8 @@ nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 "Save file
 nnoremap <Leader>w :w<CR>
+"Quit file
+nnoremap <Leader>q :wq<CR>
 "Tabs switch
 nmap <leader>[ :tabnext<CR>
 nmap <leader>] :tabprev<CR>
