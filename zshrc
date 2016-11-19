@@ -24,6 +24,7 @@ alias zshconfig="subl ~/.zshrc"
 export PATH="/usr/local/mysql/bin:$PATH"
 # launch chrome without web security
 alias chromews='open -a Google\ Chrome --args --disable-web-security'
+alias v='nvim'
 
 # Base16 Shell (Needed for correct colors in base16 material theme)
 BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"
