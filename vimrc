@@ -220,3 +220,11 @@ endfunction
 inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 inoremap <s-tab> <c-n>
 " }
+
+" Execute macro on visually selected lines with @{macro} {{
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+" }}
