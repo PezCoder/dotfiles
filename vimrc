@@ -22,7 +22,6 @@ Plugin 'danro/rename.vim'               " Rename using :Rename {newname}
 Plugin 'stephpy/vim-yaml'               " Coz Vanilla yaml in vim is slow
 Plugin 'tpope/vim-surround'             " Change the surrounding
 Plugin 'tpope/vim-repeat'               " Repeat plugin commands
-Plugin 'terryma/vim-multiple-cursors'   " Hot sublime like multicursor
 
 call vundle#end()
 filetype plugin indent on
@@ -110,11 +109,6 @@ nmap <leader>] :tabprev<CR>
 " Quickly add empty lines
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-" Multicursor Mappings
-let g:multi_cursor_use_default_mapping=0
-let g:multi_cursor_next_key='<C-n>'
-let g:multi_cursor_prev_key='<C-m>'
-let g:multi_cursor_quit_key='<Esc>'
 " }
 
 " Control-p configs {
