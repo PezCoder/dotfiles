@@ -55,6 +55,7 @@ set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
 set t_Co=256                      " Coz my iterm2 supports it
 set mouse=c                       " Disable cursor
+set hidden                        " Can hide buffer in non saved state
 
 " Remap leader key
 let mapleader = "\<Space>"
@@ -101,7 +102,7 @@ nmap <C-k> <C-w>k
 nmap <C-l> <C-w>l
 "Save file
 nnoremap <Leader>w :w<CR>
-"Quit file
+"Save & Quit file
 nnoremap <Leader>q :wq<CR>
 "Tabs switch
 nmap <leader>[ :tabnext<CR>
@@ -138,6 +139,7 @@ let g:airline_powerline_fonts = 1                                 "Enable powerl
 let g:airline#extensions#tabline#enabled = 1                      "Enable tabline extension
 let g:airline#extensions#tabline#left_sep = ' '                   "Left separator for tabline
 let g:airline#extensions#tabline#left_alt_sep = '│'               "Right separator for tabline
+let g:airline#extensions#tabline#fnamemod = ':t'                  " Show just the filename
 let g:airline_theme='oceanicnext'
 
 "Auto commands
