@@ -19,12 +19,19 @@ source $ZSH/oh-my-zsh.sh
 ######### ALIAS
 
 # Use sublimetext for editing config files
-alias zshconfig="subl ~/.zshrc"
+alias zshconfig="vi ~/.zshrc"
 # to use mysql command from terminal
 export PATH="/usr/local/mysql/bin:$PATH"
 # launch chrome without web security
 alias chromews='open -a Google\ Chrome --args --disable-web-security'
 alias v='nvim'
+alias vus='cd ~/1conf;sudo vagrant up;sudo vagrant ssh'
+alias vs='cd ~/1conf;sudo vagrant ssh'
+
+# Symfony aliases
+alias cc="app/console cache:clear"
+alias adump="app/console assetic:dump"
+alias cinstall="composer install"
 
 # Base16 Shell (Needed for correct colors in base16 material theme)
 BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"

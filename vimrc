@@ -22,6 +22,7 @@ Plugin 'danro/rename.vim'               " Rename using :Rename {newname}
 Plugin 'stephpy/vim-yaml'               " Coz Vanilla yaml in vim is slow
 Plugin 'tpope/vim-surround'             " Change the surrounding
 Plugin 'tpope/vim-repeat'               " Repeat plugin commands
+Plugin 'jszakmeister/vim-togglecursor'  " Different cursors in different modes
 
 call vundle#end()
 filetype plugin indent on
@@ -141,6 +142,9 @@ let g:airline#extensions#tabline#left_sep = ' '                   "Left separato
 let g:airline#extensions#tabline#left_alt_sep = '│'               "Right separator for tabline
 let g:airline#extensions#tabline#fnamemod = ':t'                  " Show just the filename
 let g:airline_theme='oceanicnext'
+
+"Cursor Settings
+let g:togglecursor_default = 'block'
 
 "Auto commands
 augroup vimrc
