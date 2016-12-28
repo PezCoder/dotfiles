@@ -53,3 +53,10 @@ bindkey '^Z' fancy-ctrl-z
 
 # fix terminals to send ctrl-h to neovim correctly
 [[ -f "~/.$TERM.ti" ]] && tic ~/.$TERM.ti
+
+# to run cpp program
+makeAndRunCpp() {
+    make $1 > /dev/null
+    ./$1
+}
+alias run=makeAndRunCpp
