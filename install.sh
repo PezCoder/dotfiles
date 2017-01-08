@@ -87,6 +87,7 @@ DOTS=(
     vim
     vimrc
     zshrc
+    config
 )
 
 # Fire missiles
