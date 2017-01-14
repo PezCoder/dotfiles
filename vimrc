@@ -5,24 +5,25 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'VundleVim/Vundle.vim'
-Plugin 'mattn/emmet-vim'                " Emmet for html
-Plugin 'evidens/vim-twig'               " Twig Syntax highlighting
-Plugin 'hail2u/vim-css3-syntax'         " CSS3 Syntax
+Plugin 'mattn/emmet-vim'                        " Emmet for html
+Plugin 'evidens/vim-twig'                       " Twig Syntax highlighting
+Plugin 'hail2u/vim-css3-syntax'                 " CSS3 Syntax
 Plugin 'vim-airline/vim-airline'
-Plugin 'ctrlpvim/ctrlp.vim'             " Fuzzy file/buffer search
-Plugin 'othree/html5.vim'               " Html5 syntax, indent
+Plugin 'ctrlpvim/ctrlp.vim'                     " Fuzzy file/buffer search
+Plugin 'othree/html5.vim'                       " Html5 syntax, indent
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'mhartington/oceanic-next'
-Plugin 'osyo-manga/vim-anzu'            " Show search results on vim-airline
-Plugin 'pangloss/vim-javascript'        " Better syntax highlighting & indent
-Plugin 'mxw/vim-jsx'                    " JSX highlighting (requires pangloss/vim-javascript)
-Plugin 'elzr/vim-json'                  " JSON highlighting
+Plugin 'osyo-manga/vim-anzu'                    " Show search results on vim-airline
+Plugin 'pangloss/vim-javascript'                " Better syntax highlighting & indent
+Plugin 'mxw/vim-jsx'                            " JSX highlighting (requires pangloss/vim-javascript)
+Plugin 'elzr/vim-json'                          " JSON highlighting
 Plugin 'ryanoasis/vim-devicons'
-Plugin 'danro/rename.vim'               " Rename using :Rename {newname}
-Plugin 'stephpy/vim-yaml'               " Coz Vanilla yaml in vim is slow
-Plugin 'tpope/vim-surround'             " Change the surrounding
-Plugin 'tpope/vim-repeat'               " Repeat plugin commands
-Plugin 'jszakmeister/vim-togglecursor'  " Different cursors in different modes
+Plugin 'danro/rename.vim'                       " Rename using :Rename {newname}
+Plugin 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
+Plugin 'tpope/vim-surround'                     " Change the surrounding
+Plugin 'tpope/vim-repeat'                       " Repeat plugin commands
+Plugin 'jszakmeister/vim-togglecursor'          " Different cursors in different modes
+Plugin 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 
 call vundle#end()
 filetype plugin indent on
@@ -61,7 +62,7 @@ set hidden                        " Can hide buffer in non saved state
 " Remap leader key
 let mapleader = "\<Space>"
 
- " Enable true colors if available
+" Enable true colors if available
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 if (has("termguicolors"))
   set termguicolors
@@ -78,13 +79,14 @@ endif
 " }
 
 let g:jsx_ext_required = 0      "hightlight jsx in .js
+let g:used_javascript_libs = 'angularjs,angularui,angularuirouter'
 
 " Emmet Plugin Configs
-let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss,html.twig,javascript.jsx EmmetInstall                      " Enable emmet for just few files
-autocmd FileType html,css,scss,html.twig,javascript.jsx :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
-let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
-let g:cssColorVimDoNotMessMyUpdatetime = 1
+"let g:user_emmet_install_global = 0
+"autocmd FileType html,css,scss,html.twig,javascript.jsx EmmetInstall                      " Enable emmet for just few files
+"autocmd FileType html,css,scss,html.twig,javascript.jsx :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+"let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
+"let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
@@ -145,6 +147,7 @@ let g:airline_theme='oceanicnext'
 
 "Cursor Settings
 let g:togglecursor_default = 'block'
+let g:togglecursor_force = 'xterm'   " telling xterm style terminal to make it work in vagrant & ssh
 
 "Auto commands
 augroup vimrc
