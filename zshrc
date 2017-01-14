@@ -25,8 +25,8 @@ export PATH="/usr/local/mysql/bin:$PATH"
 # launch chrome without web security
 alias chromews='open -a Google\ Chrome --args --disable-web-security'
 alias v='nvim'
-alias vus='cd ~/1conf;sudo vagrant up;sudo vagrant ssh'
-alias vs='cd ~/1conf;sudo vagrant ssh'
+alias vus='cd ~/1conf;vagrant up;vagrant ssh'
+alias vs='cd ~/1conf;vagrant ssh'
 
 # Symfony aliases
 alias cc="app/console cache:clear"

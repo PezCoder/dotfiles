@@ -20,12 +20,21 @@ errm () {
 # START HERE.
 main () {
     cd $HOME
+    install_vundle
     confirm_no_clobber
     confirm_have_goodies
     for i in ${DOTS[@]}; do
         link_dot $i
     done
     # TODO: Make sure permissions are legit. .ssh and .ghci, I'm lookin at you.
+}
+
+# Install vundle for first time if .vim directory doesn't exist
+install_vundle() {
+  DIRECTORY=".vim"
+  if [ ! -d "$DIRECTORY" ]; then
+    doo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  fi
 }
 
 # Subroutines
