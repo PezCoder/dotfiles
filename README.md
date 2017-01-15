@@ -23,4 +23,4 @@ My Vim &amp; Zsh Configurations
 ![Zsh final look](/screenshots/zsh.png?raw=true "Zsh look with clean-minimal theme")
 
 ### VIM with oceanic-next Theme
-![Vim final look](/screenshots/vim.png?raw=true "React code in VIM")
+![Vim final look](/screenshots/vim-look.png?raw=true "React code in VIM")
