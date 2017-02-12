@@ -98,7 +98,7 @@ command! -nargs=* Stab call Stab()
 " Buffer Mappings
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s<C-w>j
-nnoremap <leader>c <C-w>c
+nnoremap <leader>c :bd<CR>
 nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
