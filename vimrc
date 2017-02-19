@@ -24,6 +24,7 @@ Plugin 'tpope/vim-surround'                     " Change the surrounding
 Plugin 'tpope/vim-repeat'                       " Repeat plugin commands
 Plugin 'jszakmeister/vim-togglecursor'          " Different cursors in different modes
 Plugin 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
+Plugin 'tpope/vim-commentary'                   " Comment/uncomment plugin
 
 call vundle#end()
 filetype plugin indent on
