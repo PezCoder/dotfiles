@@ -61,3 +61,11 @@ makeAndRunCpp() {
 }
 alias run=makeAndRunCpp
 alias composer="php /usr/local/bin/composer.phar"
+
+export NVM_DIR="/home/vagrant/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# to use brew command [linuxbrew]
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
+export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
