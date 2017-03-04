@@ -83,11 +83,11 @@ let g:jsx_ext_required = 0      "hightlight jsx in .js
 let g:used_javascript_libs = 'angularjs,angularui,angularuirouter'
 
 " Emmet Plugin Configs
-"let g:user_emmet_install_global = 0
-"autocmd FileType html,css,scss,html.twig,javascript.jsx EmmetInstall                      " Enable emmet for just few files
-"autocmd FileType html,css,scss,html.twig,javascript.jsx :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
-"let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
-"let g:cssColorVimDoNotMessMyUpdatetime = 1
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,scss,html.twig,javascript.jsx EmmetInstall                      " Enable emmet for just few files
+autocmd FileType html,css,scss,html.twig,javascript.jsx :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
+let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
@@ -99,7 +99,7 @@ command! -nargs=* Stab call Stab()
 " Buffer Mappings
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s<C-w>j
-nnoremap <leader>c :bd<CR>
+nnoremap <leader>c <C-w>c
 nmap <C-h> <C-w>h
 nmap <C-j> <C-w>j
 nmap <C-k> <C-w>k
@@ -107,13 +107,16 @@ nmap <C-l> <C-w>l
 "Save file
 nnoremap <Leader>w :w<CR>
 "Save & Quit file
-nnoremap <Leader>q :wq<CR>
+nnoremap <Leader>q :wqa<CR>
 "Tabs switch
 nmap <leader>[ :tabnext<CR>
 nmap <leader>] :tabprev<CR>
 " Quickly add empty lines
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+" Mappings extermal paste
+nnoremap <silent> <leader>o  :call <SID>setup_paste()<CR>o
+nnoremap <silent> <leader>O  :call <SID>setup_paste()<CR>O
 " }
 
 " Control-p configs {
@@ -222,3 +225,23 @@ function! ExecuteMacroOverVisualRange()
 endfunction
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 " }}
+
+" Handle :paste toggle
+" Author: tpope https://github.com/tpope/vim-unimpaired
+function! s:setup_paste() abort
+  let s:paste = &paste
+  let s:mouse = &mouse
+  set paste
+  set mouse=
+  augroup unimpaired_paste
+    autocmd!
+    autocmd InsertLeave *
+          \ if exists('s:paste') |
+          \   let &paste = s:paste |
+          \   let &mouse = s:mouse |
+          \   unlet s:paste |
+          \   unlet s:mouse |
+          \ endif |
+          \ autocmd! unimpaired_paste
+  augroup END
+endfunction
