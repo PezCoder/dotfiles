@@ -62,6 +62,12 @@ makeAndRunCpp() {
 alias run=makeAndRunCpp
 alias composer="php /usr/local/bin/composer.phar"
 
+# Git grep alias
+runGitGrep() {
+  git grep -i "$1"
+}
+alias g=runGitGrep
+
 export NVM_DIR="/home/vagrant/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
