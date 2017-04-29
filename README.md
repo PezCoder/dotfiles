@@ -24,3 +24,6 @@ My Vim &amp; Zsh Configurations
 
 ### VIM with oceanic-next Theme
 ![Vim final look](/screenshots/vim-look.png?raw=true "React code in VIM")
+
+## Checkout wiki for more
+[Ctags](https://github.com/PezCoder/dotfiles/wiki/Ctags)
