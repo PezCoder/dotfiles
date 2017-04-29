@@ -66,7 +66,7 @@ alias composer="php /usr/local/bin/composer.phar"
 runGitGrep() {
   git grep -i "$1"
 }
-alias g=runGitGrep
+alias gg=runGitGrep
 
 export NVM_DIR="/home/vagrant/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -75,3 +75,6 @@ export NVM_DIR="/home/vagrant/.nvm"
 export PATH="$HOME/.linuxbrew/bin:$PATH"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"

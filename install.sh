@@ -20,6 +20,7 @@ errm () {
 # START HERE.
 main () {
     cd $HOME
+    setup_ctags
     install_vundle
     confirm_no_clobber
     confirm_have_goodies
@@ -27,6 +28,17 @@ main () {
         link_dot $i
     done
     # TODO: Make sure permissions are legit. .ssh and .ghci, I'm lookin at you.
+}
+
+setup_ctags () {
+  SRC="git_template"
+  DEST=.$SRC
+  if [ ! -d ".$SRC" ]; then
+    echo 'i am here'
+    git config --global init.templatedir '~/.git_template'
+    git config --global alias.ctags '!.git/hooks/ctags'
+    doo cp -R $EXPORT_DIR/$SRC $DEST
+  fi
 }
 
 # Install vundle for first time if .vim directory doesn't exist

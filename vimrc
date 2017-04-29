@@ -25,6 +25,7 @@ Plugin 'tpope/vim-repeat'                       " Repeat plugin commands
 Plugin 'jszakmeister/vim-togglecursor'          " Different cursors in different modes
 Plugin 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plugin 'tpope/vim-commentary'                   " Comment/uncomment plugin
+Plugin 'tpope/vim-fugitive'
 
 call vundle#end()
 filetype plugin indent on
@@ -41,6 +42,7 @@ set shiftwidth=2
 set softtabstop=2
 set expandtab                     " use spaces, not tab characters
 set relativenumber                " show relative line numbers
+set number
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
