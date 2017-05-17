@@ -110,15 +110,26 @@ nmap <C-l> <C-w>l
 nnoremap <Leader>w :w<CR>
 "Save & Quit file
 nnoremap <Leader>q :wqa<CR>
-"Tabs switch
-nmap <leader>[ :tabnext<CR>
-nmap <leader>] :tabprev<CR>
+
+" --- [ and ] prefix mappings --- {"
 " Quickly add empty lines
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-" Mappings extermal paste
+" Mappings external paste
 nnoremap <silent> <leader>o  :call <SID>setup_paste()<CR>o
 nnoremap <silent> <leader>O  :call <SID>setup_paste()<CR>O
+nnoremap <silent> <leader>i  :call <SID>setup_paste()<CR>i
+" Navigate buffer
+nnoremap <silent> [b :bprevious<CR>
+nnoremap <silent> ]b :bnext<CR>
+" Navigate quickfix
+nnoremap <silent> [q :cprevious<CR>
+nnoremap <silent> ]q :cnext<CR>
+"Tabs switch
+nnoremap <silent> [t :tabprevious<CR>
+nnoremap <silent> ]t :tabnext<CR>
+" }
+
 " }
 
 " Control-p configs {
