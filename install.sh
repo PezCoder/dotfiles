@@ -10,6 +10,14 @@ doo () {
     # echo $@
 }
 
+command_exists () {
+  type "$1" &> /dev/null ;
+}
+
+installed () {
+  echo -e " ✓ $1 already installed."
+}
+
 # This function was originally named errm to be short for "error message", but
 # then I realized that it sounds like a person saying, "Errm, excuse me, I don't
 # think that's what you meant to do."
@@ -20,6 +28,7 @@ errm () {
 # START HERE.
 main () {
     cd $HOME
+    install_ag
     setup_ctags
     install_vundle
     confirm_no_clobber
@@ -34,10 +43,19 @@ setup_ctags () {
   SRC="git_template"
   DEST=.$SRC
   if [ ! -d ".$SRC" ]; then
-    echo 'i am here'
     git config --global init.templatedir '~/.git_template'
     git config --global alias.ctags '!.git/hooks/ctags'
     doo cp -R $EXPORT_DIR/$SRC $DEST
+  else
+    installed 'ctags git hooks'
+  fi
+}
+
+install_ag () {
+  if !(command_exists ag); then
+    doo brew install the_silver_searcher
+  else
+    installed 'ag'
   fi
 }
 
@@ -46,6 +64,8 @@ install_vundle() {
   DIRECTORY=".vim"
   if [ ! -d "$DIRECTORY" ]; then
     doo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  else
+    installed 'vundle'
   fi
 }
 
