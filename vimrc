@@ -99,6 +99,7 @@ command! -nargs=* Stab call Stab()
 
 " Key Mappings {
 " Buffer Mappings
+nnoremap <silent> <leader>p :CtrlPBuffer<CR>
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s<C-w>j
 nnoremap <leader>c <C-w>c
