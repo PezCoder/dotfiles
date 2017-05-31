@@ -28,9 +28,9 @@ errm () {
 # START HERE.
 main () {
     cd $HOME
-    install_ag
-    setup_ctags
-    install_vundle
+    # install_ag
+    # setup_ctags
+    # install_vundle
     confirm_no_clobber
     confirm_have_goodies
     for i in ${DOTS[@]}; do
@@ -125,10 +125,11 @@ link_dot() {
 # Initialize globals
 EXPORT_DIR=$(dirname "${PWD}/$0")
 DOTS=(
-    vim
-    vimrc
-    zshrc
-    config
+    #vim
+    #vimrc
+    #zshrc
+    #config
+    tmux.conf
 )
 
 # Fire missiles
