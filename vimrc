@@ -45,6 +45,7 @@ set hlsearch                      " highlight all search matches
 set incsearch                     " show search results as I type
 set cursorline                    " highlight current line
 set smartcase                     " pay attention to case when caps are used
+set gdefault                      " substitute globally by default
 set ttimeoutlen=100               " decrease timeout for faster insert with 'O'
 set vb                            " enable visual bell (disable audio bell)
 set ruler                         " show row and column in footer
@@ -103,6 +104,15 @@ nmap <C-l> <C-w>l
 nnoremap <Leader>w :w<CR>
 "Save & Quit file
 nnoremap <Leader>q :wqa<CR>
+" j & k works as you expect it to on folded lines
+nnoremap j gj
+nnoremap k gk
+" regex search as default
+nnoremap / /\v
+vnoremap / /\v
+" Easily goto maching bracket
+nnoremap <tab> %
+vnoremap <tab> %
 
 " --- [ and ] prefix mappings --- {"
 " Quickly add empty lines
