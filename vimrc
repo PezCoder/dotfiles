@@ -58,24 +58,20 @@ set list listchars=tab:»·,trail:· " show extra space characters
 set nofoldenable                  " disable code folding
 set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
-set t_Co=256                      " Coz my iterm2 supports it
 set mouse=c                       " Disable cursor
 set hidden                        " Can hide buffer in non saved state
 
 " Remap leader key
 let mapleader = "\<Space>"
 
-" Enable true colors if available
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-if (has("termguicolors"))
-  set termguicolors
-endif
-
 " Color Scheme {"
 set background=dark
-if has("nvim")
+if (has("termguicolors"))
+  " Enable true colors if available
+  set termguicolors
   colorscheme OceanicNext
 else
+  set t_Co=256
   let base16colorspace=256
   colorscheme base16-material
 endif
@@ -156,10 +152,10 @@ endif
 " }
 
 " Airline setup
-let g:airline_powerline_fonts = 1                                 "Enable powerline fonts
-let g:airline#extensions#tabline#enabled = 1                      "Enable tabline extension
-let g:airline#extensions#tabline#left_sep = ' '                   "Left separator for tabline
-let g:airline#extensions#tabline#left_alt_sep = '│'               "Right separator for tabline
+let g:airline_powerline_fonts = 1                                 " Enable powerline fonts
+let g:airline#extensions#tabline#enabled = 1                      " Enable tabline extension
+let g:airline#extensions#tabline#left_sep = ' '                   " Left separator for tabline
+let g:airline#extensions#tabline#left_alt_sep = '│'               " Right separator for tabline
 let g:airline#extensions#tabline#fnamemod = ':t'                  " Show just the filename
 let g:airline_theme='oceanicnext'
 
