@@ -27,6 +27,7 @@ Plug 'Valloric/YouCompleteMe'
 call plug#end()
 
 set nobackup                      " get rid of anoying ~file
+set backspace=indent,eol,start    " Fixes not able to backspace in insert mode issue
 if !has('nvim')
   set encoding=utf-8
 end
