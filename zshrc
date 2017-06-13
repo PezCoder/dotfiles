@@ -24,7 +24,6 @@ alias zshconfig="vi ~/.zshrc"
 export PATH="/usr/local/mysql/bin:$PATH"
 # launch chrome without web security
 alias chromews='open -a Google\ Chrome --args --disable-web-security'
-alias v='nvim'
 alias vus='cd ~/1conf;vagrant up;vagrant ssh'
 alias vs='cd ~/1conf;vagrant ssh'
 
@@ -32,6 +31,7 @@ alias vs='cd ~/1conf;vagrant ssh'
 alias cc="app/console cache:clear"
 alias adump="app/console assetic:dump"
 alias cinstall="composer install"
+alias vi='vim' # Launch brew's vim with vi command
 
 # Base16 Shell (Needed for correct colors in base16 material theme)
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"
@@ -81,3 +81,4 @@ export PATH="$PATH:$HOME/.rvm/bin"
 
 # Export colors for tmux
 export TERM=xterm-256color
+export PATH="/usr/local/sbin:$PATH"

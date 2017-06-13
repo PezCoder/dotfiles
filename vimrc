@@ -1,34 +1,30 @@
-set nocompatible                       " don't need to be compatible with old vim
-"Load up vundle
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'mattn/emmet-vim'                        " Emmet for html
-Plugin 'evidens/vim-twig'                       " Twig Syntax highlighting
-Plugin 'hail2u/vim-css3-syntax'                 " CSS3 Syntax
-Plugin 'vim-airline/vim-airline'
-Plugin 'ctrlpvim/ctrlp.vim'                     " Fuzzy file/buffer search
-Plugin 'othree/html5.vim'                       " Html5 syntax, indent
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'mhartington/oceanic-next'
-Plugin 'osyo-manga/vim-anzu'                    " Show search results on vim-airline
-Plugin 'pangloss/vim-javascript'                " Better syntax highlighting & indent
-Plugin 'mxw/vim-jsx'                            " JSX highlighting (requires pangloss/vim-javascript)
-Plugin 'elzr/vim-json'                          " JSON highlighting
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'danro/rename.vim'                       " Rename using :Rename {newname}
-Plugin 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
-Plugin 'tpope/vim-surround'                     " Change the surrounding
-Plugin 'tpope/vim-repeat'                       " Repeat plugin commands
-Plugin 'jszakmeister/vim-togglecursor'          " Different cursors in different modes
-Plugin 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
-Plugin 'tpope/vim-commentary'                   " Comment/uncomment plugin
-Plugin 'tpope/vim-fugitive'
+Plug 'VundleVim/Vundle.vim'
+Plug 'mattn/emmet-vim'                        " Emmet for html
+Plug 'evidens/vim-twig'                       " Twig Syntax highlighting
+Plug 'hail2u/vim-css3-syntax'                 " CSS3 Syntax
+Plug 'vim-airline/vim-airline'
+Plug 'ctrlpvim/ctrlp.vim'                     " Fuzzy file/buffer search
+Plug 'othree/html5.vim'                       " Html5 syntax, indent
+Plug 'vim-airline/vim-airline-themes'
+Plug 'mhartington/oceanic-next'
+Plug 'osyo-manga/vim-anzu'                    " Show search results on vim-airline
+Plug 'pangloss/vim-javascript'                " Better syntax highlighting & indent
+Plug 'mxw/vim-jsx'                            " JSX highlighting (requires pangloss/vim-javascript)
+Plug 'elzr/vim-json'                          " JSON highlighting
+Plug 'ryanoasis/vim-devicons'
+Plug 'danro/rename.vim'                       " Rename using :Rename {newname}
+Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
+Plug 'tpope/vim-surround'                     " Change the surrounding
+Plug 'tpope/vim-repeat'                       " Repeat plugin commands
+Plug 'jszakmeister/vim-togglecursor'          " Different cursors in different modes
+Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
+Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
+Plug 'tpope/vim-fugitive'
+Plug 'Valloric/YouCompleteMe'
 
-call vundle#end()
-filetype plugin indent on
+call plug#end()
 
 set nobackup                      " get rid of anoying ~file
 if !has('nvim')

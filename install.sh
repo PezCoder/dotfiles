@@ -30,7 +30,7 @@ main () {
     cd $HOME
     # install_ag
     # setup_ctags
-    # install_vundle
+    install_plug
     confirm_no_clobber
     confirm_have_goodies
     for i in ${DOTS[@]}; do
@@ -59,13 +59,13 @@ install_ag () {
   fi
 }
 
-# Install vundle for first time if .vim directory doesn't exist
-install_vundle() {
-  DIRECTORY=".vim"
-  if [ ! -d "$DIRECTORY" ]; then
-    doo git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+# Install plug for first time if .vim directory doesn't exist
+install_plug() {
+  FILE=".vim/autoload/plug.vim"
+  if [ ! -f "$FILE" ]; then
+    doo curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   else
-    installed 'vundle'
+    installed 'Plug'
   fi
 }
 
