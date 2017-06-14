@@ -22,7 +22,9 @@ Plug 'jszakmeister/vim-togglecursor'          " Different cursors in different m
 Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+Plug 'jiangmiao/auto-pairs'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 
@@ -38,7 +40,7 @@ set ts=2                          " set indent to 2 spaces
 set shiftwidth=2
 set softtabstop=2
 set expandtab                     " use spaces, not tab characters
-set relativenumber                " show relative line numbers
+"set relativenumber                " show relative line numbers
 set number
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
