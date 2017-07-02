@@ -99,10 +99,6 @@ nnoremap <silent> <leader>p :CtrlPBuffer<CR>
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s<C-w>j
 nnoremap <leader>c <C-w>c
-nmap <C-h> <C-w>h
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-l> <C-w>l
 "Save file
 nnoremap <Leader>w :w<CR>
 "Save & Quit file
@@ -190,6 +186,10 @@ let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with 
 " One way behaviour for n & N
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
+
+" YouCompleteMe settings
+let g:ycm_min_num_of_chars_for_completion = 4
+let g:ycm_enable_diagnostic_highlighting = 0
 
 " Custom Functions
 function! MapTabForEmmetExpansion()

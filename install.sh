@@ -31,6 +31,7 @@ main () {
     # install_ag
     # setup_ctags
     install_plug
+    install_tpm
     confirm_no_clobber
     confirm_have_goodies
     for i in ${DOTS[@]}; do
@@ -66,6 +67,15 @@ install_plug() {
     doo curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   else
     installed 'Plug'
+  fi
+}
+
+install_tpm() {
+  DIR=".tmux/plugins/tpm"
+  if [ ! -d "$DIR" ]; then
+    doo git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
+  else
+    installed 'TPM'
   fi
 }
 
