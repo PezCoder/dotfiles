@@ -106,12 +106,6 @@ nnoremap <Leader>q :wqa<CR>
 " j & k works as you expect it to on folded lines
 nnoremap j gj
 nnoremap k gk
-" regex search as default
-nnoremap / /\v
-vnoremap / /\v
-" Easily goto maching bracket
-nnoremap <tab> %
-vnoremap <tab> %
 
 " --- [ and ] prefix mappings --- {"
 " Quickly add empty lines
