@@ -36,9 +36,9 @@ end
 runtime macros/matchit.vim        " autoload that extends % functionality
 syntax on                         " show syntax highlighting
 set autoindent                    " set auto indent
-set ts=2                          " set indent to 2 spaces
-set shiftwidth=2
-set softtabstop=2
+set ts=4
+set shiftwidth=4
+set softtabstop=4
 set expandtab                     " use spaces, not tab characters
 "set relativenumber                " show relative line numbers
 set number
@@ -82,8 +82,8 @@ let g:used_javascript_libs = 'angularjs,angularui,angularuirouter'
 
 " Emmet Plugin Configs
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss,html.twig,javascript.jsx EmmetInstall                      " Enable emmet for just few files
-autocmd FileType html,css,scss,html.twig,javascript.jsx :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig EmmetInstall                      " Enable emmet for just few files
+autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
 let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
@@ -166,7 +166,7 @@ let g:togglecursor_force = 'xterm'   " telling xterm style terminal to make it w
 augroup vimrc
   autocmd!
 augroup END
-"autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2                      "Set 2 indent for html
+autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2
 autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
 
 " Vim Anzu (Search results on vim-airline)
