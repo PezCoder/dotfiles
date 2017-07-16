@@ -139,7 +139,8 @@ DOTS=(
     #vimrc
     #zshrc
     #config
-    tmux.conf
+    # tmux.conf
+    tern-config
 )
 
 # Fire missiles

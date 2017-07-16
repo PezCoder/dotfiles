@@ -14,7 +14,7 @@ Plug 'pangloss/vim-javascript'                " Better syntax highlighting & ind
 Plug 'mxw/vim-jsx'                            " JSX highlighting (requires pangloss/vim-javascript)
 Plug 'elzr/vim-json'                          " JSON highlighting
 Plug 'ryanoasis/vim-devicons'
-Plug 'danro/rename.vim'                       " Rename using :Rename {newname}
+Plug 'danro/rename.vim', { 'on': 'Rename' }   " Rename using :Rename {newname}
 Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
 Plug 'tpope/vim-surround'                     " Change the surrounding
 Plug 'tpope/vim-repeat'                       " Repeat plugin commands
@@ -181,9 +181,14 @@ let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with 
 nnoremap <expr> n  'Nn'[v:searchforward]
 nnoremap <expr> N  'nN'[v:searchforward]
 
-" YouCompleteMe settings
+" YouCompleteMe settings {
 let g:ycm_min_num_of_chars_for_completion = 4
+let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_enable_diagnostic_highlighting = 0
+" Don't show YCM's preview window
+set completeopt-=preview
+let g:ycm_add_preview_to_completeopt = 0
+" }
 
 " Custom Functions
 function! MapTabForEmmetExpansion()
@@ -219,16 +224,15 @@ endfunction
 " }
 
 " multi-purpose tab key (auto-complete) {
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-inoremap <s-tab> <c-n>
+" function! InsertTabWrapper()
+"   let col = col('.') - 1
+"   if !col || getline('.')[col - 1] !~ '\k'
+"     return "\<tab>"
+"   else
+"     return "\<c-p>"
+"   endif
+" endfunction
+" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 " }
 
 " Execute macro on visually selected lines with @{macro} {{
