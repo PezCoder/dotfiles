@@ -82,3 +82,4 @@ export PATH="$PATH:$HOME/.rvm/bin"
 # Export colors for tmux
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
+export EDITOR=vim
