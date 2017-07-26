@@ -83,3 +83,6 @@ export PATH="$PATH:$HOME/.rvm/bin"
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
 export EDITOR=vim
+
+# for scm breeze (git shortcuts plugin)
+[ -s "/Users/pezcoder/.scm_breeze/scm_breeze.sh" ] && source "/Users/pezcoder/.scm_breeze/scm_breeze.sh"

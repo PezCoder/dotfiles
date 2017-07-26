@@ -34,6 +34,7 @@ main () {
     install_tpm
     confirm_no_clobber
     confirm_have_goodies
+    install_scm_breeze
     for i in ${DOTS[@]}; do
         link_dot $i
     done
@@ -123,6 +124,16 @@ confirm_have_goodies() {
         errm "    $NOFINDINGS"
         exit 2
     fi
+}
+
+install_scm_breeze() {
+  DIR='scm_breeze'
+  if [ ! -d ".$DIR" ]; then
+    doo git clone git://github.com/scmbreeze/scm_breeze.git ~/.scm_breeze
+    doo ~/.scm_breeze/install.sh
+  else
+    installed 'scm_breeze'
+  fi
 }
 
 link_dot() {
