@@ -25,6 +25,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'majutsushi/tagbar'
 
 call plug#end()
 
@@ -86,6 +87,9 @@ autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig EmmetIns
 autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
 let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
+
+" Tagbar alias
+nmap <leader>t :TagbarToggle<CR>
 
 " Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
