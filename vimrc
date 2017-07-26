@@ -40,7 +40,7 @@ set ts=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab                     " use spaces, not tab characters
-"set relativenumber                " show relative line numbers
+set relativenumber                " show relative line numbers
 set number
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
