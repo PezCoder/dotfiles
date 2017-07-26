@@ -26,6 +26,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
+Plug 'matze/vim-move'                         " Moves a block of code up or down
 
 call plug#end()
 
@@ -90,6 +91,10 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " Tagbar alias
 nmap <leader>t :TagbarToggle<CR>
+
+" Move plugin alias
+vmap <C-k> <Plug>MoveBlockUp
+vmap <C-j> <Plug>MoveBlockDown
 
 " Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
