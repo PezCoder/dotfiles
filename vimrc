@@ -90,7 +90,10 @@ let g:user_emmet_mode="i"                                                  " Use
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " Tagbar alias
-nmap <leader>t :TagbarToggle<CR>
+let g:tagbar_autoclose = 1
+let g:tagbar_autofocus = 1
+let g:tagbar_compact = 1
+nmap <leader>t :TagbarToggle<CR>-<CR>
 
 " Move plugin alias
 vmap <C-k> <Plug>MoveBlockUp
