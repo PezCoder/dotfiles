@@ -174,6 +174,9 @@ let g:airline#extensions#tabline#left_sep = ' '                   " Left separat
 let g:airline#extensions#tabline#left_alt_sep = '│'               " Right separator for tabline
 let g:airline#extensions#tabline#fnamemod = ':t'                  " Show just the filename
 let g:airline_theme='oceanicnext'
+" remove encoding text & devicon
+let g:airline_section_y = ''
+let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
 "Cursor Settings
 let g:togglecursor_default = 'block'
@@ -193,6 +196,7 @@ nmap * <Plug>(anzu-star-with-echo)
 nmap # <Plug>(anzu-sharp-with-echo)
 nmap <silent> <leader><space> :nohlsearch<CR><Plug>(anzu-clear-search-status)
 let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
+let g:airline#extensions#anzu#enabled=0
 
 " One way behaviour for n & N
 nnoremap <expr> n  'Nn'[v:searchforward]
