@@ -48,7 +48,6 @@ set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
 set incsearch                     " show search results as I type
-set cursorline                    " highlight current line
 set smartcase                     " pay attention to case when caps are used
 set gdefault                      " substitute globally by default
 set ttimeoutlen=100               " decrease timeout for faster insert with 'O'
@@ -72,6 +71,10 @@ if (has("termguicolors"))
   " Enable true colors if available
   set termguicolors
   colorscheme OceanicNext
+  set cursorline
+  " remove underline & hightlight the number
+  hi clear CursorLine
+  hi CursorLineNR guifg=#ffffff guibg=#1b2b34
 else
   set t_Co=256
   let base16colorspace=256
@@ -93,7 +96,7 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
-nmap <leader>t :TagbarToggle<CR>-<CR>
+nmap <leader>t :TagbarToggle<CR>
 
 " Move plugin alias
 vmap <C-k> <Plug>MoveBlockUp
