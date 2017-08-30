@@ -74,7 +74,9 @@ if (has("termguicolors"))
   set cursorline
   " remove underline & hightlight the number
   hi clear CursorLine
-  hi CursorLineNR guifg=#ffffff guibg=#1b2b34
+  hi CursorLineNR guifg=#ffffff guibg=#343D46
+  highlight CursorLine guibg=#343D46
+
 else
   set t_Co=256
   let base16colorspace=256
@@ -175,6 +177,7 @@ let g:airline#extensions#tabline#left_alt_sep = '│'               " Right sepa
 let g:airline#extensions#tabline#fnamemod = ':t'                  " Show just the filename
 let g:airline_theme='oceanicnext'
 " remove encoding text & devicon
+au VimEnter * let g:airline_section_x = airline#section#create_right(['tagbar']) | :AirlineRefresh
 let g:airline_section_y = ''
 let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
