@@ -27,6 +27,7 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'                         " Moves a block of code up or down
+Plug 'mileszs/ack.vim'
 
 call plug#end()
 
@@ -167,6 +168,11 @@ else
   \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
   \ }
 endif
+" }
+
+" Ack {
+" Don't jump to first match
+cnoreabbrev Ack Ack!
 " }
 
 " Airline setup

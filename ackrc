@@ -1,0 +1,14 @@
+# Ignored directories & files are same as in vimrc for ctrlP
+--ignore-dir=dist
+--ignore-dir=assetic
+--ignore-dir=vendor
+--ignore-dir=node_modules
+--ignore-dir=DS_Store
+--ignore-dir=git
+
+--ignore-file=.exe
+--ignore-file=.so
+--ignore-file=.dll
+
+--smart-case
+--sort-files

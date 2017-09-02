@@ -28,7 +28,7 @@ errm () {
 # START HERE.
 main () {
     cd $HOME
-    # install_ag
+    install_ack
     # setup_ctags
     install_plug
     install_tpm
@@ -53,11 +53,12 @@ setup_ctags () {
   fi
 }
 
-install_ag () {
-  if !(command_exists ag); then
-    doo brew install the_silver_searcher
+# Used by vim.ack plugin to do searching in a project
+install_ack () {
+  if !(command_exists ack); then
+    doo brew install ack
   else
-    installed 'ag'
+    installed 'ack'
   fi
 }
 
@@ -146,12 +147,13 @@ link_dot() {
 # Initialize globals
 EXPORT_DIR=$(dirname "${PWD}/$0")
 DOTS=(
-    #vim
-    #vimrc
-    #zshrc
-    #config
+    # vim
+    # vimrc
+    # zshrc
+    # config
     # tmux.conf
-    tern-config
+    # tern-config
+    ackrc
 )
 
 # Fire missiles
