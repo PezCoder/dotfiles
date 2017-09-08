@@ -6,9 +6,5 @@
 --ignore-dir=DS_Store
 --ignore-dir=git
 
---ignore-file=.exe
---ignore-file=.so
---ignore-file=.dll
-
 --smart-case
 --sort-files
