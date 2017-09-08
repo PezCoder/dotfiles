@@ -14,6 +14,14 @@ command_exists () {
   type "$1" &> /dev/null ;
 }
 
+is_osx () {
+    if [ "$(uname)" == "Darwin" ]; then
+        true
+    else
+        false
+    fi
+}
+
 installed () {
   echo -e " ✓ $1 already installed."
 }
@@ -32,6 +40,7 @@ main () {
     # setup_ctags
     install_plug
     install_tpm
+    setup_tmux_clipboard
     confirm_no_clobber
     confirm_have_goodies
     install_scm_breeze
@@ -78,6 +87,12 @@ install_tpm() {
     doo git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm && ~/.tmux/plugins/tpm/bin/install_plugins
   else
     installed 'TPM'
+  fi
+}
+
+setup_tmux_clipboard() {
+  if is_osx && !(command_exists reattach-to-user-namespace); then
+    doo brew install reattach-to-user-namespace
   fi
 }
 
