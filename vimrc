@@ -99,7 +99,7 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
-nmap <leader>t :TagbarToggle<CR>
+nmap <leader>t :TagbarToggle<CR>/
 
 " Move plugin alias
 vmap <C-k> <Plug>MoveBlockUp
@@ -173,6 +173,8 @@ endif
 " Ack {
 " Don't jump to first match
 cnoreabbrev Ack Ack!
+
+nnoremap <Leader>f :Ack!<Space>
 " }
 
 " Airline setup
