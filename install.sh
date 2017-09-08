@@ -152,8 +152,9 @@ DOTS=(
     # zshrc
     # config
     # tmux.conf
+    tmux-osx.conf
     # tern-config
-    ackrc
+    # ackrc
 )
 
 # Fire missiles
