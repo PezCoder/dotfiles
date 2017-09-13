@@ -28,6 +28,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'                         " Moves a block of code up or down
 Plug 'mileszs/ack.vim'
+Plug 'FooSoft/vim-argwrap'                    " Format arguments
 
 call plug#end()
 
@@ -175,6 +176,12 @@ endif
 cnoreabbrev Ack Ack!
 
 nnoremap <Leader>/ :Ack!<Space>
+" }
+
+" ArgWrap Config {
+let g:argwrap_tail_comma_braces = '['
+" read mapping as format arguments
+nnoremap <silent> <leader>fa :ArgWrap<CR>
 " }
 
 " Airline setup

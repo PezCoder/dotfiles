@@ -32,6 +32,7 @@ alias cc="app/console cache:clear"
 alias adump="app/console assetic:dump"
 alias cinstall="composer install"
 alias vi='vim' # Launch brew's vim with vi command
+alias rc='vi ~/.vimrc'
 
 # Base16 Shell (Needed for correct colors in base16 material theme)
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"
