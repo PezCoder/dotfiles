@@ -174,7 +174,7 @@ endif
 " Don't jump to first match
 cnoreabbrev Ack Ack!
 
-nnoremap <Leader>f :Ack!<Space>
+nnoremap <Leader>/ :Ack!<Space>
 " }
 
 " Airline setup
