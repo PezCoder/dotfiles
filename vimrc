@@ -262,6 +262,8 @@ function! SummarizeTabs()
 endfunction
 " }
 
+" YouCompleteMe is the best & if that's not working, this is a pretty good
+" auto completion on tab pressing
 " multi-purpose tab key (auto-complete) {
 " function! InsertTabWrapper()
 "   let col = col('.') - 1
