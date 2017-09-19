@@ -5,6 +5,8 @@
 --ignore-dir=node_modules
 --ignore-dir=DS_Store
 --ignore-dir=git
+--ignore-dir=cache
+--ignore-dir=logs
 
 --smart-case
 --sort-files
