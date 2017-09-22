@@ -198,6 +198,7 @@ let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
 "Cursor Settings
 let g:togglecursor_default = 'block'
+let g:togglecursor_insert = 'line'
 let g:togglecursor_force = 'xterm'   " telling xterm style terminal to make it work in vagrant & ssh
 
 "Auto commands
