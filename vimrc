@@ -61,7 +61,7 @@ set list listchars=tab:»·,trail:· " show extra space characters
 set nofoldenable                  " disable code folding
 set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
-set mouse=c                       " Disable cursor
+set mouse=a                       " enable cursor scrolling
 set hidden                        " Can hide buffer in non saved state
 
 " Remap leader key
