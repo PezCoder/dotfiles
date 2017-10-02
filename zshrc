@@ -11,15 +11,13 @@ ZSH_THEME="clean-minimal"
 plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting z)
 
 # User configuration
-export PATH="/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="$PATH:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 source $ZSH/oh-my-zsh.sh
 
 
 ######### ALIAS
 
-# Use sublimetext for editing config files
-alias zshconfig="vi ~/.zshrc"
 # to use mysql command from terminal
 export PATH="/usr/local/mysql/bin:$PATH"
 # launch chrome without web security
@@ -77,13 +75,13 @@ export PATH="$HOME/.linuxbrew/bin:$PATH"
 export MANPATH="$HOME/.linuxbrew/share/man:$MANPATH"
 export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
 # Export colors for tmux
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
 export EDITOR=vim
 
+# Needed for scm breeze
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
 # for scm breeze (git shortcuts plugin)
 [ -s "/Users/pezcoder/.scm_breeze/scm_breeze.sh" ] && source "/Users/pezcoder/.scm_breeze/scm_breeze.sh"
