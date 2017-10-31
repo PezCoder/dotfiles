@@ -29,6 +29,7 @@ Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'                         " Moves a block of code up or down
 Plug 'mileszs/ack.vim'
 Plug 'FooSoft/vim-argwrap'                    " Format arguments
+Plug 'tommcdo/vim-exchange'                   " Exchange two words highlights usage: cx{motion} .(dot)
 
 call plug#end()
 

@@ -163,11 +163,11 @@ link_dot() {
 EXPORT_DIR=$(dirname "${PWD}/$0")
 DOTS=(
     # vim
-    # vimrc
+    vimrc
     # zshrc
     # config
     # tmux.conf
-    tmux-osx.conf
+    # tmux-osx.conf
     # tern-config
     # ackrc
 )
