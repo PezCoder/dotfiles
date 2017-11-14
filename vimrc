@@ -203,10 +203,7 @@ let g:togglecursor_insert = 'line'
 let g:togglecursor_force = 'xterm'   " telling xterm style terminal to make it work in vagrant & ssh
 
 "Auto commands
-augroup vimrc
-  autocmd!
-augroup END
-autocmd vimrc FileType javascript setlocal sw=2 sts=2 ts=2
+autocmd FileType javascript setlocal sw=2 sts=2 ts=2
 autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
 
 " Vim Anzu (Search results on vim-airline)
