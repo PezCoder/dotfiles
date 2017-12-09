@@ -5,7 +5,6 @@ Plug 'mattn/emmet-vim'                        " Emmet for html
 Plug 'evidens/vim-twig'                       " Twig Syntax highlighting
 Plug 'hail2u/vim-css3-syntax'                 " CSS3 Syntax
 Plug 'vim-airline/vim-airline'
-Plug 'ctrlpvim/ctrlp.vim'                     " Fuzzy file/buffer search
 Plug 'othree/html5.vim'                       " Html5 syntax, indent
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mhartington/oceanic-next'
@@ -30,6 +29,10 @@ Plug 'matze/vim-move'                         " Moves a block of code up or down
 Plug 'mileszs/ack.vim'
 Plug 'FooSoft/vim-argwrap'                    " Format arguments
 Plug 'tommcdo/vim-exchange'                   " Exchange two words highlights usage: cx{motion} .(dot)
+Plug 'benmills/vimux'
+Plug 'StanAngeloff/php.vim'                   " syntax for php, fix some common bugs that occurs due to vim not knowing php syntax
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -101,6 +104,7 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
+let g:tagbar_sort = 0 " Sort according to their structure in file & not filename
 nmap <leader>t :TagbarToggle<CR>/
 
 " Move plugin alias
@@ -113,9 +117,11 @@ cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
 " Set tabstop, softtabstop and shiftwidth to the same value. ( Ex :Stab<CR>4 )
 command! -nargs=* Stab call Stab()
 
+" php.vim config
+let g:php_html_load = 0
+
 " Key Mappings {
 " Buffer Mappings
-nnoremap <silent> <leader>p :CtrlPBuffer<CR>
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s<C-w>j
 nnoremap <leader>c <C-w>c
@@ -148,28 +154,21 @@ nnoremap <silent> ]t :tabnext<CR>
 
 " Zoom in & out using leader + z
 nnoremap <silent><leader>z :ZoomToggle<CR>
+
+" Run phpunit test cases for the current file
+map <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
+
 " }
 
-" Control-p configs {
-" start in filesearch mode
-let g:ctrlp_by_filename = 1
-let g:ctrlp_custom_ignore = {
-\ 'dir': '\v[\/]\.(dist|assetic|vendor|node_modules|DS_Store|git)$',
-\ 'file': '\v\.(exe|so|dll)$',
-\ }
-let g:ctrlp_working_path_mode = ''      " Current working directory of vim
+" FZF configs {
+nnoremap <C-p> :call FzfOmniFiles()<CR>
+" nnoremap <leader>/ :Ag<CR>
+nnoremap <silent> <leader>p :Buffers<CR>
 
-" Make Ctrl-P Faster
-let g:ctrlp_use_caching = 0
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-else
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . -co --exclude-standard', 'find %s -type f']
-  let g:ctrlp_prompt_mappings = {
-  \ 'AcceptSelection("e")': ['<space>', '<cr>', '<2-LeftMouse>'],
-  \ }
-endif
+augroup _fzf
+  autocmd!
+  autocmd ColorScheme * call <sid>match_fzf_colors_to_current_scheme()
+augroup END
 " }
 
 " Ack {
@@ -224,6 +223,7 @@ let g:ycm_min_num_of_chars_for_completion = 4
 let g:ycm_min_num_identifier_candidate_chars = 4
 let g:ycm_enable_diagnostic_highlighting = 0
 let g:ycm_collect_identifiers_from_comments_and_strings = 1
+let g:ycm_complete_in_comments = 1
 " Don't show YCM's preview window
 set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
@@ -317,3 +317,43 @@ function! s:ZoomToggle() abort
     endif
 endfunction
 command! ZoomToggle call s:ZoomToggle()
+
+" Run FZF in git mode if available else normal file mode
+fun! FzfOmniFiles()
+  let is_git = system('git status')
+  if v:shell_error
+    :Files
+  else
+    :GitFiles
+  endif
+endfun
+
+" To match fzf colors to running color scheme
+function! s:match_fzf_colors_to_current_scheme()
+  let rules =
+  \ { 'fg':      [['Normal',       'fg']],
+    \ 'bg':      [['Normal',       'bg']],
+    \ 'hl':      [['Comment',      'fg']],
+    \ 'fg+':     [['CursorColumn', 'fg'], ['Normal', 'fg']],
+    \ 'bg+':     [['CursorColumn', 'bg']],
+    \ 'hl+':     [['Statement',    'fg']],
+    \ 'info':    [['PreProc',      'fg']],
+    \ 'prompt':  [['Conditional',  'fg']],
+    \ 'pointer': [['Exception',    'fg']],
+    \ 'marker':  [['Keyword',      'fg']],
+    \ 'spinner': [['Label',        'fg']],
+    \ 'header':  [['Comment',      'fg']] }
+  let cols = []
+  for [name, pairs] in items(rules)
+    for pair in pairs
+      let code = synIDattr(synIDtrans(hlID(pair[0])), pair[1])
+      if !empty(name) && code > 0
+        call add(cols, name.':'.code)
+        break
+      endif
+    endfor
+  endfor
+  let s:orig_fzf_default_opts = get(s:, 'orig_fzf_default_opts', $FZF_DEFAULT_OPTS)
+  let $FZF_DEFAULT_OPTS = s:orig_fzf_default_opts .
+        \ empty(cols) ? '' : (' --color='.join(cols, ','))
+endfunction
