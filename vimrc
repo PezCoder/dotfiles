@@ -176,6 +176,9 @@ augroup END
 cnoreabbrev Ack Ack!
 
 nnoremap <Leader>/ :Ack!<Space>
+
+" use ripgrep for searching ⚡️
+let g:ackprg = 'rg --vimgrep --no-heading'
 " }
 
 " ArgWrap Config {

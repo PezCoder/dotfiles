@@ -36,7 +36,7 @@ errm () {
 # START HERE.
 main () {
     cd $HOME
-    install_ack
+    install_rg
     # setup_ctags
     install_plug
     install_tpm
@@ -62,12 +62,13 @@ setup_ctags () {
   fi
 }
 
-# Used by vim.ack plugin to do searching in a project
-install_ack () {
-  if !(command_exists ack); then
-    doo brew install ack
+# ripgrep search, faster than ack, ag, silver surfer etc.
+# Used by vim.ack plugin to do searching words in a project
+install_rg () {
+  if !(command_exists rg); then
+    doo brew install rg
   else
-    installed 'ack'
+    installed 'rg'
   fi
 }
 
