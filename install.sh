@@ -66,7 +66,8 @@ setup_ctags () {
 # Used by vim.ack plugin to do searching words in a project
 install_rg () {
   if !(command_exists rg); then
-    doo brew install rg
+    doo brew tap burntsushi/ripgrep https://github.com/BurntSushi/ripgrep.git
+    doo brew install burntsushi/ripgrep/ripgrep-bin
   else
     installed 'rg'
   fi
