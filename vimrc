@@ -22,7 +22,8 @@ Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
-Plug 'jiangmiao/auto-pairs'
+" Plug 'jiangmiao/auto-pairs'
+Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'                         " Moves a block of code up or down
@@ -121,6 +122,10 @@ command! -nargs=* Stab call Stab()
 " php.vim config
 let g:php_html_load = 0
 
+" auto-pairs config
+" let g:AutoPairsMultilineClose = 0
+let g:AutoPairsUseInsertedCount = 1
+
 " Key Mappings {
 " Buffer Mappings
 nnoremap <leader>v <C-w>v<C-w>l
@@ -161,12 +166,18 @@ map <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
 
 " }
 
+" tags
+nnoremap <C-]> g<C-]>
+nnoremap g[ :pop<cr>
+
 " FZF configs {
 let g:fzf_layout = { 'down': '~25%' }
 nnoremap <C-p> :call FzfOmniFiles()<CR>
 " nnoremap <leader>/ :Ag<CR>
 nnoremap <silent> <leader>p :Buffers<CR>
 nnoremap <silent> <leader>l :BLines<CR>
+" #pending find the options to search for a function
+nnoremap <silent> <leader>j :call fzf#vim#buffer_tags('', {'options': ''})<CR>
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
@@ -184,6 +195,7 @@ let g:fzf_colors =
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
 
+" fzf search on top of word search using ripgrep with :Find
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --ignore-case --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 " }
 
