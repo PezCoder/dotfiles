@@ -34,8 +34,8 @@ alias rc='vi ~/.vimrc'
 
 # Base16 Shell (Needed for correct colors in base16 material theme)
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"
-BASE16_SHELL="$HOME/.config/oceanic-next-shell/oceanic-next.dark.sh"
-[[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
+# BASE16_SHELL="$HOME/.config/oceanic-next-shell/oceanic-next.dark.sh"
+# [[ -s $BASE16_SHELL ]] && source $BASE16_SHELL
 
 # Bind ctrl-z to switch between vim & terminal
 fancy-ctrl-z () {

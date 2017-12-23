@@ -35,6 +35,7 @@ Plug 'StanAngeloff/php.vim'                   " syntax for php, fix some common 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Plug 'michaeljsmith/vim-indent-object'
+Plug 'morhetz/gruvbox'
 
 call plug#end()
 
@@ -78,13 +79,9 @@ set background=dark
 if (has("termguicolors"))
   " Enable true colors if available
   set termguicolors
-  colorscheme OceanicNext
+  colorscheme gruvbox
   set cursorline
-  " remove underline & hightlight the number
-  hi clear CursorLine
-  hi CursorLineNR guifg=#ffffff guibg=#343D46
-  highlight CursorLine guibg=#343D46
-
+  highlight CursorLine guibg=#3c3836
 else
   set t_Co=256
   let base16colorspace=256
@@ -221,7 +218,7 @@ let g:airline#extensions#tabline#enabled = 1                      " Enable tabli
 let g:airline#extensions#tabline#left_sep = ' '                   " Left separator for tabline
 let g:airline#extensions#tabline#left_alt_sep = '│'               " Right separator for tabline
 let g:airline#extensions#tabline#fnamemod = ':t'                  " Show just the filename
-let g:airline_theme='oceanicnext'
+let g:airline_theme='gruvbox'
 " remove encoding text & devicon
 au VimEnter * let g:airline_section_x = airline#section#create_right(['tagbar']) | :AirlineRefresh
 let g:airline_section_y = ''
