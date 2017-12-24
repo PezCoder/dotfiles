@@ -81,7 +81,6 @@ if (has("termguicolors"))
   set termguicolors
   colorscheme gruvbox
   set cursorline
-  highlight CursorLine guibg=#3c3836
 else
   set t_Co=256
   let base16colorspace=256
@@ -173,8 +172,8 @@ nnoremap <C-p> :call FzfOmniFiles()<CR>
 " nnoremap <leader>/ :Ag<CR>
 nnoremap <silent> <leader>p :Buffers<CR>
 nnoremap <silent> <leader>l :BLines<CR>
-" #pending find the options to search for a function
-nnoremap <silent> <leader>j :call fzf#vim#buffer_tags('', {'options': ''})<CR>
+" Quick jump to function (uses :BTags to filter just the functions names)
+nnoremap <silent> <leader>j :call fzf#vim#buffer_tags('', { 'options': ['--nth', '1,2', '--query', '^f$ '] })<CR>
 
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
