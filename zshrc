@@ -32,6 +32,20 @@ alias cinstall="composer install"
 alias vi='vim' # Launch brew's vim with vi command
 alias rc='vi ~/.vimrc'
 
+# vim command will now launch vim in different type of modes
+function vim() {
+    if test $# -gt 0; then
+        # with options provided
+        env vim "$@"
+    elif test -f ~/.vim/Session.vim; then
+        # to restore previous session if exist
+        env vim -S ~/.vim/Session.vim
+    else
+        # with start recording the session
+        env vim -c 'Obsession ~/.vim/Session.vim'
+    fi
+}
+
 # Base16 Shell (Needed for correct colors in base16 material theme)
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"
 # BASE16_SHELL="$HOME/.config/oceanic-next-shell/oceanic-next.dark.sh"

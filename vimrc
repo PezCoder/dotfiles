@@ -36,6 +36,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Plug 'michaeljsmith/vim-indent-object'
 Plug 'morhetz/gruvbox'
+Plug 'tpope/vim-obsession'                    " wrapper to automate :mksession
 
 call plug#end()
 
