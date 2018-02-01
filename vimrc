@@ -39,6 +39,7 @@ Plug 'tpope/vim-obsession'                    " wrapper to automate :mksession
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
+Plug 'qpkorr/vim-bufkill'
 
 call plug#end()
 
@@ -127,6 +128,8 @@ let g:AutoPairsUseInsertedCount = 1
 
 " Key Mappings {
 " Buffer Mappings
+" Buffer kill and persist window
+cnoreabbrev bd BD
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s<C-w>j
 nnoremap <leader>c <C-w>c
