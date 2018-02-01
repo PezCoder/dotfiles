@@ -13,7 +13,6 @@ Plug 'pangloss/vim-javascript'                " Better syntax highlighting & ind
 Plug 'mxw/vim-jsx'                            " JSX highlighting (requires pangloss/vim-javascript)
 Plug 'elzr/vim-json'                          " JSON highlighting
 Plug 'ryanoasis/vim-devicons'
-Plug 'danro/rename.vim', { 'on': 'Rename' }   " Rename using :Rename {newname}
 Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
 Plug 'tpope/vim-surround'                     " Change the surrounding
 Plug 'tpope/vim-repeat'                       " Repeat plugin commands
@@ -39,6 +38,7 @@ Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-obsession'                    " wrapper to automate :mksession
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-rhubarb'                      " :Gbrowse
+Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 
 call plug#end()
 
