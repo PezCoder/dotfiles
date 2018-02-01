@@ -37,6 +37,8 @@ Plug 'junegunn/fzf.vim'
 " Plug 'michaeljsmith/vim-indent-object'
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-obsession'                    " wrapper to automate :mksession
+Plug 'mhinz/vim-startify'
+Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 
 call plug#end()
 
