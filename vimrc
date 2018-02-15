@@ -209,6 +209,8 @@ nnoremap <Leader>/ :Ack!<Space>
 
 " use ripgrep for searching ⚡️
 let g:ackprg = 'rg --vimgrep --no-heading --smart-case'
+let g:ack_autoclose = 1
+let g:ack_use_cword_for_empty_search = 1 "Any empty ack search will search for the work the cursor is on
 " }
 
 " ArgWrap Config {
