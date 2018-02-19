@@ -166,6 +166,17 @@ nnoremap <silent><leader>z :ZoomToggle<CR>
 " Run phpunit test cases for the current file
 map <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
 
+" Y will yank till the end of the word
+nmap Y y$
+" }
+
+" Some vimfu to make life easier {
+" Hyphen names as single word for style files
+au! FileType css,scss setl iskeyword+=-
+
+" Resize all open windows propotionally when the terminal is resized
+autocmd VimResized * :wincmd =
+
 " }
 
 " tags
