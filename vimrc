@@ -366,8 +366,13 @@ command! ZoomToggle call s:ZoomToggle()
 
 " Run FZF in git mode if available else normal file mode
 fun! FzfOmniFiles()
+  " When I change current working directory, I'm just concerned with files
+  " inside that directory (:Files) & not all project files (:GitFiles)
+  let git_root = split(system('git rev-parse --show-toplevel'), '\n')[0]
+  let cwd = getcwd()
+  " Throws v:shell_error if is not a git directory
   let is_git = system('git status')
-  if v:shell_error
+  if cwd != git_root || v:shell_error
     :Files
   else
     :GitFiles
