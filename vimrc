@@ -172,7 +172,7 @@ nmap Y y$
 
 " Some vimfu to make life easier {
 " Hyphen names as single word for style files
-au! FileType css,scss setl iskeyword+=-
+au FileType css,scss setl iskeyword+=-
 
 " Resize all open windows propotionally when the terminal is resized
 autocmd VimResized * :wincmd =
