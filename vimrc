@@ -35,7 +35,6 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Plug 'michaeljsmith/vim-indent-object'
 Plug 'morhetz/gruvbox'
-Plug 'tpope/vim-obsession'                    " wrapper to automate :mksession
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
@@ -101,6 +100,18 @@ autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig EmmetIns
 autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
 let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
+
+" Startify plugin configs
+" Use :SS to save a session
+let g:startify_session_persistence = 1
+let g:startify_list_order = ['sessions', 'dir']
+let g:startify_files_number = 5
+let g:startify_list_order = [
+            \ ['   Sessions'],
+            \ 'sessions',
+            \ ['   Recent Files'],
+            \ 'dir',
+            \ ]
 
 " Tagbar alias
 let g:tagbar_autoclose = 1
@@ -172,7 +183,7 @@ nmap Y y$
 
 " Some vimfu to make life easier {
 " Hyphen names as single word for style files
-au! FileType css,scss setl iskeyword+=-
+au FileType css,scss setl iskeyword+=-
 
 " Resize all open windows propotionally when the terminal is resized
 autocmd VimResized * :wincmd =
@@ -366,8 +377,13 @@ command! ZoomToggle call s:ZoomToggle()
 
 " Run FZF in git mode if available else normal file mode
 fun! FzfOmniFiles()
+  " When I change current working directory, I'm just concerned with files
+  " inside that directory (:Files) & not all project files (:GitFiles)
+  let git_root = split(system('git rev-parse --show-toplevel'), '\n')[0]
+  let cwd = getcwd()
+  " Throws v:shell_error if is not a git directory
   let is_git = system('git status')
-  if v:shell_error
+  if cwd != git_root || v:shell_error
     :Files
   else
     :GitFiles
