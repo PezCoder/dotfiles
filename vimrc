@@ -138,6 +138,8 @@ let g:php_html_load = 0
 let g:AutoPairsUseInsertedCount = 1
 
 " Key Mappings {
+" Map annoying bD to bd => to delete buffer
+cnoreabbrev bD bd
 " Buffer Mappings
 " Buffer kill and persist window
 cnoreabbrev bd BD
@@ -150,6 +152,7 @@ nnoremap <Leader>w :w<CR>
 nnoremap <Leader>q :wqa<CR>
 " j & k works as you expect it to on folded lines
 nnoremap j gj
+nnoremap gj j
 nnoremap k gk
 
 " --- [ and ] prefix mappings --- {"
