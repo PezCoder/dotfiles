@@ -102,6 +102,18 @@ autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call Ma
 let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
+" Startify plugin configs
+" Use :SS to save a session
+let g:startify_session_persistence = 1
+let g:startify_list_order = ['sessions', 'dir']
+let g:startify_files_number = 5
+let g:startify_list_order = [
+            \ ['   Sessions'],
+            \ 'sessions',
+            \ ['   Recent Files'],
+            \ 'dir',
+            \ ]
+
 " Tagbar alias
 let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
