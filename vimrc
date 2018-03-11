@@ -178,7 +178,8 @@ nnoremap <silent> ]t :tabnext<CR>
 nnoremap <silent><leader>z :ZoomToggle<CR>
 
 " Run phpunit test cases for the current file
-map <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
+autocmd FileType php map <buffer> <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
+autocmd FileType java map <buffer> <Leader>r :call VimuxRunCommand("clear;javac ".bufname("%")." ;java ".expand("%:r"))<CR>
 
 " Y will yank till the end of the word
 nmap Y y$
