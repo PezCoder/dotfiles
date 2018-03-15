@@ -39,6 +39,7 @@ Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
+Plug 'tpope/vim-sleuth'                       " Adjust tabs & spaces for you, Note: REMOVE if this annoys me
 
 call plug#end()
 
