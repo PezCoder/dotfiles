@@ -392,6 +392,8 @@ fun! FzfOmniFiles()
   if cwd != git_root || v:shell_error
     :Files
   else
-    :GitFiles
+    " --exclude-standard means respecting gitignore
+    " --others help in showing the untracked git files
+    :GitFiles --exclude-standard --cached --others
   endif
 endfun
