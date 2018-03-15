@@ -103,6 +103,7 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " Startify plugin configs
 " Use :SS to save a session
+let g:startify_change_to_dir = 0 "Don't change the cwd to opened file through startify
 let g:startify_session_persistence = 1
 let g:startify_list_order = ['sessions', 'dir']
 let g:startify_files_number = 5
