@@ -198,7 +198,6 @@ autocmd VimResized * :wincmd =
 
 " tags
 nnoremap <C-]> g<C-]>
-nnoremap g[ :pop<cr>
 
 " FZF configs {
 let g:fzf_layout = { 'down': '~25%' }
@@ -290,6 +289,14 @@ let g:ycm_complete_in_comments = 1
 " Don't show YCM's preview window
 set completeopt-=preview
 let g:ycm_add_preview_to_completeopt = 0
+" For line completion close the ycm dialogue first, otherwise it comes in the way
+inoremap <expr> <C-x><C-l> CloseYcmIfOpen()
+function! CloseYcmIfOpen()
+  if pumvisible()
+    return "\<C-e>\<C-x>\<C-l>"
+  endif
+  return "\<C-x>\<C-l>"
+endfunction
 " }
 
 " Custom Functions
