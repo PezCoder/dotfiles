@@ -99,7 +99,7 @@ let g:used_javascript_libs = 'angularjs,angularui,angularuirouter'
 let g:user_emmet_install_global = 0
 autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig EmmetInstall                      " Enable emmet for just few files
 autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
-let g:user_emmet_mode="i"                                                  " Use emmit for insert mode only
+let g:user_emmet_mode="a"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
 " Startify plugin configs
