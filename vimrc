@@ -40,6 +40,8 @@ Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
 Plug 'tpope/vim-sleuth'                       " Adjust tabs & spaces for you, Note: REMOVE if this annoys me
+Plug 'scrooloose/nerdtree'
+Plug 'alvan/vim-closetag'
 
 call plug#end()
 
@@ -101,6 +103,9 @@ autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig EmmetIns
 autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
 let g:user_emmet_mode="a"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
+
+" vim-closetag
+let g:closetag_filenames = '*.html,*.jsx'
 
 " Startify plugin configs
 " Use :SS to save a session
