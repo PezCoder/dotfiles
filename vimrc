@@ -12,7 +12,6 @@ Plug 'osyo-manga/vim-anzu'                    " Show search results on vim-airli
 Plug 'pangloss/vim-javascript'                " Better syntax highlighting & indent
 Plug 'mxw/vim-jsx'                            " JSX highlighting (requires pangloss/vim-javascript)
 Plug 'elzr/vim-json'                          " JSON highlighting
-Plug 'ryanoasis/vim-devicons'
 Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
 Plug 'tpope/vim-surround'                     " Change the surrounding
 Plug 'tpope/vim-repeat'                       " Repeat plugin commands
@@ -264,7 +263,6 @@ let g:airline_theme='gruvbox'
 " remove encoding text & devicon
 au VimEnter * let g:airline_section_x = airline#section#create_right(['tagbar']) | :AirlineRefresh
 let g:airline_section_y = ''
-let g:webdevicons_enable_airline_statusline_fileformat_symbols=0
 
 "Cursor Settings
 let g:togglecursor_default = 'block'
