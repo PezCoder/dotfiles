@@ -38,8 +38,6 @@ Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
-Plug 'tpope/vim-sleuth'                       " Adjust tabs & spaces for you, Note: REMOVE if this annoys me
-Plug 'scrooloose/nerdtree'
 Plug 'alvan/vim-closetag'
 
 call plug#end()
@@ -92,6 +90,13 @@ else
   colorscheme base16-material
 endif
 " }
+
+" Save swap files separately to avoid cluttering cwd {
+if isdirectory($HOME . '/.vim/swap-files') == 0
+    :silent !mkdir -p ~/.vim/swap-files > /dev/null 2>&1
+endif
+set directory^=$HOME/.vim/swap-files//
+"}
 
 let g:jsx_ext_required = 0      "hightlight jsx in .js
 let g:used_javascript_libs = 'angularjs,angularui,angularuirouter'
