@@ -241,18 +241,10 @@ command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-h
 " }
 
 " Ack {
-command! -nargs=* Search call InputAwareAckSearch(<q-args>)
-nnoremap <Leader>/ :Search<space>
+" Don't jump to first match
+cnoreabbrev Ack Ack!
 
-function! InputAwareAckSearch(args)
-    if len(a:args) > 0
-        " Executes ack by wrapping user input with quotes
-        execute ":Ack! '".a:args."'"
-    else
-        " For no input, executes empty ack, so that word under cursor is searched
-        execute ":Ack!"
-    endif
-endfunction
+nnoremap <Leader>/ :Ack!<Space>
 
 " use ripgrep for searching ⚡️
 let g:ackprg = 'rg --vimgrep --no-heading --smart-case'
