@@ -39,6 +39,7 @@ Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
+Plug 'sjl/gundo.vim'                          "http://vimcasts.org/episodes/undo-branching-and-gundo-vim/
 
 call plug#end()
 
