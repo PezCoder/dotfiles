@@ -311,6 +311,15 @@ function! CloseYcmIfOpen()
 endfunction
 " }
 
+" Neovim stuff {
+if has('nvim')
+    " Escape to exit out of terminal insert mode
+    tnoremap <Esc> <C-\><C-n>
+    " Hide numbers for terminal
+    au TermOpen * setlocal nonumber norelativenumber
+endif
+" }
+
 " Custom Functions
 function! MapTabForEmmetExpansion()
   imap <expr> <leader><tab> emmet#expandAbbrIntelligent("\<tab>")
