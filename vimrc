@@ -40,6 +40,7 @@ Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'sjl/gundo.vim'                          "http://vimcasts.org/episodes/undo-branching-and-gundo-vim/
+Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 
@@ -309,6 +310,13 @@ function! CloseYcmIfOpen()
   endif
   return "\<C-x>\<C-l>"
 endfunction
+" }
+
+" machakann/vim-highlightedyank {
+if !exists('##TextYankPost')
+  map y <Plug>(highlightedyank)
+endif
+let g:highlightedyank_highlight_duration=250
 " }
 
 " Neovim stuff {
