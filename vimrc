@@ -41,6 +41,7 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'sjl/gundo.vim'                          "http://vimcasts.org/episodes/undo-branching-and-gundo-vim/
 Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-projectionist'
 
 call plug#end()
 
@@ -215,7 +216,7 @@ nnoremap <C-]> g<C-]>
 
 " FZF configs {
 let g:fzf_layout = { 'down': '~25%' }
-nnoremap <C-p> :call FzfOmniFiles()<CR>
+nnoremap <silent> <C-p> :call FzfOmniFiles()<CR>
 " nnoremap <leader>/ :Ag<CR>
 nnoremap <silent> <leader>p :Buffers<CR>
 nnoremap <silent> <leader>l :BLines<CR>
@@ -325,6 +326,14 @@ if has('nvim')
     tnoremap <Esc> <C-\><C-n>
     " Hide numbers for terminal
     au TermOpen * setlocal nonumber norelativenumber
+
+    " FZF fixes for terminal mode {
+    " Make escape exit fzf
+    autocmd FileType fzf tnoremap <buffer> <Esc> <c-c>
+    " Remove visible clutter
+    autocmd FileType fzf set laststatus=0 noshowmode noruler
+                \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+    " }
 endif
 " }
 
