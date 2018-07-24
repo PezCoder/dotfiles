@@ -41,6 +41,7 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-projectionist'
+Plug 'w0rp/ale'                               " Asynchronous linting engine
 
 call plug#end()
 
@@ -182,9 +183,12 @@ nnoremap <silent> <leader>i  :call <SID>setup_paste()<CR>i
 " Navigate buffer
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
-" Navigate quickfix
+" Navigate quickfix list
 nnoremap <silent> [q :cprevious<CR>
 nnoremap <silent> ]q :cnext<CR>
+" Navigate location list
+nnoremap <silent> [w :lprevious<CR>
+nnoremap <silent> ]w :lnext<CR>
 "Tabs switch
 nnoremap <silent> [t :tabprevious<CR>
 nnoremap <silent> ]t :tabnext<CR>
@@ -334,6 +338,18 @@ if has('nvim')
                 \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
     " }
 endif
+
+" w0rp/ale {
+let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_enter = 0
+let g:ale_lint_on_filetype_changed = 0
+" By default it expects .eslintrc jo be at the root
+" For custom eslintrc use:
+" let g:ale_javascript_eslint_options = '--config ./config/eslint.config.js'
+let g:ale_linters = {
+\   'javascript': ['eslint'],
+\ }
 " }
 
 " Custom Functions
