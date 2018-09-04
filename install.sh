@@ -44,6 +44,7 @@ main () {
     confirm_no_clobber
     confirm_have_goodies
     install_scm_breeze
+    install_diff-so-fancy
     for i in ${DOTS[@]}; do
         link_dot $i
     done
@@ -151,6 +152,14 @@ install_scm_breeze() {
     doo ~/.scm_breeze/install.sh
   else
     installed 'scm_breeze'
+  fi
+}
+
+install_diff-so-fancy() {
+  if !(command_exists diff-so-fancy); then
+    doo brew install diff-so-fancy
+  else
+    installed 'diff-so-fancy'
   fi
 }
 
