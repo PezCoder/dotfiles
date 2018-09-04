@@ -42,6 +42,8 @@ Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-projectionist'
 Plug 'w0rp/ale'                               " Asynchronous linting engine
+Plug 'xolox/vim-misc'
+Plug 'xolox/vim-notes'
 
 call plug#end()
 
@@ -155,18 +157,22 @@ let g:php_html_load = 0
 let g:AutoPairsUseInsertedCount = 1
 
 " Key Mappings {
-" Map annoying bD to bd => to delete buffer
+" Usual spelling errors
 cnoreabbrev bD bd
-" Buffer Mappings
-" Buffer kill and persist window
 cnoreabbrev bd BD
+cnoreabbrev Copen copen
+
+" Buffer Mappings
 nnoremap <leader>v <C-w>v<C-w>l
 nnoremap <leader>s <C-w>s<C-w>j
 nnoremap <leader>c <C-w>c
+
 "Save file
 nnoremap <Leader>w :w<CR>
+
 "Save & Quit file
 nnoremap <Leader>q :wqa<CR>
+
 " j & k works as you expect it to on folded lines
 nnoremap j gj
 nnoremap gj j
@@ -337,6 +343,9 @@ if has('nvim')
     autocmd FileType fzf set laststatus=0 noshowmode noruler
                 \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
     " }
+
+    " Live substitute with %s
+    set inccommand=nosplit
 endif
 
 " w0rp/ale {
@@ -351,6 +360,10 @@ let g:ale_linters = {
 \   'javascript': ['eslint'],
 \ }
 " }
+
+" xolox/vim-notes {
+let g:notes_directories = ['~/Downloads/Workspace/VimNotes']
+"}
 
 " Custom Functions
 function! MapTabForEmmetExpansion()
