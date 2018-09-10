@@ -78,6 +78,7 @@ set wildmenu                      " enable bash style tab completion
 set wildmode=list:longest,full
 set mouse=c                       " Disable cursor
 set hidden                        " Can hide buffer in non saved state
+set undofile                      " Persists undo history on multiple repeat opening of files :help persistent-undo
 
 " Remap leader key
 let mapleader = "\<Space>"
