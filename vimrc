@@ -134,7 +134,7 @@ let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
 let g:tagbar_sort = 0 " Sort according to their structure in file & not filename
-nmap <leader>t :TagbarToggle<CR>
+nnoremap <leader>t :TagbarToggle<CR>
 
 " Move plugin alias
 vmap <C-k> <Plug>MoveBlockUp
@@ -156,6 +156,10 @@ let g:AutoPairsUseInsertedCount = 1
 " Key Mappings {
 " Map annoying bD to bd => to delete buffer
 cnoreabbrev bD bd
+cnoreabbrev bd BD
+cnoreabbrev Copen copen
+cnoreabbrev gblame Gblame
+
 " Buffer Mappings
 " Buffer kill and persist window
 cnoreabbrev bd BD
@@ -175,10 +179,10 @@ nnoremap k gk
 " Quickly add empty lines
 nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
-" Mappings external paste
-nnoremap <silent> <leader>o  :call <SID>setup_paste()<CR>o
-nnoremap <silent> <leader>O  :call <SID>setup_paste()<CR>O
-nnoremap <silent> <leader>i  :call <SID>setup_paste()<CR>i
+" Mappings external paste (temp disable as it's auto detecting paste)
+" nnoremap <silent> <leader>o  :call <SID>setup_paste()<CR>o
+" nnoremap <silent> <leader>O  :call <SID>setup_paste()<CR>O
+" nnoremap <silent> <leader>i  :call <SID>setup_paste()<CR>i
 " Navigate buffer
 nnoremap <silent> [b :bprevious<CR>
 nnoremap <silent> ]b :bnext<CR>
@@ -201,7 +205,11 @@ autocmd FileType php map <buffer> <Leader>r :call VimuxRunCommand("clear;phpunit
 autocmd FileType java map <buffer> <Leader>r :call VimuxRunCommand("clear;javac ".bufname("%")." ;java ".expand("%:r"))<CR>
 
 " Y will yank till the end of the word
-nmap Y y$
+nnoremap Y y$
+
+" Casing made easy
+nnoremap <c-u> gUiw
+nnoremap <c-l> guiw
 " }
 
 " Some vimfu to make life easier {
@@ -283,12 +291,23 @@ let g:togglecursor_force = 'xterm'   " telling xterm style terminal to make it w
 autocmd FileType javascript setlocal sw=2 sts=2 ts=2
 autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
 
+" On new file save, auto create directories if doesn't exist
+augroup vimrc-auto-mkdir
+  autocmd!
+  autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
+  function! s:auto_mkdir(dir, force)
+    if !isdirectory(a:dir)
+      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
+    endif
+  endfunction
+augroup END
+
 " Vim Anzu (Search results on vim-airline)
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
-nmap <silent> <leader><space> :nohlsearch<CR><Plug>(anzu-clear-search-status)
+nnoremap n <Plug>(anzu-n-with-echo)
+nnoremap N <Plug>(anzu-N-with-echo)
+nnoremap * <Plug>(anzu-star-with-echo)
+nnoremap # <Plug>(anzu-sharp-with-echo)
+nnoremap <silent> <leader><space> :nohlsearch<CR><Plug>(anzu-clear-search-status)
 let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
 let g:airline#extensions#anzu#enabled=0
 
