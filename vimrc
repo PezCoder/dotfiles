@@ -210,8 +210,9 @@ nnoremap Y y$
 " Casing made easy
 nnoremap <c-u> gUiw
 
-" Quick open vimrc
+" Quick open vimrc with auto sourcing on save
 nnoremap <leader>rc :vsplit ~/.vimrc<cr>
+autocmd! bufwritepost ~/.vimrc source $MYVIMRC
 " }
 
 " Some vimfu to make life easier {
