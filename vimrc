@@ -214,7 +214,10 @@ nnoremap Y y$
 
 " Casing made easy
 nnoremap <c-u> gUiw
-nnoremap <c-l> guiw
+
+" Quick open vimrc with auto sourcing on save
+nnoremap <leader>rc :vsplit ~/.vimrc<cr>
+autocmd! bufwritepost ~/.vimrc source $MYVIMRC
 " }
 
 " Some vimfu to make life easier {
@@ -308,11 +311,11 @@ augroup vimrc-auto-mkdir
 augroup END
 
 " Vim Anzu (Search results on vim-airline)
-nnoremap n <Plug>(anzu-n-with-echo)
-nnoremap N <Plug>(anzu-N-with-echo)
-nnoremap * <Plug>(anzu-star-with-echo)
-nnoremap # <Plug>(anzu-sharp-with-echo)
-nnoremap <silent> <leader><space> :nohlsearch<CR><Plug>(anzu-clear-search-status)
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+nmap <silent> <leader><space> :nohlsearch<CR><Plug>(anzu-clear-search-status)
 let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
 let g:airline#extensions#anzu#enabled=0
 
