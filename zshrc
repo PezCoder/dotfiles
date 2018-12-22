@@ -8,7 +8,7 @@ ZSH_THEME="clean-minimal"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git colored-man colorize github jira vagrant virtualenv pip python brew osx zsh-syntax-highlighting z)
+plugins=(git zsh-syntax-highlighting z)
 
 # User configuration
 export PATH="$PATH:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -31,8 +31,6 @@ alias vs='cd ~/1conf;vagrant ssh'
 alias cc="app/console cache:clear"
 alias adump="app/console assetic:dump"
 alias cinstall="composer install"
-alias vi='vim' # Launch brew's vim with vi command
-alias rc='vi ~/.vimrc'
 
 # Base16 Shell (Needed for correct colors in base16 material theme)
 # BASE16_SHELL="$HOME/.config/base16-shell/base16-material.dark.sh"
@@ -52,6 +50,15 @@ fancy-ctrl-z () {
 zle -N fancy-ctrl-z
 bindkey '^Z' fancy-ctrl-z
 
+# Use Neovim instead of Vim or Vi
+# alias vim=nvim
+alias vi='exec_scmb_expand_args nvim'
+alias rc='vi ~/.vimrc'
+
+# Use Neovim as "preferred editor"
+export VISUAL=nvim
+export EDITOR="$VISUAL"
+
 # fix terminals to send ctrl-h to neovim correctly
 [[ -f "~/.$TERM.ti" ]] && tic ~/.$TERM.ti
 
@@ -69,8 +76,32 @@ runGitGrep() {
 }
 alias gg=runGitGrep
 
-export NVM_DIR="/home/vagrant/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+
+# Not sourcing nvm but loading on demand when it's used for the first time
+# as it adds up 40ms to shell load time
+# http://broken-by.me/lazy-load-nvm/
+# Old code:
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+nvm() {
+    unset -f nvm
+    export NVM_DIR=~/.nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+    nvm "$@"
+}
+node() {
+    unset -f node
+    export NVM_DIR=~/.nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+    node "$@"
+}
+npm() {
+    unset -f npm
+    export NVM_DIR=~/.nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+    npm "$@"
+}
+
 
 # to use brew command [linuxbrew]
 export PATH="$HOME/.linuxbrew/bin:$PATH"
@@ -80,7 +111,9 @@ export INFOPATH="$HOME/.linuxbrew/share/info:$INFOPATH"
 # Export colors for tmux
 export TERM=xterm-256color
 export PATH="/usr/local/sbin:$PATH"
-export EDITOR=vim
+
+# For udemy clas on data structures
+export CLASSPATH=$CLASSPATH:~/Downloads/algs4.jar
 
 # Needed for scm breeze
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
