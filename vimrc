@@ -19,7 +19,7 @@ Plug 'jszakmeister/vim-togglecursor'          " Different cursors in different m
 Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 " Plug 'jiangmiao/auto-pairs'
 Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
 Plug 'christoomey/vim-tmux-navigator'
@@ -351,8 +351,20 @@ let g:highlightedyank_highlight_duration=250
 
 " Neovim stuff {
 if has('nvim')
+    " Prefer insert mode when entering a terminal buffer
+    autocmd BufEnter term://* startinsert
+
     " Escape to exit out of terminal insert mode
     tnoremap <Esc> <C-\><C-n>
+
+    " Note: FZF also opens in terminal mode so this mapping breaks
+    " the up & down motion with c-j & c-k in fzf
+    " Navigate seamlessly from terminal mode to another window.
+    " tnoremap <C-h> <C-\><C-n><C-w>h
+    " tnoremap <C-j> <C-\><C-n><C-w>j
+    " tnoremap <C-k> <C-\><C-n><C-w>k
+    " tnoremap <C-l> <C-\><C-n><C-w>l
+
     " Hide numbers for terminal
     au TermOpen * setlocal nonumber norelativenumber
 
