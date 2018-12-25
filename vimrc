@@ -284,6 +284,8 @@ let g:airline_theme='gruvbox'
 " remove encoding text & devicon
 au VimEnter * let g:airline_section_x = airline#section#create_right(['tagbar']) | :AirlineRefresh
 let g:airline_section_y = ''
+" Line number/Total lines | Column Number
+let g:airline_section_z='%4l/%L : %3v'
 
 "Cursor Settings
 let g:togglecursor_default = 'block'
