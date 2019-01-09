@@ -226,7 +226,10 @@ au FileType css,scss setl iskeyword+=-
 
 " Resize all open windows propotionally when the terminal is resized
 autocmd VimResized * :wincmd =
+" }
 
+" Fix the vim's explorer window doesn't close with :bd {
+autocmd FileType netrw setl bufhidden=wipe
 " }
 
 " tags
