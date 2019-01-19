@@ -7,6 +7,8 @@
 --ignore-dir=git
 --ignore-dir=cache
 --ignore-dir=logs
+--ignore-file=ext:bak
+--nosql
 
 --smart-case
 --sort-files
