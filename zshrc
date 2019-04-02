@@ -8,7 +8,7 @@ ZSH_THEME="clean-minimal"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting z)
+plugins=(git zsh-syntax-highlighting z docker docker-compose)
 
 # User configuration
 export PATH="$PATH:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
