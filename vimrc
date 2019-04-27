@@ -105,8 +105,11 @@ let g:used_javascript_libs = 'angularjs,angularui,angularuirouter'
 
 " Emmet Plugin Configs
 let g:user_emmet_install_global = 0
-autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig EmmetInstall                      " Enable emmet for just few files
-autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+augroup emmet_configuration
+    autocmd!
+    autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig EmmetInstall                      " Enable emmet for just few files
+    autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+augroup END
 let g:user_emmet_mode="a"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
 
@@ -200,9 +203,13 @@ nnoremap <silent> ]t :tabnext<CR>
 " Zoom in & out using leader + z
 nnoremap <silent><leader>z :ZoomToggle<CR>
 
-" Run phpunit test cases for the current file
-autocmd FileType php map <buffer> <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
-autocmd FileType java map <buffer> <Leader>r :call VimuxRunCommand("clear;javac ".bufname("%")." ;java ".expand("%:r"))<CR>
+" <leader>r => Run
+augroup leader_run
+    " Runs respective test case for php file
+    autocmd FileType php map <buffer> <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
+    " Compiles & runs the java file
+    autocmd FileType java map <buffer> <Leader>r :call VimuxRunCommand("clear;javac ".bufname("%")." ;java ".expand("%:r"))<CR>
+augroup END
 
 " Y will yank till the end of the word
 nnoremap Y y$
@@ -211,7 +218,7 @@ nnoremap Y y$
 nnoremap <c-u> gUiw
 
 " Quick open vimrc with auto sourcing on save
-nnoremap <leader>rc :vsplit ~/.vimrc<cr>
+nnoremap <leader>ev :vsplit ~/.vimrc<cr>
 autocmd! bufwritepost ~/.vimrc source $MYVIMRC
 " }
 
@@ -220,7 +227,10 @@ autocmd! bufwritepost ~/.vimrc source $MYVIMRC
 au FileType css,scss setl iskeyword+=-
 
 " Resize all open windows propotionally when the terminal is resized
-autocmd VimResized * :wincmd =
+augroup vim_buffers_resize
+    autocmd!
+    autocmd VimResized * :wincmd =
+augroup END
 " }
 
 " Fix the vim's explorer window doesn't close with :bd {
