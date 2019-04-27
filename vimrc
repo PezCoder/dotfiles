@@ -160,6 +160,7 @@ let g:AutoPairsUseInsertedCount = 1
 " Map annoying bD to bd => to delete buffer
 cnoreabbrev bD bd
 cnoreabbrev bd BD
+cnoreabbrev Bd BD
 cnoreabbrev Copen copen
 cnoreabbrev gblame Gblame
 
