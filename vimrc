@@ -41,9 +41,8 @@ Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
-Plug 'tpope/vim-projectionist'
 Plug 'w0rp/ale'                               " Asynchronous linting engine
-Plug 'xolox/vim-misc'
+Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'leafgarland/typescript-vim'
 
