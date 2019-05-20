@@ -78,6 +78,7 @@ set laststatus=2                  " always show status bar
 set list listchars=tab:»·,trail:· " show extra space characters
 set nofoldenable                  " disable code folding
 set wildmenu                      " enable bash style tab completion
+set wildignorecase                " Ignore casing when tab completion while opening files/directories
 set wildmode=list:longest,full
 set mouse=c                       " Disable cursor
 set hidden                        " Can hide buffer in non saved state
@@ -133,10 +134,6 @@ augroup vimrc-auto-mkdir
     endif
   endfunction
 augroup END
-
-" One way behaviour for n & N
-nnoremap <expr> n  'Nn'[v:searchforward]
-nnoremap <expr> N  'nN'[v:searchforward]
 
 " Handle :paste toggle
 " Author: tpope https://github.com/tpope/vim-unimpaired
@@ -606,3 +603,9 @@ augroup END
 " }}}
 " }}}
 " }}}
+
+" TODO: figure out why this isn't working when put on the top
+" One way behaviour for n & N
+nnoremap <expr> n 'Nn'[v:searchforward]
+nnoremap <expr> N 'nN'[v:searchforward]
+
