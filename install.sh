@@ -182,7 +182,6 @@ link_dot() {
 # Initialize globals
 EXPORT_DIR=$(dirname "${PWD}/$0")
 DOTS=(
-    vim
     vimrc
     zshrc
     config
