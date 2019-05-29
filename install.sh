@@ -37,8 +37,9 @@ errm () {
 main () {
     cd $HOME
     install_rg
-    # setup_ctags
+    setup_ctags
     install_plug
+    install_tmux
     install_tpm
     setup_tmux_clipboard
     confirm_no_clobber
@@ -81,6 +82,14 @@ install_plug() {
     doo curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   else
     installed 'Plug'
+  fi
+}
+
+install_tmux () {
+  if !(command_exists tmux); then
+    doo brew install tmux
+  else
+    installed 'tmux'
   fi
 }
 
@@ -173,14 +182,14 @@ link_dot() {
 # Initialize globals
 EXPORT_DIR=$(dirname "${PWD}/$0")
 DOTS=(
-    # vim
+    vim
     vimrc
-    # zshrc
-    # config
-    # tmux.conf
-    # tmux-osx.conf
-    # tern-config
-    # ackrc
+    zshrc
+    config
+    tmux.conf
+    tmux-osx.conf
+    tern-config
+    ackrc
 )
 
 # Fire missiles
