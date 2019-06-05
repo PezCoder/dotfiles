@@ -37,6 +37,7 @@ errm () {
 main () {
     cd $HOME
     install_rg
+    install_universal_ctags
     setup_ctags
     install_plug
     install_tmux
@@ -50,6 +51,32 @@ main () {
         link_dot $i
     done
     # TODO: Make sure permissions are legit. .ssh and .ghci, I'm lookin at you.
+}
+
+install_universal_ctags () {
+  if !(command_exists uctags); then
+      # requirements
+      if !(command_exists automake); then
+          doo brew install automake
+      fi
+      if !(command_exists pkg-config); then
+          doo brew install pkg-config
+      fi
+      if !(command_exists libxml2); then
+          doo brew install libxml2
+      fi
+
+      doo git clone https://github.com/universal-ctags/ctags.git
+      doo cd ctags
+      doo ./autogen.sh
+      doo ./configure --program-prefix=u
+      doo make
+      doo sudo make install
+      doo cd ..
+      doo rm -rf ctags
+  else
+    installed 'Universal-ctags'
+  fi
 }
 
 setup_ctags () {
@@ -184,7 +211,6 @@ EXPORT_DIR=$(dirname "${PWD}/$0")
 DOTS=(
     vimrc
     zshrc
-    config
     tmux.conf
     tmux-osx.conf
     tern-config
