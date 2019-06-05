@@ -158,15 +158,15 @@ endfunction
 " YouCompleteMe is the best & if that's not working, this is a pretty good
 " auto completion on tab pressing
 " multi-purpose tab key (auto-complete)
-" function! InsertTabWrapper()
-"   let col = col('.') - 1
-"   if !col || getline('.')[col - 1] !~ '\k'
-"     return "\<tab>"
-"   else
-"     return "\<c-p>"
-"   endif
-" endfunction
-" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 " }}}
 
 " Plugins --- {{{
@@ -511,7 +511,7 @@ function! HelpInNewTab ()
     endif
 endfunction
 
-" autocmd FileType javascript setlocal sw=2 sts=2 ts=2
+autocmd FileType javascript setlocal sw=2 sts=2 ts=2
 " }}}
 " }}}
 
@@ -571,6 +571,11 @@ augroup markdown_mappings
     autocmd!
     autocmd FileType markdown onoremap ih :<c-u>execute "normal! ?^[-,=]\\+$\r:nohlsearch\rkvg_"<cr>
 augroup END
+
+function! Helloworld()
+    echo 'rahul gupta'
+    return 'mastana'
+endfunction
 
 " STATUS LINE Setings ---- {{{
 function! GetCurrentMode()
