@@ -45,6 +45,7 @@ Plug 'w0rp/ale'                               " Asynchronous linting engine
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'leafgarland/typescript-vim'
+Plug 'airblade/vim-gitgutter'
 
 call plug#end()
 " }}}
@@ -365,6 +366,15 @@ let g:ale_linters = {
 " xolox/vim-notes --- {{{
 let g:notes_directories = ['~/Downloads/Workspace/VimNotes']
 cnoreabbrev note Note
+" }}}
+
+" vim-gitgutter --- {{{
+" To update git signs almost immediately
+set updatetime=100
+" don't setup any default mappings
+let g:gitgutter_map_keys = 0
+nmap ]g <Plug>GitGutterNextHunk
+nmap [g <Plug>GitGutterPrevHunk
 " }}}
 " }}}
 
