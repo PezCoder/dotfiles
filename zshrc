@@ -115,6 +115,10 @@ export PATH="/usr/local/sbin:$PATH"
 # For udemy clas on data structures
 export CLASSPATH=$CLASSPATH:~/Downloads/algs4.jar
 
+# Fixes https://discourse.brew.sh/t/failed-to-set-locale-category-lc-numeric-to-en-ru/5092/6
+# which occurs when launching VIM. Root cause - unknown
+export LC_ALL=en_US.UTF-8
+
 # Needed for scm breeze
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
