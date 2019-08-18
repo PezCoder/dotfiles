@@ -43,6 +43,7 @@ main () {
     install_tmux
     install_tpm
     setup_tmux_clipboard
+    install_tmuxinator
     confirm_no_clobber
     confirm_have_goodies
     install_scm_breeze
@@ -132,6 +133,24 @@ install_tpm() {
 setup_tmux_clipboard() {
   if is_osx && !(command_exists reattach-to-user-namespace); then
     doo brew install reattach-to-user-namespace
+  fi
+}
+
+install_tmuxinator () {
+  # Tmuxinator requires a higher ruby version
+  # Using rbenv to manage ruby version for the root directory
+  if !(command_exists rbenv); then
+      doo brew install rbenv
+      doo pwd
+      doo rbenv local 2.6.3
+  else
+      installed 'rbenv'
+  fi
+
+  if !(command_exists tmuxinator); then
+    doo gem install tmuxinator
+  else
+    installed 'tmuxinator'
   fi
 }
 

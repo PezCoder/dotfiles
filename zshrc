@@ -59,6 +59,8 @@ alias rc='vi ~/.vimrc'
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 
+alias tx=tmuxinator
+
 # fix terminals to send ctrl-h to neovim correctly
 [[ -f "~/.$TERM.ti" ]] && tic ~/.$TERM.ti
 
@@ -118,6 +120,10 @@ export CLASSPATH=$CLASSPATH:~/Downloads/algs4.jar
 # Fixes https://discourse.brew.sh/t/failed-to-set-locale-category-lc-numeric-to-en-ru/5092/6
 # which occurs when launching VIM. Root cause - unknown
 export LC_ALL=en_US.UTF-8
+
+# Load rbenv automatically by appending
+# the following to ~/.zshrc:
+eval "$(rbenv init -)"
 
 # Needed for scm breeze
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
