@@ -303,11 +303,18 @@ let g:airline#extensions#tabline#left_sep = ' '                   " Left separat
 let g:airline#extensions#tabline#left_alt_sep = '│'               " Right separator for tabline
 let g:airline#extensions#tabline#fnamemod = ':t'                  " Show just the filename
 let g:airline_theme='gruvbox'
+
+" Customize airline content
+"+-----------------------------------------------------------------------------+
+"| A | B |                     C                            X | Y | Z |  [...] |
+"+-----------------------------------------------------------------------------+<Paste>
 " remove encoding text & devicon
 au VimEnter * let g:airline_section_x = airline#section#create_right(['tagbar']) | :AirlineRefresh
 let g:airline_section_y = ''
 " Line number/Total lines | Column Number with right padding
 let g:airline_section_z='%4l/%L : %-3v'
+" disable +32 ~9 -0 hunks information in airline section B
+let g:airline#extensions#hunks#enabled = 0
 " }}}
 
 " vim-togglecursor --- {{{
@@ -388,8 +395,9 @@ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 set updatetime=100
 " don't setup any default mappings
 let g:gitgutter_map_keys = 0
-nmap ]g <Plug>GitGutterNextHunk
-nmap [g <Plug>GitGutterPrevHunk
+nmap ]g <Plug>(GitGutterNextHunk)
+nmap [g <Plug>(GitGutterPrevHunk)
+nmap <Leader>ga <Plug>(GitGutterStageHunk)
 " }}}
 " }}}
 
@@ -436,6 +444,7 @@ cnoreabbrev bd BD
 cnoreabbrev Bd BD
 cnoreabbrev Copen copen
 cnoreabbrev gblame Gblame
+cnoreabbrev Cd cd
 
 " Buffer Mappings
 nnoremap <leader>v <C-w>v<C-w>l
