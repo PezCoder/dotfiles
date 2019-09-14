@@ -45,7 +45,10 @@ Plug 'w0rp/ale'                               " Asynchronous linting engine
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'leafgarland/typescript-vim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'airblade/vim-gitgutter'
+Plug 'alok/notational-fzf-vim'
 
 call plug#end()
 " }}}
@@ -159,15 +162,15 @@ endfunction
 " YouCompleteMe is the best & if that's not working, this is a pretty good
 " auto completion on tab pressing
 " multi-purpose tab key (auto-complete)
-function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
-endfunction
-inoremap <tab> <c-r>=InsertTabWrapper()<cr>
+" function! InsertTabWrapper()
+"   let col = col('.') - 1
+"   if !col || getline('.')[col - 1] !~ '\k'
+"     return "\<tab>"
+"   else
+"     return "\<c-p>"
+"   endif
+" endfunction
+" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
 " }}}
 
 " Plugins --- {{{
@@ -366,6 +369,18 @@ let g:ale_linters = {
 " xolox/vim-notes --- {{{
 let g:notes_directories = ['~/Downloads/Workspace/VimNotes']
 cnoreabbrev note Note
+" }}}
+
+" notational-fzf-vim --- {{{
+" Search in notes directory quickly
+nnoremap <silent> <leader>n :NV<CR>
+let g:nv_search_paths = g:notes_directories
+" }}}
+
+" deoplete.nvim --- {{{
+let g:deoplete#enable_at_startup = 1
+" Tab completion
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " }}}
 
 " vim-gitgutter --- {{{
