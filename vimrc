@@ -512,6 +512,9 @@ vnoremap ' <esc>a'<esc>`<i'<esc>
 
 " tags
 nnoremap <C-]> g<C-]>
+" Manually setting the tags directory, as Tag support was removed in fugitive here:
+" https://github.com/tpope/vim-fugitive/commit/63a05a6935ec4a45551bf141089c13d5671202a1
+set tags^=./.git/tags;
 
 " Execute macro on visually selected lines with @{macro}
 function! ExecuteMacroOverVisualRange()
