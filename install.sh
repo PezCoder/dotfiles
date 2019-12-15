@@ -66,6 +66,9 @@ install_universal_ctags () {
       if !(command_exists libxml2); then
           doo brew install libxml2
       fi
+      # Troubleshooting tips: If "error undefined macro AC_MSG_ERRO" error
+      # https://github.com/pooler/cpuminer/issues/74
+      # doo sudo apt-get install libcurl4-openssl-dev
 
       doo git clone https://github.com/universal-ctags/ctags.git
       doo cd ctags
