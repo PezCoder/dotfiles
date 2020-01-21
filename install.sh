@@ -57,7 +57,7 @@ main () {
 
 install_zsh() {
     if !(command_exists zsh); then
-        doo brew install zsh
+        doo apt-get install zsh --assume-yes
         doo chsh -s /bin/zsh
         doo sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     else
@@ -79,7 +79,7 @@ install_universal_ctags () {
       fi
       # Troubleshooting tips: If "error undefined macro AC_MSG_ERRO" error
       # https://github.com/pooler/cpuminer/issues/74
-      # doo sudo apt-get install libcurl4-openssl-dev
+      # doo sudo apt-get install libcurl4-openssl-dev --assume-yes
 
       doo git clone https://github.com/universal-ctags/ctags.git
       doo cd ctags
