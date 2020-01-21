@@ -36,6 +36,7 @@ errm () {
 # START HERE.
 main () {
     cd $HOME
+    install_zsh
     install_rg
     install_universal_ctags
     setup_ctags
@@ -52,6 +53,16 @@ main () {
         link_dot $i
     done
     # TODO: Make sure permissions are legit. .ssh and .ghci, I'm lookin at you.
+}
+
+install_zsh() {
+    if !(command_exists zsh); then
+        doo brew install zsh
+        doo chsh -s /bin/zsh
+        doo sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+    else
+        installed 'zsh, oh-my-zsh'
+    fi
 }
 
 install_universal_ctags () {
