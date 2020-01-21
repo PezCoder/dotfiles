@@ -20,7 +20,6 @@ Plug 'jszakmeister/vim-togglecursor'          " Different cursors in different m
 Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
-" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' }
 " Plug 'jiangmiao/auto-pairs'
 Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
 Plug 'christoomey/vim-tmux-navigator'
@@ -45,10 +44,9 @@ Plug 'w0rp/ale'                               " Asynchronous linting engine
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'leafgarland/typescript-vim'
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-phpls'}
 
 call plug#end()
 " }}}
@@ -158,20 +156,6 @@ function! s:setup_paste() abort
           \ autocmd! unimpaired_paste
   augroup END
 endfunction
-
-" YouCompleteMe is the best & if that's not working, this is a pretty good
-" auto completion on tab pressing
-" multi-purpose tab key (auto-complete)
-" function! InsertTabWrapper()
-"   let col = col('.') - 1
-"   if !col || getline('.')[col - 1] !~ '\k'
-"     return "\<tab>"
-"   else
-"     return "\<c-p>"
-"   endif
-" endfunction
-" inoremap <tab> <c-r>=InsertTabWrapper()<cr>
-" }}}
 
 " Plugins --- {{{
 
@@ -334,25 +318,6 @@ let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with 
 let g:airline#extensions#anzu#enabled=0
 " }}}
 
-" YouCompleteMe --- {{{
-let g:ycm_min_num_of_chars_for_completion = 4
-let g:ycm_min_num_identifier_candidate_chars = 4
-let g:ycm_enable_diagnostic_highlighting = 0
-let g:ycm_collect_identifiers_from_comments_and_strings = 1
-let g:ycm_complete_in_comments = 1
-" Don't show YCM's preview window
-set completeopt-=preview
-let g:ycm_add_preview_to_completeopt = 0
-" For line completion close the ycm dialogue first, otherwise it comes in the way
-inoremap <expr> <C-x><C-l> CloseYcmIfOpen()
-function! CloseYcmIfOpen()
-  if pumvisible()
-    return "\<C-e>\<C-x>\<C-l>"
-  endif
-  return "\<C-x>\<C-l>"
-endfunction
-" }}}
-
 " vim-highlightedyank --- {{{
 if !exists('##TextYankPost')
   map y <Plug>(highlightedyank)
@@ -384,10 +349,35 @@ nnoremap <silent> <leader>n :NV<CR>
 let g:nv_search_paths = g:notes_directories
 " }}}
 
-" deoplete.nvim --- {{{
-let g:deoplete#enable_at_startup = 1
-" Tab completion
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" neoclide/coc.nvim --- {{{
+" TODO look into these options to which one's are
+
+" Reference: https://github.com/neoclide/coc.nvim#example-vim-configuration
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Remap keys for gotos.
+" actually useful
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nmap <leader>rn <Plug>(coc-rename)
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 " }}}
 
 " vim-gitgutter --- {{{
