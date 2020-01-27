@@ -49,6 +49,7 @@ main () {
     confirm_have_goodies
     install_scm_breeze
     install_diff-so-fancy
+    install_neovim
     for i in ${DOTS[@]}; do
         link_dot $i
     done
@@ -86,6 +87,7 @@ install_universal_ctags () {
       doo ./autogen.sh
       doo ./configure --program-prefix=u
       doo make
+      # If fails for ex: in docker, try removing sudo
       doo sudo make install
       doo cd ..
       doo rm -rf ctags
@@ -229,6 +231,16 @@ install_diff-so-fancy() {
     doo brew install diff-so-fancy
   else
     installed 'diff-so-fancy'
+  fi
+}
+
+install_neovim() {
+  if !(command_exists nvim); then
+    doo brew install neovim/neovim/neovim
+    doo ln -s ~/.vim ~/.config/nvim
+    doo ln -s ~/.vimrc ~/.config/nvim/init.vim
+  else
+    installed 'neovim'
   fi
 }
 
