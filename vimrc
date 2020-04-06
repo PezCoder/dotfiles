@@ -46,11 +46,13 @@ Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-phpls'}
+Plug 'tpope/vim-sleuth'
 
 call plug#end()
 " }}}
 
 " Basic Settings --- {{{
+set noswapfile                    " get rid of annoying .swp exist, delete, read options to deal with
 set nobackup                      " get rid of anoying ~file
 set backspace=indent,eol,start    " Fixes not able to backspace in insert mode issue
 if !has('nvim')
@@ -488,7 +490,7 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 
 " Quick open vimrc
-nnoremap <leader>ev :vsplit ~/.vimrc<cr>
+nmap <leader>ev <leader>v:e ~/.vimrc<cr>
 
 " Casing made easy
 nnoremap <c-u> gUiw
@@ -498,6 +500,9 @@ nnoremap Y y$
 
 " Quick add single quote
 vnoremap ' <esc>a'<esc>`<i'<esc>
+
+" Paste to clipboard
+vnoremap <leader>y "+Y
 
 " tags
 nnoremap <C-]> g<C-]>
