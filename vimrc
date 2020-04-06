@@ -396,6 +396,22 @@ nmap <Leader>ga <Plug>(GitGutterStageHunk)
 " Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
 
+" Strip trailing white spaces --- {{{
+" http://vimcasts.org/episodes/tidying-whitespace/
+command! -nargs=* StripTrailingWhitespaces call StripTrailingWhitespaces()
+function! StripTrailingWhitespaces()
+    " Preparation: save last search, and cursor position.
+    let _s=@/
+    let l = line(".")
+    let c = col(".")
+    " Do the business:
+    %s/\s\+$//e
+    " Clean up: restore previous search history, and cursor position
+    let @/=_s
+    call cursor(l, c)
+endfunction
+" }}}
+
 " Set tab with Stab --- {{{
 " Set tabstop, softtabstop and shiftwidth to the same value. ( Ex :Stab<CR>4 )
 command! -nargs=* Stab call Stab()
@@ -490,7 +506,7 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 
 " Quick open vimrc
-nmap <leader>ev <leader>v:e ~/.vimrc<cr>
+nmap <leader>ev :botright vnew ~/.vimrc<cr>
 
 " Casing made easy
 nnoremap <c-u> gUiw
