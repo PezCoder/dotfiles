@@ -15,8 +15,35 @@ export PATH="$PATH:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/
 
 source $ZSH/oh-my-zsh.sh
 
-source ~/.fzf.zsh
 
+# Make VI mode as default for zsh {
+# https://dougblack.io/words/zsh-vi-mode.html
+bindkey -v
+function zle-line-init zle-keymap-select {
+    VIM_PROMPT="%{$fg_bold[yellow]%} [% NORMAL]%  %{$reset_color%}"
+    RPS1="${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/} $EPS1"
+    zle reset-prompt
+}
+
+# Register the widget to zle
+zle -N zle-line-init
+zle -N zle-keymap-select
+
+# Persist normal non-vi behaviour
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^w' backward-kill-word
+bindkey '^r' fzf
+bindkey '^e' end-of-line
+bindkey '^a' beginning-of-line
+bindkey "^?" backward-delete-char
+
+# Make mode change lag go away
+export KEYTIMEOUT=1
+# }
+
+# Sourcing should be after zle reverse search is registered
+source ~/.fzf.zsh
 
 ######### ALIAS
 
