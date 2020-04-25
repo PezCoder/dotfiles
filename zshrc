@@ -13,6 +13,9 @@ plugins=(git zsh-syntax-highlighting z docker docker-compose)
 # User configuration
 export PATH="$PATH:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
+# ZSH displays error with /usr/local permissions
+ZSH_DISABLE_COMPFIX="true"
+
 source $ZSH/oh-my-zsh.sh
 
 
@@ -53,6 +56,9 @@ export PATH="/usr/local/mysql/bin:$PATH"
 alias chromews='open -a Google\ Chrome --args --disable-web-security'
 alias vus='cd ~/1conf;vagrant up;vagrant ssh'
 alias vs='cd ~/1conf;vagrant ssh'
+
+alias sf='echo "Connecting to sfctrl.practodev.com..." && ssh ubuntu@13.235.52.247'
+alias glb="git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
 
 # Symfony aliases
 alias cc="app/console cache:clear"
@@ -112,24 +118,26 @@ alias gg=runGitGrep
 # Old code:
 # export NVM_DIR="$HOME/.nvm"
 # [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-nvm() {
-    unset -f nvm
-    export NVM_DIR=~/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-    nvm "$@"
-}
-node() {
-    unset -f node
-    export NVM_DIR=~/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-    node "$@"
-}
-npm() {
-    unset -f npm
-    export NVM_DIR=~/.nvm
-    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
-    npm "$@"
-}
+# nvm() {
+#     unset -f nvm
+#     export NVM_DIR=~/.nvm
+#     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+#     nvm "$@"
+# }
+# node() {
+#     unset -f node
+#     export NVM_DIR=~/.nvm
+#     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+#     node "$@"
+# }
+# npm() {
+#     unset -f npm
+#     export NVM_DIR=~/.nvm
+#     [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" --no-use  # This loads nvm
+#     npm "$@"
+# }
+# Make globally installed packages accessible to zsh
+# export PATH=$HOME/.nvm/versions/node/v10.11.0/lib/node_modules:$PATH
 
 
 # to use brew command [linuxbrew]
@@ -157,3 +165,6 @@ eval "$(rbenv init -)"
 export PATH="$PATH:$HOME/.rvm/bin"
 # for scm breeze (git shortcuts plugin)
 [ -s "/Users/pezcoder/.scm_breeze/scm_breeze.sh" ] && source "/Users/pezcoder/.scm_breeze/scm_breeze.sh"
+export PATH="/usr/local/bin:$PATH"
+export PATH="/usr/bin:$PATH"
+export PATH="$PATH:/Users/pezcoder/Library/Python/2.7/bin"
