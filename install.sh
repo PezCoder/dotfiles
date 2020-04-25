@@ -53,6 +53,7 @@ main () {
     for i in ${DOTS[@]}; do
         link_dot $i
     done
+    setup_git_global_ignore
     # TODO: Make sure permissions are legit. .ssh and .ghci, I'm lookin at you.
 }
 
@@ -251,6 +252,10 @@ link_dot() {
     doo ln -s $EXPORT_DIR/$src $dst
 }
 
+setup_git_global_ignore() {
+    doo git config --global core.excludesfile ~/.gitignore_global
+}
+
 # Initialize globals
 EXPORT_DIR=$(dirname "${PWD}/$0")
 DOTS=(
@@ -260,6 +265,7 @@ DOTS=(
     tmux-osx.conf
     tern-config
     ackrc
+    gitignore_global
 )
 
 # Fire missiles
