@@ -61,9 +61,19 @@ install_zsh() {
     if !(command_exists zsh); then
         doo apt-get install zsh --assume-yes
         doo chsh -s /bin/zsh
-        doo sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
     else
-        installed 'zsh, oh-my-zsh'
+        installed 'zsh'
+    fi
+
+    # Install oh-my-zsh
+    DIR="/Users/$USER/.oh-my-zsh"
+    if [ ! -d "$DIR" ]; then
+        # https://github.com/ohmyzsh/ohmyzsh#unattended-install
+        sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+        # Remove zshrc created by oh-my-zsh by default because we have our own
+        doo rm -rf ~/.zshrc
+    else
+        installed 'oh-my-zsh'
     fi
 }
 
