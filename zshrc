@@ -8,7 +8,7 @@ ZSH_THEME="clean-minimal"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git zsh-syntax-highlighting z docker docker-compose)
+plugins=(git z docker docker-compose)
 
 # User configuration
 export PATH="$PATH:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
@@ -164,7 +164,7 @@ eval "$(rbenv init -)"
 # Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
 export PATH="$PATH:$HOME/.rvm/bin"
 # for scm breeze (git shortcuts plugin)
-[ -s "/Users/pezcoder/.scm_breeze/scm_breeze.sh" ] && source "/Users/pezcoder/.scm_breeze/scm_breeze.sh"
+[ -s "/Users/$USER/.scm_breeze/scm_breeze.sh" ] && source "/Users/$USER/.scm_breeze/scm_breeze.sh"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/bin:$PATH"
-export PATH="$PATH:/Users/pezcoder/Library/Python/2.7/bin"
+export PATH="$PATH:/Users/$USER/Library/Python/2.7/bin"
