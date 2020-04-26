@@ -72,6 +72,8 @@ install_zsh() {
         sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
         # Remove zshrc created by oh-my-zsh by default because we have our own
         doo rm -rf ~/.zshrc
+        # Setup theme in oh-my-zsh
+        doo cp "$EXPORT_DIR/themes/clean-minimal.zsh-theme" ~/.oh-my-zsh/themes/clean-minimal.zsh-theme
     else
         installed 'oh-my-zsh'
     fi
