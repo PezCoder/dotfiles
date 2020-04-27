@@ -243,6 +243,7 @@ install_diff-so-fancy() {
   if !(command_exists diff-so-fancy); then
     doo brew install diff-so-fancy
     git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+    git config --bool --global diff-so-fancy.markEmptyLines false
   else
     installed 'diff-so-fancy'
   fi
