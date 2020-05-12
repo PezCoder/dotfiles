@@ -11,7 +11,8 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'mhartington/oceanic-next'
 Plug 'osyo-manga/vim-anzu'                    " Show search results on vim-airline
 Plug 'pangloss/vim-javascript'                " Better syntax highlighting & indent
-Plug 'mxw/vim-jsx'                            " JSX highlighting (requires pangloss/vim-javascript)
+Plug 'leafgarland/typescript-vim'
+Plug 'MaxMEllon/vim-jsx-pretty'               " JSX highlighting (requires pangloss/vim-javascript)
 Plug 'elzr/vim-json'                          " JSON highlighting
 Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
 Plug 'tpope/vim-surround'                     " Change the surrounding
@@ -356,19 +357,24 @@ let g:nv_search_paths = g:notes_directories
 " Reference: https://github.com/neoclide/coc.nvim#example-vim-configuration
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-" inoremap <silent><expr> <TAB>
-"       \ pumvisible() ? "\<C-n>" :
-"       \ <SID>check_back_space() ? "\<TAB>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-" function! s:check_back_space() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
-" Coc only does snippet and additional edit on confirm.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
 
 " Remap keys for gotos.
 " actually useful
@@ -607,57 +613,7 @@ if has('nvim')
 endif
 " }}}
 
-" Learning VIM Temporary stuff here --- {{{
-let localleader="\\"
-augroup custom_commenter
-    autocmd!
-    autocmd FileType javascript nnoremap <localleader>y I//<esc>
-    autocmd FileType sh nnoremap <localleader>y I#<esc>
-augroup END
-augroup markdown_mappings
-    autocmd!
-    autocmd FileType markdown onoremap ih :<c-u>execute "normal! ?^[-,=]\\+$\r:nohlsearch\rkvg_"<cr>
-augroup END
-
-function! Helloworld()
-    echo 'rahul gupta'
-    return 'mastana'
-endfunction
-
-" STATUS LINE Setings ---- {{{
-function! GetCurrentMode()
-    if mode() == 'i'
-        return '--INSERT--'
-    elseif mode() == 'V'
-        return 'VISUAL'
-    elseif mode() == 'R'
-        return 'REPLACE'
-    elseif mode() == 'n'
-        return 'NORMAL'
-    elseif mode() == 'no'
-        return 'Normal [waiting]'
-    else
-        return 'NOTHING'
-    endif
-endfunction
-set statusline=%{GetCurrentMode()}\ \|\ %f%=%3l/%L\ :\ %v
-
-augroup markdown_statusline
-    autocmd!
-    autocmd FileType markdown set statusline=%\{GetCurrentMode()}\ \,\ %F%=%l
-augroup END
-
-" Vimscript file settings
-augroup filetype_vim
-    autocmd!
-    autocmd FileType vim setlocal foldmethod=marker
-augroup END
-" }}}
-" }}}
-" }}}
-
 " TODO: figure out why this isn't working when put on the top
 " One way behaviour for n & N
 nnoremap <expr> n 'Nn'[v:searchforward]
 nnoremap <expr> N 'nN'[v:searchforward]
-
