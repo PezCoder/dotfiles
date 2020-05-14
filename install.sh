@@ -263,6 +263,7 @@ install_neovim() {
 # https://github.com/alacritty/alacritty#macos
 # Alacritty helpful links:
 # Setup italics: https://alexpearce.me/2014/05/italics-in-iterm2-vim-tmux/
+# Ligature for operator mono: https://github.com/kiliman/operator-mono-lig
 install_alacritty() {
   if !(command_exists alacritty); then
     doo brew cask install alacritty

@@ -98,7 +98,7 @@ font:
     #   - (Windows) Consolas
     # family: Hack
     # family: Fira Code
-    family: Operator Mono
+    family: Operator Mono Lig
 
     # The `style` can be specified to pick a specific face.
     style: Book
@@ -109,7 +109,7 @@ font:
     #
     # If the bold family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: Operator Mono
 
     # The `style` can be specified to pick a specific face.
     # Note: Medium for operator mono is not very bold & not very light
@@ -122,7 +122,7 @@ font:
     #
     # If the italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: Operator Mono
 
     # The `style` can be specified to pick a specific face.
     style: Book Italic
@@ -133,7 +133,7 @@ font:
     #
     # If the bold italic family is not specified, it will fall back to the
     # value specified for the normal font.
-    #family: monospace
+    family: Operator Mono
 
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
