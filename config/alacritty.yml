@@ -505,9 +505,12 @@ live_config_reload: true
 # Note: Details here https://arslan.io/2018/02/05/gpu-accelerated-terminal-alacritty/
 key_bindings:
   # Use command + [ - to go to previous tmux window
-  - { key: LBracket, mods: Command, chars: "\x5c\x70"  }
+  - { key: LBracket, mods: Command, chars: "\x5c\x70" }
   # Use command + ] - to go to previous tmux window
-  - { key: RBracket, mods: Command, chars: "\x5c\x6e"  }
+  - { key: RBracket, mods: Command, chars: "\x5c\x6e" }
+  # ctrl-^ doesn't work in some terminals like alacritty
+  - { key: Key6, mods: Control, chars: "\x1e" }
+
   #- { key: Paste,                                action: Paste          }
   #- { key: Copy,                                 action: Copy           }
   #- { key: L,         mods: Control,             action: ClearLogNotice }
