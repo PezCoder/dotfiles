@@ -228,7 +228,10 @@ let g:AutoPairsUseInsertedCount = 1
 " }}}
 
 " fzf.vim --- {{{
+let g:fzf_tags_command = 'uctags -R'
 let g:fzf_layout = { 'down': '~25%' }
+" Empty value to disable preview window altogether
+let g:fzf_preview_window = ''
 nnoremap <silent> <C-p> :call FzfOmniFiles()<CR>
 " nnoremap <leader>/ :Ag<CR>
 nnoremap <silent> <leader>p :Buffers<CR>
