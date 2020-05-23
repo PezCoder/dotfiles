@@ -48,6 +48,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-phpls'}
 Plug 'tpope/vim-sleuth'
+Plug 'voldikss/vim-floaterm', {'do': ':!brew install ranger'}
 
 call plug#end()
 " }}}
@@ -208,6 +209,7 @@ let g:tagbar_autoclose = 1
 let g:tagbar_autofocus = 1
 let g:tagbar_compact = 1
 let g:tagbar_sort = 0 " Sort according to their structure in file & not filename
+let g:tagbar_ctags_bin = '/usr/local/bin/uctags'
 nnoremap <leader>t :TagbarToggle<CR>
 " }}}
 
@@ -388,6 +390,11 @@ nmap <leader>rn <Plug>(coc-rename)
 
 " Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" }}}
+
+" voldikss/vim-floaterm --- {{{
+nnoremap <silent> - :Ranger<CR>
+command! Ranger FloatermNew --width=0.8 ranger
 " }}}
 
 " vim-gitgutter --- {{{
