@@ -639,9 +639,35 @@ if has('nvim')
     " Live substitute with %s
     set inccommand=nosplit
 endif
-" }}}
 
 " TODO: figure out why this isn't working when put on the top
 " One way behaviour for n & N
 nnoremap <expr> n 'Nn'[v:searchforward]
 nnoremap <expr> N 'nN'[v:searchforward]
+
+" Make focused windwo more prominent in VIM --- {{{
+let g:WincentColorColumnFileTypeBlacklist = ['command-t', 'diff', 'dirvish', 'fugitiveblame', 'undotree', 'qf']
+let g:WincentColorColumnBufferNameBlacklist = []
+function! ShouldColorColumn() abort
+  if index(g:WincentColorColumnBufferNameBlacklist, bufname(bufnr('%'))) != -1
+    return 0
+  endif
+  if index(g:WincentColorColumnFileTypeBlacklist, &filetype) != -1
+    return 0
+  endif
+  return &buflisted
+endfunction
+
+if exists('+winhighlight')
+  autocmd BufEnter,FocusGained,VimEnter,WinEnter * set winhighlight=
+  autocmd FocusLost,WinLeave * set winhighlight=CursorLineNr:LineNr,EndOfBuffer:ColorColumn,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn
+  if exists('+colorcolumn')
+    autocmd BufEnter,FocusGained,VimEnter,WinEnter * if ShouldColorColumn() | let &l:colorcolumn='+' . join(range(0, 254), ',+') | endif
+  endif
+elseif exists('+colorcolumn')
+  autocmd BufEnter,FocusGained,VimEnter,WinEnter * if ShouldColorColumn() | let &l:colorcolumn='+' . join(range(0, 254), ',+') | endif
+  autocmd FocusLost,WinLeave * if ShouldColorColumn() | let &l:colorcolumn=join(range(1, 255), ',') | endif
+endif
+" }}}
+
+" }}}
