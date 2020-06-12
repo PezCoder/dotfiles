@@ -49,6 +49,7 @@ Plug 'alok/notational-fzf-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-phpls'}
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install ranger'}
+Plug 'JamshedVesuna/vim-markdown-preview'
 
 call plug#end()
 " }}}
@@ -417,6 +418,12 @@ nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
 nmap <Leader>ga <Plug>(GitGutterStageHunk)
 " }}}
+" }}}
+
+" JamshedVesuna/vim-markdown-preview --- {{{
+let vim_markdown_preview_hotkey='<C-m>'
+let vim_markdown_preview_github=1
+let vim_markdown_preview_toggle=2
 " }}}
 
 " Helpful mappings --- {{{
