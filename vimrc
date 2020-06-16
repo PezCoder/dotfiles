@@ -12,6 +12,7 @@ Plug 'mhartington/oceanic-next'
 Plug 'osyo-manga/vim-anzu'                    " Show search results on vim-airline
 Plug 'pangloss/vim-javascript'                " Better syntax highlighting & indent
 Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'            " To support jsx inside typescript i.e .tsx
 Plug 'MaxMEllon/vim-jsx-pretty'               " JSX highlighting (requires pangloss/vim-javascript)
 Plug 'elzr/vim-json'                          " JSON highlighting
 Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
@@ -358,7 +359,7 @@ let g:ale_linters = {
 " }}}
 
 " xolox/vim-notes --- {{{
-let g:notes_directories = ['~/Downloads/Workspace/VimNotes']
+let g:notes_directories = ['~/Downloads/VimNotes']
 cnoreabbrev note Note
 " }}}
 
