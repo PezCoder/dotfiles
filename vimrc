@@ -258,20 +258,23 @@ let g:fzf_colors =
 " fzf search on top of word search using ripgrep with :Find
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --ignore-case --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
-" Run FZF in git mode if available else normal file mode
+" Run FZF based on the cwd & git detection
+" 1. Runs :Files, If cwd is not a git repository
+" 2. Runs :GitFiles <cwd> If root is a git repository
 fun! FzfOmniFiles()
-  " When I change current working directory, I'm just concerned with files
-  " inside that directory (:Files) & not all project files (:GitFiles)
-  let git_root = split(system('git rev-parse --show-toplevel'), '\n')[0]
-  let cwd = getcwd()
   " Throws v:shell_error if is not a git directory
-  let is_git = system('git status')
-  if cwd != git_root || v:shell_error
+  let git_status = system('git status')
+  if v:shell_error != 0
     :Files
   else
-    " --exclude-standard means respecting gitignore
-    " --others help in showing the untracked git files
-    :GitFiles --exclude-standard --cached --others
+    " Reference examples which made this happen:
+    " https://github.com/junegunn/fzf.vim/blob/master/doc/fzf-vim.txt#L209
+    " https://github.com/junegunn/fzf.vim/blob/master/doc/fzf-vim.txt#L290
+    " --exclude-standard - Respect gitignore
+    " --others - Show untracked git files
+    " dir: getcwd() - Shows file names relative to cwd
+    let git_files_cmd = ":GitFiles --exclude-standard --cached --others"
+    call fzf#vim#gitfiles('--exclude-standard --cached --others', {'dir': getcwd()})
   endif
 endfun
 " }}}
