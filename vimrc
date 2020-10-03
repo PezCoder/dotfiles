@@ -49,8 +49,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-phpls'}
 Plug 'tpope/vim-sleuth'
-Plug 'voldikss/vim-floaterm', {'do': ':!brew install ranger'}
-Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
+" Plug 'JamshedVesuna/vim-markdown-preview'
 
 call plug#end()
 " }}}
@@ -132,6 +132,7 @@ augroup vim_buffers_resize
 augroup END
 
 " Fix the vim's explorer window doesn't close with :bd
+" TODO: Still isn't smooth, rather don't use it.
 autocmd FileType netrw setl bufhidden=wipe
 
 " On new file save, auto create directories if doesn't exist
@@ -356,9 +357,15 @@ let g:ale_lint_on_filetype_changed = 0
 " By default it expects .eslintrc jo be at the root
 " For custom eslintrc use:
 " let g:ale_javascript_eslint_options = '--config ./config/eslint.config.js'
-let g:ale_linters = {
-\   'javascript': ['eslint'],
-\ }
+" Auto fix linting errors on save
+let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
+let g:ale_fixers = {
+\   'typescript': ['prettier', 'eslint'],
+\   'javascript': ['prettier', 'eslint'],
+\   'scss': ['prettier'],
+\   'css': ['prettier']
+\}
+let g:ale_fix_on_save = 1
 " }}}
 
 " xolox/vim-notes --- {{{
@@ -397,20 +404,29 @@ else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
-" Remap keys for gotos.
-" actually useful
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gi <Plug>(coc-implementation)
+" Remap keys for gotos
+" Uses coc.nvim to go to a tag when c-]
+set tagfunc=CocTagFunc
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
 
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+" Use <leader>i to show documentation under the cursor
+nnoremap <silent> <leader>i :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 " }}}
 
 " voldikss/vim-floaterm --- {{{
-nnoremap <silent> - :Ranger<CR>
-command! Ranger FloatermNew --width=0.8 ranger
+nnoremap <silent> - :FileBrowser<CR>
+command! FileBrowser FloatermNew --width=0.8 nnn
 " }}}
 
 " vim-gitgutter --- {{{
@@ -422,7 +438,6 @@ nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
 nmap <Leader>ga <Plug>(GitGutterStageHunk)
 " }}}
-" }}}
 
 " JamshedVesuna/vim-markdown-preview --- {{{
 let vim_markdown_preview_hotkey='<C-m>'
@@ -433,6 +448,11 @@ let vim_markdown_preview_toggle=2
 " Helpful mappings --- {{{
 " Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
+
+" Open chrom with :chrome command
+" TODO: Make this available only on html file types
+command! Chrome !open % -a Google\ Chrome
+cnoreabbrev chrome Chrome
 
 " Strip trailing white spaces --- {{{
 " http://vimcasts.org/episodes/tidying-whitespace/
@@ -490,6 +510,7 @@ cnoreabbrev Bd BD
 cnoreabbrev Copen copen
 cnoreabbrev gblame Gblame
 cnoreabbrev Cd cd
+iabbrev calender calendar
 
 " Buffer Mappings
 nnoremap <leader>v <C-w>v<C-w>l
