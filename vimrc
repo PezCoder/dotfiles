@@ -9,7 +9,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'othree/html5.vim'                       " Html5 syntax, indent
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mhartington/oceanic-next'
-Plug 'osyo-manga/vim-anzu'                    " Show search results on vim-airline
 Plug 'pangloss/vim-javascript'                " Better syntax highlighting & indent
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'            " To support jsx inside typescript i.e .tsx
@@ -165,6 +164,11 @@ function! s:setup_paste() abort
           \ autocmd! unimpaired_paste
   augroup END
 endfunction
+
+" One way behaviour for n & N
+nnoremap <expr> n 'Nn'[v:searchforward]
+nnoremap <expr> N 'nN'[v:searchforward]
+" }}}
 
 " Plugins --- {{{
 
@@ -331,17 +335,6 @@ let g:togglecursor_insert = 'line'
 let g:togglecursor_force = 'xterm'   " telling xterm style terminal to make it work in vagrant & ssh
 " }}}
 
-" Vim Anzu --- {{{
-" Search results on vim-airline
-nmap n <Plug>(anzu-n-with-echo)
-nmap N <Plug>(anzu-N-with-echo)
-nmap * <Plug>(anzu-star-with-echo)
-nmap # <Plug>(anzu-sharp-with-echo)
-nmap <silent> <leader><space> :nohlsearch<CR><Plug>(anzu-clear-search-status)
-let g:anzu_enable_CursorMoved_AnzuUpdateSearchStatus=1        "When search with /
-let g:airline#extensions#anzu#enabled=0
-" }}}
-
 " vim-highlightedyank --- {{{
 if !exists('##TextYankPost')
   map y <Plug>(highlightedyank)
@@ -427,6 +420,7 @@ inoremap <silent><expr> <c-space> coc#refresh()
 " voldikss/vim-floaterm --- {{{
 nnoremap <silent> - :FileBrowser<CR>
 command! FileBrowser FloatermNew --width=0.8 nnn
+autocmd FileType floaterm tnoremap <buffer> <Esc> q
 " }}}
 
 " vim-gitgutter --- {{{
@@ -591,6 +585,9 @@ function! ExecuteMacroOverVisualRange()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
 xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+" <space><space> removes the search highlights
+nmap <silent> <space><space> :nohlsearch<CR>
 " }}}
 
 " Autocmd --- {{{
@@ -664,11 +661,6 @@ if has('nvim')
     " Live substitute with %s
     set inccommand=nosplit
 endif
-
-" TODO: figure out why this isn't working when put on the top
-" One way behaviour for n & N
-nnoremap <expr> n 'Nn'[v:searchforward]
-nnoremap <expr> N 'nN'[v:searchforward]
 
 " Make focused windwo more prominent in VIM --- {{{
 let g:WincentColorColumnFileTypeBlacklist = ['command-t', 'diff', 'dirvish', 'fugitiveblame', 'undotree', 'qf']
