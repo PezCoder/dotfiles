@@ -41,7 +41,7 @@ Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
-Plug 'w0rp/ale'                               " Asynchronous linting engine
+Plug 'w0rp/ale', {'do': ':!brew install languagetool'} " Asynchronous linting engine
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
@@ -49,7 +49,7 @@ Plug 'alok/notational-fzf-vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-tabnine'}
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
-" Plug 'JamshedVesuna/vim-markdown-preview'
+Plug 'JamshedVesuna/vim-markdown-preview'
 
 call plug#end()
 " }}}
@@ -181,8 +181,8 @@ let g:used_javascript_libs = 'angularjs,angularui,angularuirouter'
 let g:user_emmet_install_global = 0
 augroup emmet_configuration
     autocmd!
-    autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig EmmetInstall                      " Enable emmet for just few files
-    autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+    autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig,typescript.tsx,typescriptreact,javascriptreact EmmetInstall                      " Enable emmet for just few files
+    autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig,typescript.tsx,typescriptreact,javascriptreact :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
 augroup END
 let g:user_emmet_mode="a"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
@@ -198,7 +198,9 @@ let g:closetag_filenames = '*.html,*.jsx'
 " vim-startify --- {{{
 " handle cwd when opening a file through startify
 let g:startify_change_to_dir = 0
-let g:startify_change_to_vcs_root = 1
+" Changing to vcs_root was a problem in case of monorepos which may contain multiple sub apps
+" Where we would want the cwd to still be the sub app & not the root of repository
+" let g:startify_change_to_vcs_root = 1
 " Use :SS to save a session
 let g:startify_session_persistence = 1
 let g:startify_list_order = ['sessions', 'dir']
@@ -354,7 +356,9 @@ let g:ale_lint_on_filetype_changed = 0
 let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
 let g:ale_fixers = {
 \   'typescript': ['prettier', 'eslint'],
+\   'typescriptreact': ['prettier', 'eslint'],
 \   'javascript': ['prettier', 'eslint'],
+\   'javascriptreact': ['prettier', 'eslint'],
 \   'scss': ['prettier'],
 \   'css': ['prettier']
 \}
@@ -523,6 +527,7 @@ cnoreabbrev bd BD
 cnoreabbrev Bd BD
 cnoreabbrev Copen copen
 cnoreabbrev gblame Gblame
+cnoreabbrev gbrowse GBrowse
 cnoreabbrev Cd cd
 iabbrev calender calendar
 
@@ -615,10 +620,9 @@ nmap <silent> <space><space> :nohlsearch<CR>
 autocmd! bufwritepost ~/.vimrc source $MYVIMRC
 
 " <leader>r => Run
+" Runs test case for respective file types
 augroup leader_run
-    " Runs respective test case for php file
     autocmd FileType php map <buffer> <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
-    " Compiles & runs the java file
     autocmd FileType java map <buffer> <Leader>r :call VimuxRunCommand("clear;javac ".bufname("%")." ;java ".expand("%:r"))<CR>
 augroup END
 
@@ -635,7 +639,10 @@ function! HelpInNewTab ()
 endfunction
 
 autocmd FileType javascript setlocal sw=2 sts=2 ts=2
-" }}}
+
+" Spell correction
+autocmd FileType markdown setlocal spell
+nnoremap z= 1z=
 " }}}
 
 " Experimental --- {{{
@@ -681,30 +688,4 @@ if has('nvim')
     " Live substitute with %s
     set inccommand=nosplit
 endif
-
-" Make focused windwo more prominent in VIM --- {{{
-let g:WincentColorColumnFileTypeBlacklist = ['command-t', 'diff', 'dirvish', 'fugitiveblame', 'undotree', 'qf']
-let g:WincentColorColumnBufferNameBlacklist = []
-function! ShouldColorColumn() abort
-  if index(g:WincentColorColumnBufferNameBlacklist, bufname(bufnr('%'))) != -1
-    return 0
-  endif
-  if index(g:WincentColorColumnFileTypeBlacklist, &filetype) != -1
-    return 0
-  endif
-  return &buflisted
-endfunction
-
-if exists('+winhighlight')
-  autocmd BufEnter,FocusGained,VimEnter,WinEnter * set winhighlight=
-  autocmd FocusLost,WinLeave * set winhighlight=CursorLineNr:LineNr,EndOfBuffer:ColorColumn,IncSearch:ColorColumn,Normal:ColorColumn,NormalNC:ColorColumn,SignColumn:ColorColumn
-  if exists('+colorcolumn')
-    autocmd BufEnter,FocusGained,VimEnter,WinEnter * if ShouldColorColumn() | let &l:colorcolumn='+' . join(range(0, 254), ',+') | endif
-  endif
-elseif exists('+colorcolumn')
-  autocmd BufEnter,FocusGained,VimEnter,WinEnter * if ShouldColorColumn() | let &l:colorcolumn='+' . join(range(0, 254), ',+') | endif
-  autocmd FocusLost,WinLeave * if ShouldColorColumn() | let &l:colorcolumn=join(range(1, 255), ',') | endif
-endif
-" }}}
-
 " }}}
