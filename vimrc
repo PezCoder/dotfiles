@@ -431,6 +431,8 @@ let g:gitgutter_map_keys = 0
 nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
 nmap <Leader>ga <Plug>(GitGutterStageHunk)
+nmap <Leader>gu <Plug>(GitGutterUndoHunk)
+nmap <Leader>gs <Plug>(GitGutterPreviewHunk)
 " }}}
 
 " JamshedVesuna/vim-markdown-preview --- {{{
