@@ -58,7 +58,7 @@ alias vus='cd ~/1conf;vagrant up;vagrant ssh'
 alias vs='cd ~/1conf;vagrant ssh'
 
 alias sf='echo "Connecting to sfctrl.practodev.com..." && ssh ubuntu@13.235.52.247'
-alias glb="git for-each-ref --count=5 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
+alias glb="git for-each-ref --count=7 --sort=-committerdate refs/heads/ --format='%(refname:short)'"
 
 # Symfony aliases
 alias cc="app/console cache:clear"
