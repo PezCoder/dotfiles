@@ -46,7 +46,7 @@ Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-phpls'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-tabnine'}
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
 " Plug 'JamshedVesuna/vim-markdown-preview'
@@ -402,6 +402,9 @@ endif
 set tagfunc=CocTagFunc
 nmap <silent> gr <Plug>(coc-references)
 nmap <leader>rn <Plug>(coc-rename)
+" Overrides gt which is for tabs, I don't use tabs anymore but in case things
+" break for tabs, remove this
+nmap <silent> gt <Plug>(coc-type-definition)
 
 " Use <leader>i to show documentation under the cursor
 nnoremap <silent> <leader>i :call <SID>show_documentation()<CR>
@@ -413,8 +416,21 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Use <c-space> to trigger completion.
+" Insert mode - <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
+" Normal mode - <c-space> to trigger codaction that lets quick import & other
+" smart operations.
+nmap <c-space> <Plug>(coc-codeaction)
+
+" Show parameter signature help when in insert mode
+" TODO: Figure, why does it goes away
+" https://github.com/neoclide/coc.nvim/issues/2951
+" inoremap <silent><c-space> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
+
+" Use c-f & c-b to scroll up & down the documentation if it exists
+" https://github.com/neoclide/coc.nvim/issues/1841
+nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 " }}}
 
 " voldikss/vim-floaterm --- {{{
@@ -439,6 +455,8 @@ nmap <Leader>gs <Plug>(GitGutterPreviewHunk)
 let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=2
+" }}}
+
 " }}}
 
 " Helpful mappings --- {{{
