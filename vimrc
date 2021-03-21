@@ -46,7 +46,7 @@ Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-tabnine'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-tabnine coc-pyright'}
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
 Plug 'JamshedVesuna/vim-markdown-preview'
@@ -360,7 +360,8 @@ let g:ale_fixers = {
 \   'javascript': ['prettier', 'eslint'],
 \   'javascriptreact': ['prettier', 'eslint'],
 \   'scss': ['prettier'],
-\   'css': ['prettier']
+\   'css': ['prettier'],
+\   'python': ['yapf']
 \}
 let g:ale_fix_on_save = 1
 " }}}
@@ -624,6 +625,7 @@ autocmd! bufwritepost ~/.vimrc source $MYVIMRC
 augroup leader_run
     autocmd FileType php map <buffer> <Leader>r :call VimuxRunCommand("clear;phpunit -c app/ " . bufname("%"))<CR>
     autocmd FileType java map <buffer> <Leader>r :call VimuxRunCommand("clear;javac ".bufname("%")." ;java ".expand("%:r"))<CR>
+    autocmd FileType python map <buffer> <Leader>r :call VimuxRunCommand("clear;python '".bufname("%")."'")<CR>
 augroup END
 
 " Make :help appear in a full-screen tab, instead of a half window
