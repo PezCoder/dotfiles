@@ -33,6 +33,8 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 # Persist normal non-vi behaviour
+# Reference to key & values:
+# https://betterprogramming.pub/master-mac-linux-terminal-shortcuts-like-a-ninja-7a36f32752a6
 bindkey '^P' up-history
 bindkey '^N' down-history
 bindkey '^w' backward-kill-word
@@ -40,6 +42,8 @@ bindkey '^r' fzf
 bindkey '^e' end-of-line
 bindkey '^a' beginning-of-line
 bindkey "^?" backward-delete-char
+bindkey "^u" backward-kill-line
+bindkey "^y" yank
 
 # Make mode change lag go away
 export KEYTIMEOUT=1
