@@ -440,7 +440,7 @@ nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 
 " voldikss/vim-floaterm --- {{{
 nnoremap <silent> - :FileBrowser<CR>
-command! FileBrowser FloatermNew --width=0.8 nnn
+command! FileBrowser FloatermNew --width=0.8 --opener=edit nnn
 autocmd FileType floaterm tnoremap <buffer> <Esc> q
 " }}}
 
