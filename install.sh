@@ -255,6 +255,7 @@ install_neovim() {
     doo brew install neovim/neovim/neovim
     doo ln -s ~/.vim ~/.config/nvim
     doo ln -s ~/.vimrc ~/.config/nvim/init.vim
+    doo ln -s "$EXPORT_DIR/config/coc-settings.json" ~/.vim/coc-settings.json
     doo pip3 install --user pynvim
   else
     installed 'neovim'
