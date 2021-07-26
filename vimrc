@@ -5,9 +5,7 @@ Plug 'VundleVim/Vundle.vim'
 Plug 'mattn/emmet-vim'                        " Emmet for html
 Plug 'evidens/vim-twig'                       " Twig Syntax highlighting
 Plug 'hail2u/vim-css3-syntax'                 " CSS3 Syntax
-Plug 'vim-airline/vim-airline'
 Plug 'othree/html5.vim'                       " Html5 syntax, indent
-Plug 'vim-airline/vim-airline-themes'
 Plug 'mhartington/oceanic-next'
 Plug 'pangloss/vim-javascript'                " Better syntax highlighting & indent
 Plug 'leafgarland/typescript-vim'
@@ -21,6 +19,7 @@ Plug 'jszakmeister/vim-togglecursor'          " Different cursors in different m
 Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
+Plug 'itchyny/vim-gitbranch'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
 Plug 'christoomey/vim-tmux-navigator'
@@ -42,6 +41,9 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
 Plug 'w0rp/ale', {'do': ':!brew install languagetool'} " Asynchronous linting engine
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
+Plug 'mengelbrecht/lightline-bufferline'
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
@@ -310,26 +312,60 @@ let g:argwrap_tail_comma_braces = '['
 nnoremap <silent> <leader>fa :ArgWrap<CR>
 " }}}
 
-" vim-airline --- {{{
-let g:airline_powerline_fonts = 1                                 " Enable powerline fonts
-let g:airline#extensions#tabline#enabled = 1                      " Enable tabline extension
-let g:airline#extensions#tabline#left_sep = ' '                   " Left separator for tabline
-let g:airline#extensions#tabline#left_alt_sep = '│'               " Right separator for tabline
-let g:airline#extensions#tabline#fnamemod = ':t'                  " Show just the filename
-let g:airline_theme='gruvbox'
-
-" Customize airline content
-"+-----------------------------------------------------------------------------+
-"| A | B |                     C                            X | Y | Z |  [...] |
-"+-----------------------------------------------------------------------------+<Paste>
-" remove encoding text & devicon
-au VimEnter * let g:airline_section_x = airline#section#create_right(['tagbar']) | :AirlineRefresh
-let g:airline_section_y = ''
-" Line number/Total lines | Column Number with right padding
-let g:airline_section_z='%4l/%L : %-3v'
-" disable +32 ~9 -0 hunks information in airline section B
-let g:airline#extensions#hunks#enabled = 0
+" itchyny/lightline.vim --- {{{
+let g:lightline#bufferline#modified = ' ✎'
+set showtabline=2
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \
+      \ 'tabline': {
+      \   'left': [ [ 'buffers' ] ],
+      \   'right': []
+      \ },
+      \
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'readonly', 'gitbranch', 'relativepath', 'cocstatus' ] ],
+      \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ], ['lineinfo'],
+      \              ['filetype'] ]
+      \ },
+      \
+      \ 'inactive': {
+      \   'left': [ [ 'filename' ] ],
+      \   'right': [ [ 'lineinfo' ]]
+      \ },
+      \
+      \ 'component_function': {
+      \   'gitbranch': 'gitbranch#name',
+      \   'cocstatus': 'coc#status'
+      \ },
+      \
+      \ 'component': {
+      \   'lineinfo': '%3l/%L'
+      \},
+      \
+      \ 'component_expand': {
+      \  'linter_checking': 'lightline#ale#checking',
+      \  'linter_infos': 'lightline#ale#infos',
+      \  'linter_warnings': 'lightline#ale#warnings',
+      \  'linter_errors': 'lightline#ale#errors',
+      \  'linter_ok': 'lightline#ale#ok',
+      \
+      \  'buffers': 'lightline#bufferline#buffers'
+      \ },
+      \ 'component_type': {
+      \  'linter_checking': 'right',
+      \  'linter_infos': 'right',
+      \  'linter_warnings': 'warning',
+      \  'linter_errors': 'error',
+      \  'linter_ok': 'success',
+      \
+      \  'buffers': 'tabsel'
+      \ }
+      \ }
 " }}}
+" Use autocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 " vim-togglecursor --- {{{
 let g:togglecursor_default = 'block'
