@@ -89,6 +89,10 @@ bindkey '^Z' fancy-ctrl-z
 
 # Use Neovim instead of Vim or Vi
 # alias vim=nvim
+
+# Uses Neovom from the binary downloaded if the brew installation doesn't work
+# export PATH="$HOME/Downloads/nvim-osx64/bin:$PATH"
+
 alias vi='exec_scmb_expand_args nvim'
 alias rc='vi ~/.vimrc'
 

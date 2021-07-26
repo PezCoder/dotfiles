@@ -47,7 +47,7 @@ Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-tabnine coc-pyright'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-tabnine coc-pyright coc-styled-components'}
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
 Plug 'JamshedVesuna/vim-markdown-preview'
