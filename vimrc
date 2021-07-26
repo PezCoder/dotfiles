@@ -15,7 +15,6 @@ Plug 'elzr/vim-json'                          " JSON highlighting
 Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
 Plug 'tpope/vim-surround'                     " Change the surrounding
 Plug 'tpope/vim-repeat'                       " Repeat plugin commands
-Plug 'jszakmeister/vim-togglecursor'          " Different cursors in different modes
 Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
@@ -366,12 +365,6 @@ let g:lightline = {
 " }}}
 " Use autocmd to force lightline update.
 autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
-
-" vim-togglecursor --- {{{
-let g:togglecursor_default = 'block'
-let g:togglecursor_insert = 'line'
-let g:togglecursor_force = 'xterm'   " telling xterm style terminal to make it work in vagrant & ssh
-" }}}
 
 " vim-highlightedyank --- {{{
 if !exists('##TextYankPost')
