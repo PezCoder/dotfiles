@@ -1,3 +1,16 @@
+# ZSH Performance debug helpers --- {{{
+# Uncomment this & run zprof on the shell to debug time taken by plugins
+# More: https://blog.mattclemente.com/2020/06/26/oh-my-zsh-slow-to-load/
+# zmodload zsh/zprof
+
+# Uncomment this & run 'timezsh' to track overall zsh load time
+# timezsh() {
+#   shell=${1-$SHELL}
+#   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+# }
+#
+# }}}
+
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
@@ -164,6 +177,7 @@ export CLASSPATH=$CLASSPATH:~/Downloads/algs4.jar
 # which occurs when launching VIM. Root cause - unknown
 export LC_ALL=en_US.UTF-8
 
+# Takes ~100ms
 # Load rbenv automatically by appending
 # the following to ~/.zshrc:
 eval "$(rbenv init -)"
