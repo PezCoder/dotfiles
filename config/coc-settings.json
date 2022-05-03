@@ -3,5 +3,7 @@
     "tsserver.trace.server": "verbose",
     "typescript.preferences.importModuleSpecifier": "non-relative",
     "typescript.updateImportsOnFileMove.enable": true,
-    "coc.preferences.listOfWorkspaceEdit": "none"
+    "coc.preferences.listOfWorkspaceEdit": "none",
+    "tsserver.enableJavascript": true,
+    "javascript.validate.enable": true
 }

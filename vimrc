@@ -47,7 +47,7 @@ Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-tabnine coc-pyright coc-styled-components'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components coc-flow'}
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
 Plug 'JamshedVesuna/vim-markdown-preview'
@@ -232,6 +232,10 @@ vmap <C-j> <Plug>MoveBlockDown
 let g:php_html_load = 0
 " }}}
 
+" pangloss/vim-javascript --- {{{
+let g:javascript_plugin_flow = 1
+" }}}
+
 " auto-pairs-gentle --- {{{
 " let g:AutoPairsMultilineClose = 0
 let g:AutoPairsUseInsertedCount = 1
@@ -266,6 +270,8 @@ let g:fzf_colors =
 " fzf search on top of word search using ripgrep with :Find
 command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --ignore-case --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
 
+" TODO: This causes the FZF to lag when c-p is pressed in a big repository
+" where 'git status' is slow
 " Run FZF based on the cwd & git detection
 " 1. Runs :Files, If cwd is not a git repository
 " 2. Runs :GitFiles <cwd> If root is a git repository
@@ -383,6 +389,8 @@ let g:ale_lint_on_filetype_changed = 0
 " let g:ale_javascript_eslint_options = '--config ./config/eslint.config.js'
 " Auto fix linting errors on save
 let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
+let g:ale_javascript_flow_use_global = 1
+let g:ale_javascript_flow_use_home_config = 1
 let g:ale_fixers = {
 \   'typescript': ['prettier', 'eslint'],
 \   'typescriptreact': ['prettier', 'eslint'],
@@ -392,6 +400,8 @@ let g:ale_fixers = {
 \   'css': ['prettier'],
 \   'python': ['yapf']
 \}
+let g:ale_linters = {'javascript': ['flow']}
+let g:ale_linters_ignore = {'javascript': ['tsserver']}
 let g:ale_fix_on_save = 1
 " }}}
 
@@ -489,8 +499,6 @@ nmap <Leader>gs <Plug>(GitGutterPreviewHunk)
 let vim_markdown_preview_hotkey='<C-m>'
 let vim_markdown_preview_github=1
 let vim_markdown_preview_toggle=2
-" }}}
-
 " }}}
 
 " Helpful mappings --- {{{
