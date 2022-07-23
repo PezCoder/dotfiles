@@ -49,11 +49,11 @@ main () {
     confirm_have_goodies
     install_scm_breeze
     install_diff-so-fancy
-    install_neovim
     install_alacritty
     for i in ${DOTS[@]}; do
         link_dot $i
     done
+    install_neovim
     setup_git_global_ignore
     # TODO: Make sure permissions are legit. .ssh and .ghci, I'm lookin at you.
 }
@@ -233,7 +233,7 @@ confirm_have_goodies() {
 install_scm_breeze() {
   DIR='scm_breeze'
   if [ ! -d ".$DIR" ]; then
-    doo git clone git://github.com/scmbreeze/scm_breeze.git ~/.scm_breeze
+    doo git clone https://github.com/scmbreeze/scm_breeze.git ~/.scm_breeze
     doo ~/.scm_breeze/install.sh
   else
     installed 'scm_breeze'
@@ -268,7 +268,7 @@ install_neovim() {
 # Ligature for operator mono: https://github.com/kiliman/operator-mono-lig
 install_alacritty() {
   if !(command_exists alacritty); then
-    doo brew cask install alacritty
+    doo brew install alacritty --cask
 
     # clone
     doo git clone https://github.com/alacritty/alacritty.git

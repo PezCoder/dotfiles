@@ -1,3 +1,5 @@
+# !NOTE! if you VIM is running slow, always check if the ~/.zshenv is messing it up
+
 # ZSH Performance debug helpers --- {{{
 # Uncomment this & run zprof on the shell to debug time taken by plugins
 # More: https://blog.mattclemente.com/2020/06/26/oh-my-zsh-slow-to-load/

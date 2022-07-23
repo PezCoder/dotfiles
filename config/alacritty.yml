@@ -138,8 +138,9 @@ font:
     # The `style` can be specified to pick a specific face.
     style: Bold Italic
 
-  # Point size
-  size: 16.0
+  # Font size
+  # 16 is optimal for macos, since I mostly code within 27' monitor, keeping 18 as default
+  size: 18.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
