@@ -139,8 +139,8 @@ font:
     style: Bold Italic
 
   # Font size
-  # 16 is optimal for macos, since I mostly code within 27' monitor, keeping 18 as default
-  size: 18.0
+  # 16 is optimal for macos, since I mostly code within 27' monitor, keeping 20 as default
+  size: 20.0
 
   # Offset is the extra space around each character. `offset.y` can be thought of
   # as modifying the line spacing, and `offset.x` as modifying the letter spacing.
