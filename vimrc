@@ -651,6 +651,11 @@ xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
 " <space><space> removes the search highlights
 nmap <silent> <space><space> :nohlsearch<CR>
+
+" Delete always asks for 'tpope/vim-eunuch'
+cnoreabbrev rm Delete!
+cnoreabbrev rn Rename
+cnoreabbrev mv Move
 " }}}
 
 " Autocmd --- {{{
