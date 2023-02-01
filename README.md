@@ -19,10 +19,10 @@ My Vim &amp; Zsh Configurations
     ```
 
 ## Screenshots
-### ZSH with zsh-minimal Theme
-![Zsh final look](/screenshots/zsh.png?raw=true "Zsh look with clean-minimal theme")
+### ZSH + Tmux with custom themes
+![Zsh final look](/screenshots/zsh-tmux.png?raw=true "Zsh look with clean-minimal theme")
 
-### VIM with oceanic-next Theme
+### VIM with Gruvebox theme
 ![Vim final look](/screenshots/vim-look.png?raw=true "React code in VIM")
 
 ## Checkout wiki for more
