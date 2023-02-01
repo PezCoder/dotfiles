@@ -313,6 +313,7 @@ DOTS=(
     zshrc
     tmux.conf
     tmux-osx.conf
+    tmux-theme.conf
     tern-config
     ackrc
     gitignore_global
