@@ -1,3 +1,7 @@
+package.path = package.path .. ";./lua/?.lua"
+local utils = require('utils');
+
+vim.cmd([[
 " Plugins --- {{{
 call plug#begin('~/.vim/plugged')
 
@@ -18,6 +22,7 @@ Plug 'tpope/vim-repeat'                       " Repeat plugin commands
 Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
+Plug 'tommcdo/vim-fubitive' " Add support for bitbucket repos in :GBrowse from fugitive
 Plug 'itchyny/vim-gitbranch'
 " Plug 'jiangmiao/auto-pairs'
 Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
@@ -47,10 +52,20 @@ Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components coc-flow'}
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components'}
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
 Plug 'JamshedVesuna/vim-markdown-preview', {'do': ':!brew install grip'} "grip is github flavoured markdown & a prerequisite
+Plug 'ap/vim-css-color' " Visualise hex codes
+Plug 'udalov/kotlin-vim'
+Plug 'phaazon/hop.nvim'
+Plug 'mopp/autodirmake.vim' " Auto create non existing directory on file save
+
+" telescope -- {{{
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
+" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+" -- }}}
 
 call plug#end()
 " }}}
@@ -134,17 +149,6 @@ augroup END
 " Fix the vim's explorer window doesn't close with :bd
 " TODO: Still isn't smooth, rather don't use it.
 autocmd FileType netrw setl bufhidden=wipe
-
-" On new file save, auto create directories if doesn't exist
-augroup vimrc-auto-mkdir
-  autocmd!
-  autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
-  function! s:auto_mkdir(dir, force)
-    if !isdirectory(a:dir)
-      call mkdir(iconv(a:dir, &encoding, &termencoding), 'p')
-    endif
-  endfunction
-augroup END
 
 " Handle :paste toggle
 " Author: tpope https://github.com/tpope/vim-unimpaired
@@ -251,7 +255,7 @@ nnoremap <silent> <C-p> :call FzfOmniFiles()<CR>
 nnoremap <silent> <leader>p :Buffers<CR>
 nnoremap <silent> <leader>l :BLines<CR>
 " Quick jump to function (uses :BTags to filter just the functions names)
-nnoremap <silent> <leader>j :call fzf#vim#buffer_tags('', { 'options': ['--nth', '1,2', '--query', '^f$ '] })<CR>
+" nnoremap <silent> <leader>j :call fzf#vim#buffer_tags('', { 'options': ['--nth', '1,2', '--query', '^f$ '] })<CR>
 " Customize fzf colors to match your color scheme
 let g:fzf_colors =
 \ { 'fg':      ['fg', 'Normal'],
@@ -337,7 +341,7 @@ let g:lightline = {
       \
       \ 'inactive': {
       \   'left': [ [ 'filename' ] ],
-      \   'right': [ [ 'lineinfo' ]]
+      \   'right': [ [ 'lineinfo' ] ]
       \ },
       \
       \ 'component_function': {
@@ -504,6 +508,20 @@ let vim_markdown_preview_toggle=1
 let vim_markdown_preview_hotkey='<leader>m'
 " }}}
 
+" telescope --- {{{
+" Behaviour:
+" Looks for all files if not a git project & considers .gitignore if it's a
+" git project
+" nnoremap <c-p> <cmd>Telescope find_files<cr>
+" TODO: Find how to live grep but add into the buffer
+" nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+" nnoremap <leader>p <cmd>Telescope buffers<cr>
+
+" nvim-telescope/telescope-fzf-native.nvim
+" One native telescope sorter to significantly improve sorting performance
+" require('telescope').load_extension('fzf')
+" }}}
+
 " Helpful mappings --- {{{
 " Current Directory remap to :%%
 cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
@@ -515,7 +533,7 @@ cnoreabbrev chrome Chrome
 
 " Strip trailing white spaces --- {{{
 " http://vimcasts.org/episodes/tidying-whitespace/
-command! -nargs=* StripTrailingWhitespaces call StripTrailingWhitespaces()
+command! -nargs=* Whitespaces call StripTrailingWhitespaces()
 function! StripTrailingWhitespaces()
     " Preparation: save last search, and cursor position.
     let _s=@/
@@ -567,7 +585,7 @@ cnoreabbrev bD bd
 cnoreabbrev bd BD
 cnoreabbrev Bd BD
 cnoreabbrev Copen copen
-cnoreabbrev gblame Gblame
+cnoreabbrev gb Git blame
 cnoreabbrev gbrowse GBrowse
 cnoreabbrev Cd cd
 iabbrev calender calendar
@@ -736,3 +754,31 @@ if has('nvim')
     set inccommand=nosplit
 endif
 " }}}
+]])
+
+require('hop').setup()
+utils.nmap("<leader>j", "<cmd>HopWordAC<cr>")
+utils.nmap("<leader>k", "<cmd>HopWordAC<cr>")
+
+-- TODO: Move this to find_replace.lua
+function Sed(find, replace)
+    local files = vim.fn.systemlist('git grep -l -- ' .. vim.fn.shellescape(find))
+    local quickfix_list = {}
+    for _, file in ipairs(files) do
+        vim.api.nvim_command('edit ' .. file)
+        local _, err = pcall(function() vim.api.nvim_command('%s/'..find..'/'..replace..'/g') end)
+        if err == nil then
+            print("inserting")
+            table.insert(quickfix_list, {filename = file, lnum = 1, text = 'Replaced '..find..' with '..replace})
+            -- vim.api.nvim_command("w") -- save the changes
+        end
+    end
+    print('rohit', quickfix_list)
+    for k, v in pairs(quickfix_list) do
+      print('rahul')
+      print(k, v)
+    end
+    vim.api.nvim_set_var("quickfix_list", quickfix_list)
+end
+
+vim.api.nvim_command("command! -nargs=* Sed lua Sed(<f-args>)")
