@@ -59,7 +59,7 @@ Plug 'JamshedVesuna/vim-markdown-preview', {'do': ':!brew install grip'} "grip i
 Plug 'ap/vim-css-color' " Visualise hex codes
 Plug 'udalov/kotlin-vim'
 Plug 'phaazon/hop.nvim'
-Plug 'mopp/autodirmake.vim' " Auto create non existing directory on file save
+Plug 'PezCoder/auto-create-directory.nvim'
 
 " telescope -- {{{
 " Plug 'nvim-lua/plenary.nvim'
@@ -755,6 +755,8 @@ if has('nvim')
 endif
 " }}}
 ]])
+
+require('auto-create-directory').setup()
 
 require('hop').setup()
 utils.nmap("<leader>j", "<cmd>HopWordAC<cr>")
