@@ -257,6 +257,8 @@ install_neovim() {
     doo ln -s ~/.vimrc ~/.config/nvim/init.vim
     doo ln -s "$EXPORT_DIR/config/coc-settings.json" ~/.vim/coc-settings.json
     doo pip3 install --user pynvim
+
+    doo ln -s "$EXPORT_DIR/lua" ~/.vim/lua
   else
     installed 'neovim'
   fi
