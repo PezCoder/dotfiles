@@ -15,6 +15,7 @@ https://draculatheme.com/
 
 ### Improvements
 - Add “brew install watchman” as part of coc-nvim installation, needed for things like renaming
+  - https://github.com/junegunn/vim-plug/issues/1243
 
 - Find and replace in the repository
   - Internally wants to use 'rg' like I'm using currently

@@ -228,8 +228,7 @@ nnoremap <leader>t :TagbarToggle<CR>
 " }}}
 
 " vim-move --- {{{
-vmap <C-k> <Plug>MoveBlockUp
-vmap <C-j> <Plug>MoveBlockDown
+let g:move_key_modifier_visualmode = 'C'
 " }}}
 
 " php.vim --- {{{

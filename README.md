@@ -29,5 +29,6 @@ My Vim &amp; Zsh Configurations
 [Ctags](https://github.com/PezCoder/dotfiles/wiki/Ctags)
 
 ## Docs
-[Docs link](./docs)
-[Upcoming stuff](./docs/todo.md)
+[TODO - Upcoming stuff](./docs/todo.md)
+
+[All other docs](./docs)
