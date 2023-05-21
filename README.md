@@ -27,3 +27,7 @@ My Vim &amp; Zsh Configurations
 
 ## Checkout wiki for more
 [Ctags](https://github.com/PezCoder/dotfiles/wiki/Ctags)
+
+## Docs
+[Docs link](./docs)
+[Upcoming stuff](./docs/todo.md)
