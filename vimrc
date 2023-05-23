@@ -52,7 +52,17 @@ Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': ':CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components'}
+
+" How post update hook works
+" https://github.com/junegunn/vim-plug/blob/master/README.md#post-update-hooks
+function! PostInstallCocNvim(info)
+  if a:info.status == 'installed' || a:info.force
+    !brew install watchman
+    CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components
+  endif
+endfunction
+Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': function('PostInstallCocNvim') }
+
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
 Plug 'JamshedVesuna/vim-markdown-preview', {'do': ':!brew install grip'} "grip is github flavoured markdown & a prerequisite

@@ -14,14 +14,13 @@ https://draculatheme.com/
 - EMACS - ORG Mode
 
 ### Improvements
-- Add “brew install watchman” as part of coc-nvim installation, needed for things like renaming
-  - https://github.com/junegunn/vim-plug/issues/1243
-
 - Find and replace in the repository
-  - Internally wants to use 'rg' like I'm using currently
-  - Finding within a pattern of if possible
+  - Internally wants to use 'rg' like I'm using currently - TODO
+  - Finding within a pattern of if possible -- DONE
   Explore: https://github.com/dyng/ctrlsf.vim
-  - Be able to search within node_modules when needed ex': @see SentryClient'
+  - Be able to search within node_modules when needed ex': @see SentryClient' - DONE
+  - To be able to replace
+  - Quickfix list ]q is not in sync with the ctrlf window that opens
 
 - Paste enhancement: https://github.com/hrsh7th/nvim-pasta
 
