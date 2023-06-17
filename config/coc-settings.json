@@ -6,5 +6,9 @@
     "coc.preferences.listOfWorkspaceEdit": "none",
     "tsserver.enableJavascript": true,
     "javascript.validate.enable": true,
-    "Lua.telemetry.enable": false
+    "Lua.telemetry.enable": false,
+    "yaml.schemas": {
+        "kubernetes": "/*.yaml"
+    },
+    "suggest.noselect": true
 }

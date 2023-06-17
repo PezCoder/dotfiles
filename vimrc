@@ -58,7 +58,8 @@ Plug 'alok/notational-fzf-vim'
 function! PostInstallCocNvim(info)
   if a:info.status == 'installed' || a:info.force
     !brew install watchman
-    CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components
+    " using coc-yaml with :CocConfig to super kubernetes config
+    CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components coc-kotlin coc-docker coc-yaml
   endif
 endfunction
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': function('PostInstallCocNvim') }
@@ -433,26 +434,21 @@ let g:nv_search_paths = g:notes_directories
 " TODO look into these options to which one's are
 
 " Reference: https://github.com/neoclide/coc.nvim#example-vim-configuration
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" Use tab for trigger completion with characters ahead and navigate
+" NOTE: There's always complete item selected by default, you may want to enable
+" no select by `"suggest.noselect": true` in your configuration file
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#pum#visible() ? coc#pum#next(1) :
+      \ CheckBackspace() ? "\<Tab>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
-" position. Coc only does snippet and additional edit on confirm.
-" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
-if exists('*complete_info')
-  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
-else
-  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-endif
+" Make <CR> to accept selected completion item or notify coc.nvim to format
+" <C-g>u breaks current undo, please make your own choice
+inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Remap keys for gotos
 " Uses coc.nvim to go to a tag when c-]
@@ -469,7 +465,8 @@ function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   else
-    call CocAction('doHover')
+    " CocAction('doHover') used to hang, so changed this to async
+    call CocActionAsync('doHover')
   endif
 endfunction
 

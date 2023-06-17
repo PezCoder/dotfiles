@@ -55,7 +55,6 @@ main () {
     done
     install_neovim
     setup_git_global_ignore
-    # TODO: Make sure permissions are legit. .ssh and .ghci, I'm lookin at you.
 }
 
 install_zsh() {
