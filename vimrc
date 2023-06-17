@@ -510,7 +510,8 @@ nmap <Leader>gs <Plug>(GitGutterPreviewHunk)
 " JamshedVesuna/vim-markdown-preview --- {{{
 let vim_markdown_preview_github=1
 let vim_markdown_preview_temp_file=1
-let vim_markdown_preview_browser='Google Chrome'
+" Other value can be: Google Chrome
+let vim_markdown_preview_browser='arc'
 " To display images with the hotkey mapping (defaults to Control p).
 let vim_markdown_preview_toggle=1
 let vim_markdown_preview_hotkey='<leader>m'
