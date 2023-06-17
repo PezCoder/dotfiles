@@ -122,7 +122,7 @@ setup_ctags () {
 }
 
 # ripgrep search, faster than ack, ag, silver surfer etc.
-# Used by vim.ack plugin to do searching words in a project
+# Used by ctrlsf.vim plugin to do searching words in a project
 install_rg () {
   if !(command_exists rg); then
     doo brew tap burntsushi/ripgrep https://github.com/BurntSushi/ripgrep.git

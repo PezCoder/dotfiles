@@ -29,7 +29,6 @@ Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able 
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'                         " Moves a block of code up or down
-Plug 'mileszs/ack.vim'
 Plug 'FooSoft/vim-argwrap'                    " Format arguments
 Plug 'tommcdo/vim-exchange'                   " Exchange two words highlights usage: cx{motion} .(dot)
 Plug 'benmills/vimux'
@@ -71,6 +70,7 @@ Plug 'ap/vim-css-color' " Visualise hex codes
 Plug 'udalov/kotlin-vim'
 Plug 'phaazon/hop.nvim'
 Plug 'PezCoder/auto-create-directory.nvim'
+Plug 'dyng/ctrlsf.vim' " Text find, navigate & replace
 
 " telescope -- {{{
 " Plug 'nvim-lua/plenary.nvim'
@@ -307,22 +307,23 @@ fun! FzfOmniFiles()
 endfun
 " }}}
 
-" ack.vim --- {{{
-" use ripgrep for searching ⚡️
-" Options include:
-" --vimgrep -> Needed to parse the rg response properly for ack.vim
-" --type-not sql -> Avoid huge sql file dumps as it slows down the search
-" --smart-case -> Search case insensitive if all lowercase pattern, Search
-" case sensitively otherwise
-let g:ackprg = 'rg --vimgrep --type-not sql --smart-case'
-" Auto close the Quickfix list after pressing '<enter>' on a list item
-let g:ack_autoclose = 1
-" Any empty ack search will search for the work the cursor is on
-let g:ack_use_cword_for_empty_search = 1
-" Don't jump to first match
-cnoreabbrev Ack Ack!
-" Maps <leader>/ so we're ready to type the search keyword
-nnoremap <Leader>/ :Ack!<Space>
+" dyng/ctrlsf.vim --- {{{
+" Defaults:
+" Case sensitive - smart
+" Regex - Literals by default. Use '-R' to pass regex
+let g:ctrlsf_default_view_mode = 'compact' " Quickfix like view
+let g:ctrlsf_populate_qflist = 1
+let g:ctrlsf_auto_close = {
+    \ "compact": 0
+    \}
+let g:ctrlsf_mapping = {
+    \ "next": "j",
+    \ "prev": "k",
+    \ }
+let g:ctrlsf_auto_focus = {
+    \ "at": "start"
+    \ }
+nnoremap <Leader>/ :CtrlSF<Space>
 " }}}
 
 " vim-argwrap --- {{{
