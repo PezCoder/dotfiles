@@ -398,6 +398,7 @@ let g:ale_sign_column_always = 1
 let g:ale_lint_on_text_changed = 'never'
 let g:ale_lint_on_enter = 0
 let g:ale_lint_on_filetype_changed = 0
+let g:ale_virtualtext_cursor = 'disabled' " Errors at the end of the line
 " By default it expects .eslintrc jo be at the root
 " For custom eslintrc use:
 " let g:ale_javascript_eslint_options = '--config ./config/eslint.config.js'
