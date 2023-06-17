@@ -68,7 +68,6 @@ Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
 Plug 'JamshedVesuna/vim-markdown-preview', {'do': ':!brew install grip'} "grip is github flavoured markdown & a prerequisite
 Plug 'ap/vim-css-color' " Visualise hex codes
 Plug 'udalov/kotlin-vim'
-Plug 'phaazon/hop.nvim'
 Plug 'PezCoder/auto-create-directory.nvim'
 Plug 'dyng/ctrlsf.vim' " Text find, navigate & replace
 
@@ -766,10 +765,6 @@ endif
 ]])
 
 require('auto-create-directory').setup()
-
-require('hop').setup()
-utils.nmap("<leader>j", "<cmd>HopWordAC<cr>")
-utils.nmap("<leader>k", "<cmd>HopWordAC<cr>")
 
 -- TODO: Move this to find_replace.lua
 function Sed(find, replace)
