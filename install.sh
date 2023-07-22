@@ -43,7 +43,6 @@ main () {
     install_plug
     install_tmux
     install_tpm
-    setup_tmux_clipboard
     install_tmuxinator
     confirm_no_clobber
     confirm_have_goodies
@@ -159,12 +158,6 @@ install_tpm() {
   fi
 }
 
-setup_tmux_clipboard() {
-  if is_osx && !(command_exists reattach-to-user-namespace); then
-    doo brew install reattach-to-user-namespace
-  fi
-}
-
 install_tmuxinator () {
   # Tmuxinator requires a higher ruby version
   # Using rbenv to manage ruby version for the root directory
@@ -251,6 +244,8 @@ install_diff-so-fancy() {
 
 install_neovim() {
   if !(command_exists nvim); then
+    # TODO: Update this, Currently I just download the binary from neovim,
+    # put that in ~/Downloads/<here> & source it via ~/.zshrc
     doo brew install neovim/neovim/neovim
     doo ln -s ~/.vim ~/.config/nvim
     doo ln -s ~/.vimrc ~/.config/nvim/init.vim
@@ -313,7 +308,6 @@ DOTS=(
     vimrc
     zshrc
     tmux.conf
-    tmux-osx.conf
     tmux-theme.conf
     tern-config
     ackrc
