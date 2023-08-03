@@ -66,10 +66,11 @@ Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': function('PostInstallCocNv
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
 Plug 'JamshedVesuna/vim-markdown-preview', {'do': ':!brew install grip'} "grip is github flavoured markdown & a prerequisite
-Plug 'ap/vim-css-color' " Visualise hex codes
+Plug 'norcalli/nvim-colorizer.lua' " works well in alacritty.yml colors, css, html
 Plug 'udalov/kotlin-vim'
 Plug 'PezCoder/auto-create-directory.nvim'
 Plug 'dyng/ctrlsf.vim' " Text find, navigate & replace
+Plug 'mg979/vim-visual-multi', {'branch': 'master'} " Multi cursor support, with <c-n>, q to skip a word
 
 " telescope -- {{{
 " Plug 'nvim-lua/plenary.nvim'
@@ -499,6 +500,7 @@ let g:gitgutter_map_keys = 0
 nmap ]g <Plug>(GitGutterNextHunk)
 nmap [g <Plug>(GitGutterPrevHunk)
 nmap <Leader>ga <Plug>(GitGutterStageHunk)
+vmap <Leader>ga <Plug>(GitGutterStageHunk)
 nmap <Leader>gu <Plug>(GitGutterUndoHunk)
 nmap <Leader>gs <Plug>(GitGutterPreviewHunk)
 " }}}
@@ -533,8 +535,12 @@ cnoremap <expr> %%  getcmdtype() == ':' ? expand('%:h').'/' :'%%'
 
 " Open chrom with :chrome command
 " TODO: Make this available only on html file types
+" TODO: Pick up the "default" system browser instead & change command to
+" generic ":Open"
 command! Chrome !open % -a Google\ Chrome
+command! Arc !open % -a Arc
 cnoreabbrev chrome Chrome
+cnoreabbrev arc Arc
 
 " Strip trailing white spaces --- {{{
 " http://vimcasts.org/episodes/tidying-whitespace/
@@ -787,7 +793,10 @@ function Sed(find, replace)
     vim.api.nvim_set_var("quickfix_list", quickfix_list)
 end
 
+-- Find replace in the repository
 vim.api.nvim_command("command! -nargs=* Sed lua Sed(<f-args>)")
+
+-- AlexvZyl/nordic.nvim {{
 local nordicPalette = require 'nordic.colors'
 local nordicOptions = require('nordic.config').options
 require 'nordic' .setup {
@@ -803,4 +812,6 @@ require 'nordic' .setup {
     }
 }
 vim.cmd.colorscheme 'nordic'
+-- }}
 
+require 'colorizer'.setup()

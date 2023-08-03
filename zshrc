@@ -16,6 +16,11 @@
 # Path to your oh-my-zsh installation.
 export ZSH=~/.oh-my-zsh
 
+# Informs when a command has finished by bell
+precmd () {
+  echo -n -e "\a"
+}
+
 # Set name of the theme to load.
 ZSH_THEME="clean-minimal"
 
@@ -23,7 +28,8 @@ ZSH_THEME="clean-minimal"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git z docker docker-compose)
+plugins=(git z docker docker-compose zsh-autosuggestions)
+# zsh-autosuggestions - c-e to accept a suggestion
 
 # User configuration
 export PATH="$PATH:/usr/local/mysql/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"

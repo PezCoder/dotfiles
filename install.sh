@@ -73,6 +73,9 @@ install_zsh() {
         doo rm -rf ~/.zshrc
         # Setup theme in oh-my-zsh
         doo cp "$EXPORT_DIR/themes/clean-minimal.zsh-theme" ~/.oh-my-zsh/themes/clean-minimal.zsh-theme
+
+        # Install zsh-autosuggestions plugin
+        doo git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
     else
         installed 'oh-my-zsh'
     fi
