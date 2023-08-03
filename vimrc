@@ -36,7 +36,6 @@ Plug 'StanAngeloff/php.vim'                   " syntax for php, fix some common 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 " Plug 'michaeljsmith/vim-indent-object'
-Plug 'morhetz/gruvbox'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
@@ -51,6 +50,7 @@ Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
+Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 
 " How post update hook works
 " https://github.com/junegunn/vim-plug/blob/master/README.md#post-update-hooks
@@ -125,7 +125,6 @@ set background=dark
 if (has("termguicolors"))
   " Enable true colors if available
   set termguicolors
-  colorscheme gruvbox
   " Enable italics, Make sure this is immediately after colorscheme
   " https://stackoverflow.com/questions/3494435/vimrc-make-comments-italic
   highlight Comment cterm=italic gui=italic
@@ -136,8 +135,6 @@ else
   colorscheme base16-material
 endif
 
-" Highlight current line
-autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
 " }}}
 
 " Vim Quirks --- {{{
@@ -335,7 +332,7 @@ nnoremap <silent> <leader>fa :ArgWrap<CR>
 let g:lightline#bufferline#modified = ' ✎'
 set showtabline=2
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
+      \ 'colorscheme': 'nord',
       \
       \ 'tabline': {
       \   'left': [ [ 'buffers' ] ],
@@ -653,6 +650,9 @@ command! ZoomToggle call s:ZoomToggle()
 " Quick open vimrc
 nmap <leader>ev :botright vnew ~/.vimrc<cr>
 
+" Quick open todo.md
+nmap <leader>et :botright vnew ~/Downloads/workspace/dotfiles/docs/todo.md<cr>
+
 " Casing made easy
 nnoremap <c-u> gUiw
 
@@ -788,3 +788,19 @@ function Sed(find, replace)
 end
 
 vim.api.nvim_command("command! -nargs=* Sed lua Sed(<f-args>)")
+local nordicPalette = require 'nordic.colors'
+local nordicOptions = require('nordic.config').options
+require 'nordic' .setup {
+    reduced_blue = false,
+    -- By default the cursorline & visual highlight was not visible
+    override = {
+        Visual = {
+            bg = nordicPalette.gray1,
+        },
+        CursorLine = {
+            bg = nordicPalette.gray1,
+        }
+    }
+}
+vim.cmd.colorscheme 'nordic'
+

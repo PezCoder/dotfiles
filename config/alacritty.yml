@@ -13,15 +13,16 @@
 
 # Any items in the `env` entry below will be added as
 # environment variables. Some entries may override variables
-# set by alacritty itself.
+# set by alacritty it self.
 env:
-  # TERM variable
+  # TERM env customization.
   #
-  # This value is used to set the `$TERM` environment variable for
-  # each instance of Alacritty. If it is not present, alacritty will
-  # check the local terminfo database and use `alacritty` if it is
-  # available, otherwise `xterm-256color` is used.
-  TERM: alacritty
+  # If this property is not set, alacritty will set it to xterm-256color.
+  #
+  # Note that some xterm terminfo databases don't declare support for italics.
+  # You can verify this by checking for the presence of `smso` and `sitm` in
+  # `infocmp xterm-256color`.
+  TERM: xterm-256color
 
 window:
   # Window dimensions (changes require restart)
@@ -186,32 +187,37 @@ font:
 colors:
   # Default colors
   primary:
-    # hard contrast: background = '#1d2021'
-    background: '#282828'
-    # soft contrast: background = '#32302f'
-    foreground: '#ebdbb2'
+    # in alacritty - #242626
+    # in vim - #242933
+    background: '#242933'
+    foreground: '#BBBDAF'
 
   # Normal colors
   normal:
-    black:   '#282828'
-    red:     '#cc241d'
-    green:   '#98971a'
-    yellow:  '#d79921'
-    blue:    '#458588'
-    magenta: '#b16286'
-    cyan:    '#689d6a'
-    white:   '#a89984'
+    black: '#191C1D'
+    red: '#BD6062'
+    green: '#A3D6A9'
+    yellow: '#F0DFAF'
+    blue: '#8FB4D8'
+    magenta: '#C7A9D9'
+    cyan: '#B6D7A8'
+    white: '#BDC5BD'
 
   # Bright colors
   bright:
-    black:   '#928374'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#ebdbb2'
+    black: '#727C7C'
+    red: '#D18FAF'
+    green: '#B7CEB0'
+    yellow: '#BCBCBC'
+    blue: '#E0CF9F'
+    magenta: '#C7A9D9'
+    cyan: '#BBDA97'
+    white: '#BDC5BD'
+
+  # Selection color
+  selection:
+    text: '#000000'
+    background: '#F0DFAF'
 
   # Indexed Colors
   #

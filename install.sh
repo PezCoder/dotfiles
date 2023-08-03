@@ -270,10 +270,12 @@ install_alacritty() {
     doo git clone https://github.com/alacritty/alacritty.git
     doo cd alacritty
 
+    # Not needed to be set anymore, seem to be working by default since 0.12 version
+    # https://github.com/alacritty/alacritty/blob/master/INSTALL.md#terminfo
     # Install terminfo globally, I'm thinking this is to make the awesome
     # true colors & italic fonts work
     # We also change default terminal to alacritty in ~/.tmux.conf to use this
-    doo sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
+    # doo sudo tic -xe alacritty,alacritty-direct extra/alacritty.info
 
     # clean
     doo cd ..
