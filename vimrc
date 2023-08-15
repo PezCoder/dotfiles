@@ -8,18 +8,11 @@ call plug#begin('~/.vim/plugged')
 Plug 'VundleVim/Vundle.vim'
 Plug 'mattn/emmet-vim'                        " Emmet for html
 Plug 'evidens/vim-twig'                       " Twig Syntax highlighting
-Plug 'hail2u/vim-css3-syntax'                 " CSS3 Syntax
 Plug 'othree/html5.vim'                       " Html5 syntax, indent
-Plug 'mhartington/oceanic-next'
-Plug 'pangloss/vim-javascript'                " Better syntax highlighting & indent
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'            " To support jsx inside typescript i.e .tsx
-Plug 'MaxMEllon/vim-jsx-pretty'               " JSX highlighting (requires pangloss/vim-javascript)
 Plug 'elzr/vim-json'                          " JSON highlighting
 Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
 Plug 'tpope/vim-surround'                     " Change the surrounding
 Plug 'tpope/vim-repeat'                       " Repeat plugin commands
-Plug 'othree/javascript-libraries-syntax.vim' "JS Plugin library syntax support
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
 Plug 'tommcdo/vim-fubitive' " Add support for bitbucket repos in :GBrowse from fugitive
@@ -51,6 +44,7 @@ Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " How post update hook works
 " https://github.com/junegunn/vim-plug/blob/master/README.md#post-update-hooks
@@ -184,12 +178,6 @@ nnoremap <expr> N 'nN'[v:searchforward]
 " }}}
 
 " Plugins --- {{{
-
-" vim-jsx --- {{{
-let g:jsx_ext_required = 0      "hightlight jsx in .js
-let g:used_javascript_libs = 'angularjs,angularui,angularuirouter'
-" }}}
-
 " emmet-vim --- {{{
 let g:user_emmet_install_global = 0
 augroup emmet_configuration
@@ -241,10 +229,6 @@ let g:move_key_modifier_visualmode = 'C'
 
 " php.vim --- {{{
 let g:php_html_load = 0
-" }}}
-
-" pangloss/vim-javascript --- {{{
-let g:javascript_plugin_flow = 1
 " }}}
 
 " auto-pairs-gentle --- {{{
@@ -815,3 +799,36 @@ vim.cmd.colorscheme 'nordic'
 -- }}
 
 require 'colorizer'.setup()
+
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the five listed parsers should always be installed)
+  ensure_installed = {
+      -- default
+      "c",
+      "lua",
+      "vim",
+      "vimdoc",
+      "query",
+      -- custom
+      "javascript",
+      "typescript",
+  },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  highlight = {
+    enable = true,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+
