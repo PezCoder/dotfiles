@@ -5,9 +5,7 @@ vim.cmd([[
 " Plugins --- {{{
 call plug#begin('~/.vim/plugged')
 
-Plug 'VundleVim/Vundle.vim'
 Plug 'mattn/emmet-vim'                        " Emmet for html
-Plug 'evidens/vim-twig'                       " Twig Syntax highlighting
 Plug 'othree/html5.vim'                       " Html5 syntax, indent
 Plug 'elzr/vim-json'                          " JSON highlighting
 Plug 'stephpy/vim-yaml'                       " Coz Vanilla yaml in vim is slow
@@ -17,18 +15,15 @@ Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
 Plug 'tommcdo/vim-fubitive' " Add support for bitbucket repos in :GBrowse from fugitive
 Plug 'itchyny/vim-gitbranch'
-" Plug 'jiangmiao/auto-pairs'
 Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'majutsushi/tagbar'
 Plug 'matze/vim-move'                         " Moves a block of code up or down
 Plug 'FooSoft/vim-argwrap'                    " Format arguments
 Plug 'tommcdo/vim-exchange'                   " Exchange two words highlights usage: cx{motion} .(dot)
 Plug 'benmills/vimux'
 Plug 'StanAngeloff/php.vim'                   " syntax for php, fix some common bugs that occurs due to vim not knowing php syntax
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-" Plug 'michaeljsmith/vim-indent-object'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
@@ -182,8 +177,8 @@ nnoremap <expr> N 'nN'[v:searchforward]
 let g:user_emmet_install_global = 0
 augroup emmet_configuration
     autocmd!
-    autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig,typescript.tsx,typescriptreact,javascriptreact EmmetInstall                      " Enable emmet for just few files
-    autocmd FileType html,css,scss,html.twig,javascript.jsx,htmldjango.twig,typescript.tsx,typescriptreact,javascriptreact :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
+    autocmd FileType html,css,scss,javascript.jsx,typescript.tsx,typescriptreact,javascriptreact EmmetInstall                      " Enable emmet for just few files
+    autocmd FileType html,css,scss,javascript.jsx,typescript.tsx,typescriptreact,javascriptreact :call MapTabForEmmetExpansion()   " Tab expands the expression, woot!
 augroup END
 let g:user_emmet_mode="a"                                                  " Use emmit for insert mode only
 let g:cssColorVimDoNotMessMyUpdatetime = 1
@@ -212,15 +207,6 @@ let g:startify_list_order = [
             \ ['   Recent Files'],
             \ 'dir',
             \ ]
-" }}}
-
-" tagbar --- {{{
-let g:tagbar_autoclose = 1
-let g:tagbar_autofocus = 1
-let g:tagbar_compact = 1
-let g:tagbar_sort = 0 " Sort according to their structure in file & not filename
-let g:tagbar_ctags_bin = '/usr/local/bin/uctags'
-nnoremap <leader>t :TagbarToggle<CR>
 " }}}
 
 " vim-move --- {{{
@@ -422,6 +408,10 @@ let g:nv_search_paths = g:notes_directories
 " no select by `"suggest.noselect": true` in your configuration file
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config
+function! CheckBackspace() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
 inoremap <silent><expr> <TAB>
       \ coc#pum#visible() ? coc#pum#next(1) :
       \ CheckBackspace() ? "\<Tab>" :
