@@ -381,7 +381,8 @@ let g:ale_fixers = {
 \   'javascriptreact': ['prettier', 'eslint'],
 \   'scss': ['prettier'],
 \   'css': ['prettier'],
-\   'python': ['yapf']
+\   'python': ['yapf'],
+\   'graphql': ['prettier']
 \}
 let g:ale_linters = {'javascript': ['flow']}
 let g:ale_linters_ignore = {'javascript': ['tsserver']}
@@ -567,8 +568,8 @@ endfunction
 " Key Mappings --- {{{
 " Usual spelling errors
 cnoreabbrev bD bd
-cnoreabbrev bd BD
-cnoreabbrev Bd BD
+cnoreabbrev bd bd
+cnoreabbrev Bd bd
 cnoreabbrev Copen copen
 cnoreabbrev gb Git blame
 cnoreabbrev gbrowse GBrowse
@@ -802,6 +803,7 @@ require'nvim-treesitter.configs'.setup {
       -- custom
       "javascript",
       "typescript",
+      "graphql",
   },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
@@ -810,6 +812,9 @@ require'nvim-treesitter.configs'.setup {
   -- Automatically install missing parsers when entering buffer
   -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   auto_install = true,
+
+  -- handle indentation using nvim-treesitter
+  indent = { enable = true },
 
   highlight = {
     enable = true,
