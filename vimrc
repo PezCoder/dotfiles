@@ -280,10 +280,13 @@ endfun
 " Case sensitive - smart
 " Regex - Literals by default. Use '-R' to pass regex
 let g:ctrlsf_default_view_mode = 'compact' " Quickfix like view
+
+" Use quick fix list to populate & open instead of ctrlsf window
+" https://github.com/dyng/ctrlsf.vim/issues/340
 let g:ctrlsf_populate_qflist = 1
-let g:ctrlsf_auto_close = {
-    \ "compact": 0
-    \}
+let g:ctrlsf_auto_close = 1
+let g:ctrlsf_auto_qf = 1
+
 let g:ctrlsf_mapping = {
     \ "next": "j",
     \ "prev": "k",
@@ -644,8 +647,8 @@ nnoremap Y y$
 " Quick add single quote
 vnoremap ' <esc>a'<esc>`<i'<esc>
 
-" Paste to clipboard
-vnoremap <leader>y "+Y
+" Copy to clipboard
+vnoremap <leader>y "+y
 
 " tags
 nnoremap <C-]> g<C-]>
