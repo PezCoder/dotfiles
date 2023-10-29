@@ -54,6 +54,7 @@ main () {
     done
     install_neovim
     setup_git_global_ignore
+    setup_window_tiling
 }
 
 install_zsh() {
@@ -258,6 +259,28 @@ install_neovim() {
     doo ln -s "$EXPORT_DIR/lua" ~/.vim/lua
   else
     installed 'neovim'
+  fi
+}
+
+setup_window_tiling() {
+  # Setup tiling manager with yabai
+  if !(command_exists yabai); then
+    doo brew install koekeishiya/formulae/yabai
+    doo mkdir -p .config/yabai
+    doo ln -s "$EXPORT_DIR/config/yabairc" ~/.config/yabai/yabairc
+    doo yabai --start-service
+  else
+    installed 'yabai'
+  fi
+
+  # Setup shortcuts using skhd
+  if !(command_exists skhd); then
+    doo brew install skhd
+    doo mkdir -p .config/skhd
+    doo ln -s "$EXPORT_DIR/config/skhdrc" ~/.config/skhd/skhdrc
+    doo skhd --start-service
+  else
+    installed 'skhd'
   fi
 }
 

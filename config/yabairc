@@ -1,0 +1,43 @@
+# https://www.josean.com/posts/yabai-setup
+# Yabai commands:
+# yabai --start-service
+# yabai --restart-service
+# Uninstall - https://github.com/koekeishiya/yabai/wiki/Uninstalling-yabai
+
+# SKHD
+# skhd --start-service
+# skhd --restart-service
+
+# bsp / stack or float
+yabai -m config layout bsp
+
+# New window is added, if vertically split goes to right
+# if horizontally split, goes to the left
+yabai -m config window_placement second_child
+
+# padding
+yabai -m config top_padding 0
+yabai -m config bottom_padding 0
+yabai -m config left_padding 0
+yabai -m config right_padding 0
+yabai -m config window_gap 5
+
+# mouse settings
+# mouse follows to the focused window
+yabai -m config mouse_follows_focus on
+
+# left click + drag -> Move
+yabai -m config mouse_action1 move
+
+# right click + drag -> resie
+yabai -m config mouse_action2 resize
+
+# if window is dragged to center of another window, it'll swap them
+yabai -m config mouse_drop_action swap
+
+# Stop yabai to manage these apps, i.e they'll float over
+yabai -m rule --add app="^System Settings$" manage=off
+yabai -m rule --add app="^Calculator$" manage=off
+yabai -m rule --add app="^Karabiner-Elements$" manage=off
+yabai -m rule --add app="^Stickies$" manage=off
+yabai -m rule --add app="^Cisco Secure Client$" manage=off
