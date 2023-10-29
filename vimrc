@@ -47,7 +47,7 @@ function! PostInstallCocNvim(info)
   if a:info.status == 'installed' || a:info.force
     !brew install watchman
     " using coc-yaml with :CocConfig to super kubernetes config
-    CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components coc-kotlin coc-docker coc-yaml
+    CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components coc-docker coc-yaml coc-kotlin
   endif
 endfunction
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': function('PostInstallCocNvim') }
@@ -60,6 +60,7 @@ Plug 'udalov/kotlin-vim'
 Plug 'PezCoder/auto-create-directory.nvim'
 Plug 'dyng/ctrlsf.vim' " Text find, navigate & replace
 Plug 'mg979/vim-visual-multi', {'branch': 'master'} " Multi cursor support, with <c-n>, q to skip a word
+Plug 'ggandor/leap.nvim'
 
 " telescope -- {{{
 " Plug 'nvim-lua/plenary.nvim'
@@ -772,6 +773,7 @@ end
 vim.api.nvim_command("command! -nargs=* Sed lua Sed(<f-args>)")
 
 -- AlexvZyl/nordic.nvim {{
+-- https://github.com/AlexvZyl/nordic.nvim/blob/main/lua/nordic/colors/nordic.lua
 local nordicPalette = require 'nordic.colors'
 local nordicOptions = require('nordic.config').options
 require 'nordic' .setup {
@@ -827,3 +829,29 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+-- ggandor/leap.nvim --- {{{
+require('leap').add_repeat_mappings('<Leader>j', '<Leader>k', {
+  -- False by default. If set to true, the keys will work like the
+  -- native semicolon/comma, i.e., forward/backward is understood in
+  -- relation to the last motion.
+  relative_directions = true,
+  -- By default, all modes are included.
+  modes = {'n'},
+})
+vim.keymap.set({'n', 'x', 'o'}, '<leader>j', '<Plug>(leap-forward-to)')
+vim.keymap.set({'n', 'x', 'o'}, '<leader>k', '<Plug>(leap-backward-to)')
+require('leap').init_highlight(true)
+
+-- :h leap-highlight
+vim.api.nvim_set_hl(0, 'LeapLabelPrimary', {
+    fg = nordicPalette.black1,
+    bg = nordicPalette.yellow.bright,
+    nocombine = true,
+})
+vim.api.nvim_set_hl(0, 'LeapMatch', {
+    fg = nordicPalette.black1,
+    bg = nordicPalette.yellow.bright,
+    underline = true,
+    nocombine = true,
+})
+-- }}}
