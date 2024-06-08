@@ -13,7 +13,8 @@ Plug 'tpope/vim-surround'                     " Change the surrounding
 Plug 'tpope/vim-repeat'                       " Repeat plugin commands
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
-Plug 'tommcdo/vim-fubitive' " Add support for bitbucket repos in :GBrowse from fugitive
+Plug 'tommcdo/vim-fubitive'                   " Gbrowse for bitbucket - extends fugitive
+Plug 'mobiushorizons/fugitive-stash'      " Gbrowse for stash repos - extends fugitive
 Plug 'itchyny/vim-gitbranch'
 Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
 Plug 'christoomey/vim-tmux-navigator'
@@ -40,6 +41,8 @@ Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" rm -rf ~/.config/github-copilot/hosts.json to signout from copilot
+Plug 'github/copilot.vim'
 
 " How post update hook works
 " https://github.com/junegunn/vim-plug/blob/master/README.md#post-update-hooks
@@ -47,7 +50,7 @@ function! PostInstallCocNvim(info)
   if a:info.status == 'installed' || a:info.force
     !brew install watchman
     " using coc-yaml with :CocConfig to super kubernetes config
-    CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components coc-docker coc-yaml coc-kotlin
+    CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components coc-docker coc-yaml coc-kotlin @yaegassy/coc-tailwindcss3
   endif
 endfunction
 Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': function('PostInstallCocNvim') }
@@ -61,6 +64,21 @@ Plug 'PezCoder/auto-create-directory.nvim'
 Plug 'dyng/ctrlsf.vim' " Text find, navigate & replace
 Plug 'mg979/vim-visual-multi', {'branch': 'master'} " Multi cursor support, with <c-n>, q to skip a word
 Plug 'ggandor/leap.nvim'
+
+" LSP --- {{{
+" " Manage LSP Servers from Neovim
+" Plug 'williamboman/mason.nvim'
+" Plug 'williamboman/mason-lspconfig.nvim'
+
+" " LSP Support
+" Plug 'neovim/nvim-lspconfig'
+" " Autocompletion
+" Plug 'hrsh7th/nvim-cmp'
+" Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'L3MON4D3/LuaSnip'
+
+" Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v3.x'}
+" " --- }}}
 
 " telescope -- {{{
 " Plug 'nvim-lua/plenary.nvim'
@@ -831,6 +849,13 @@ require'nvim-treesitter.configs'.setup {
     additional_vim_regex_highlighting = false,
   },
 }
+
+-- github/copilot.vim
+vim.keymap.set('i', '<C-e>', 'copilot#Accept("\\<CR>")', {
+  expr = true,
+  replace_keycodes = false
+})
+vim.g.copilot_no_tab_map = true
 
 -- ggandor/leap.nvim --- {{{
 require('leap').add_repeat_mappings('<Leader>j', '<Leader>k', {

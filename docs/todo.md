@@ -1,21 +1,17 @@
 ## TODO
 
 ### Fixes
-- sometimes going to a tag using c-] stucks indefinetely - Happening a lot for kotlin & JS project
-  - I am using universal tags i think for this? Is there a better alternative?
-- To have a convenient vertical small split for running terminal commands or a way to resize
--- TODO: fix leap config in vimrc
-- CtrlSF has some issue when searching fix it!
-- Fix when selecting visually & pressing <leader>y yanks the whole line
+- Fix gbrowse for stash repos - configure
+  - mobiushorizons/fugitive-stash.vim
+- Setup copilot key bindings
+- 'dynamic-import-chunkname' is not found within marketplace-frontend using ctrlsf, find out why?
 - Change alacrity font based on monitor connected
-- Move yabairc & skhdrc within dot files
 
 ### Trying currently
-- zsh c-x c-e -- seems slow!
-- to format json do :%!jq -- can't possibly remember it!
+- zsh c-x c-e -- this sucks
+  - zsh-vi-mode is slow in big repos, debug why.
 
 ### Features
-- Add breakpoints & debugging through vim in JS project
 - LUA Migrate: https://atlassian.slack.com/archives/CFJ97E79C/p1675032963401039
 - EMACS - ORG Mode
   - https://orgmode.org/ - About EMACS org mode

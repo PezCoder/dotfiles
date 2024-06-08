@@ -41,3 +41,4 @@ yabai -m rule --add app="^Calculator$" manage=off
 yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^Stickies$" manage=off
 yabai -m rule --add app="^Cisco Secure Client$" manage=off
+yabai -m rule --add app="^Loom$" manage=off
