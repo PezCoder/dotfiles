@@ -71,7 +71,7 @@ export KEYTIMEOUT=1
 # }
 
 # Sourcing should be after zle reverse search is registered
-source ~/.fzf.zsh
+source <(fzf --zsh)
 
 ######### ALIAS
 

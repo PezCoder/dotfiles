@@ -49,6 +49,7 @@ main () {
     install_scm_breeze
     install_diff-so-fancy
     install_alacritty
+    install_fzf
     for i in ${DOTS[@]}; do
         link_dot $i
     done
@@ -128,8 +129,7 @@ setup_ctags () {
 # Used by ctrlsf.vim plugin to do searching words in a project
 install_rg () {
   if !(command_exists rg); then
-    doo brew tap burntsushi/ripgrep https://github.com/BurntSushi/ripgrep.git
-    doo brew install burntsushi/ripgrep/ripgrep-bin
+    doo brew install ripgrep
   else
     installed 'rg'
   fi
@@ -316,6 +316,14 @@ install_alacritty() {
     doo defaults -currentHost write -globalDomain AppleFontSmoothing -int 2
   else
     installed 'alacritty'
+  fi
+}
+
+install_fzf() {
+  if !(command_exists fzf); then
+    doo brew install fzf
+  else
+    installed 'fzf'
   fi
 }
 
