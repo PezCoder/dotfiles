@@ -203,20 +203,4 @@ export PATH="$PATH:/Users/$USER/Library/Python/3.7/bin"
 ## For yarn
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
-## Atlassian --- {{{
-
-# if [ -e /Users/rgupta2/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/rgupta2/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
-# Used for atlassian nix (virtual environment)
-# eval "$(direnv hook zsh)"
-
-alias get-keys="atlas micros service assume -s mpac-dev-amkt-10 -e ddev | grep ASAP > asap ; source asap; rm asap"
-
-# Atlassian for 'atlassian-upm' project
-export PATH="/usr/local/opt/util-linux/bin:$PATH"
-export PATH="/usr/local/opt/util-linux/sbin:$PATH"
-
-# Slow - takes around ~ 0.5s-1s if not lazy loaded
-export PATH="$HOME/.jenv/bin:$PATH"
-eval "$(jenv init -)"
-
-#--- }}}
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
