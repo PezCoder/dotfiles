@@ -13,8 +13,7 @@ Plug 'tpope/vim-surround'                     " Change the surrounding
 Plug 'tpope/vim-repeat'                       " Repeat plugin commands
 Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
-Plug 'tommcdo/vim-fubitive'                   " Gbrowse for bitbucket - extends fugitive
-Plug 'mobiushorizons/fugitive-stash'      " Gbrowse for stash repos - extends fugitive
+Plug 'shumphrey/fugitive-gitlab.vim'          " Gbrowse for gitlab
 Plug 'itchyny/vim-gitbranch'
 Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
 Plug 'christoomey/vim-tmux-navigator'
@@ -144,8 +143,6 @@ else
   colorscheme base16-material
 endif
 
-" }}}
-
 " Vim Quirks --- {{{
 " Save swap files separately to avoid cluttering cwd
 if isdirectory($HOME . '/.vim/swap-files') == 0
@@ -234,6 +231,10 @@ let g:move_key_modifier_visualmode = 'C'
 
 " php.vim --- {{{
 let g:php_html_load = 0
+" }}}
+
+" shumphrey/fugitive-gitlab.vim --- {{{
+let g:fugitive_gitlab_domains = ['https://gitlab.eng.roku.com']
 " }}}
 
 " auto-pairs-gentle --- {{{
