@@ -33,3 +33,11 @@ shift + alt - j : yabai -m window --swap south
 shift + alt - k : yabai -m window --swap north
 shift + alt - h : yabai -m window --swap west
 shift + alt - l : yabai -m window --swap east
+
+# move window to space #
+cmd + ctrl - 1 : yabai -m window --space 1;
+cmd + ctrl - 2 : yabai -m window --space 2;
+cmd + ctrl - 3 : yabai -m window --space 3;
+cmd + ctrl - 4 : yabai -m window --space 4;
+cmd + ctrl - 5 : yabai -m window --space 5;
+cmd + ctrl - 6 : yabai -m window --space 6;
