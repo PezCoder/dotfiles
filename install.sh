@@ -252,7 +252,7 @@ install_neovim() {
     # put that in ~/Downloads/<here> & source it via ~/.zshrc
     doo brew install neovim/neovim/neovim
     doo ln -s ~/.vim ~/.config/nvim
-    doo ln -s ~/.vimrc ~/.config/nvim/init.vim
+    doo ln -s ~/.vimrc ~/.config/nvim/init.lua
     doo ln -s "$EXPORT_DIR/config/coc-settings.json" ~/.vim/coc-settings.json
     doo pip3 install --user pynvim
 
@@ -263,6 +263,14 @@ install_neovim() {
 }
 
 setup_window_tiling() {
+  # Setup borders for our windows - helps with identifying window focus
+  # Configured by yabairc
+  if !(command_exists border); then
+    doo brew tap FelixKratz/formulae
+    doo brew install borders
+    doo brew services start borders
+  fi
+
   # Setup tiling manager with yabai
   if !(command_exists yabai); then
     doo brew install koekeishiya/formulae/yabai

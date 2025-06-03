@@ -16,10 +16,10 @@ yabai -m config layout bsp
 yabai -m config window_placement second_child
 
 # padding
-yabai -m config top_padding 0
-yabai -m config bottom_padding 0
-yabai -m config left_padding 0
-yabai -m config right_padding 0
+yabai -m config top_padding 5
+yabai -m config bottom_padding 5
+yabai -m config left_padding 5
+yabai -m config right_padding 5
 yabai -m config window_gap 5
 
 # mouse settings
@@ -42,3 +42,7 @@ yabai -m rule --add app="^Karabiner-Elements$" manage=off
 yabai -m rule --add app="^Stickies$" manage=off
 yabai -m rule --add app="^Cisco Secure Client$" manage=off
 yabai -m rule --add app="^Loom$" manage=off
+
+# add borders to focused window using this tool
+# https://github.com/FelixKratz/JankyBorders/
+borders active_color=0xffebcb8b inactive_color=0x553b4252 width=5.0 &
