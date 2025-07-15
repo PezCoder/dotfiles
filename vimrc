@@ -41,7 +41,8 @@ Plug 'alok/notational-fzf-vim'
 Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 " rm -rf ~/.config/github-copilot/hosts.json to signout from copilot
-Plug 'github/copilot.vim'
+" Plug 'github/copilot.vim'
+Plug 'Exafunction/windsurf.vim', { 'branch': 'main' }
 
 " How post update hook works
 " https://github.com/junegunn/vim-plug/blob/master/README.md#post-update-hooks
@@ -852,11 +853,20 @@ require'nvim-treesitter.configs'.setup {
 }
 
 -- github/copilot.vim
-vim.keymap.set('i', '<C-e>', 'copilot#Accept("\\<CR>")', {
+-- vim.keymap.set('i', '<C-e>', 'copilot#Accept("\\<CR>")', {
+--   expr = true,
+--   replace_keycodes = false
+-- })
+-- vim.g.copilot_no_tab_map = true
+
+-- Exafunction/windsurf.vim
+vim.keymap.set('i', '<C-e>', 'codeium#Accept()', {
   expr = true,
   replace_keycodes = false
 })
-vim.g.copilot_no_tab_map = true
+vim.g.codeium_disable_bindings = 1
+
+-- vim.g.codeium_no_map_tab = true
 
 -- ggandor/leap.nvim --- {{{
 require('leap').add_repeat_mappings('<Leader>j', '<Leader>k', {

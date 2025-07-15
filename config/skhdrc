@@ -23,7 +23,7 @@ shift + alt - t : yabai -m window --toggle float --grid 4:4:1:1:2:2
 
 # Modify window size --
 # maximize a window
-shift + alt - return : yabai -m window --toggle zoom-fullscreen
+alt - z : yabai -m window --toggle zoom-fullscreen
 
 # balance out tree of windows (resize to occupy same area)
 shift + alt - r : yabai -m space --balance
@@ -35,9 +35,9 @@ shift + alt - h : yabai -m window --swap west
 shift + alt - l : yabai -m window --swap east
 
 # move window to space #
-cmd + ctrl - 1 : yabai -m window --space 1;
-cmd + ctrl - 2 : yabai -m window --space 2;
-cmd + ctrl - 3 : yabai -m window --space 3;
-cmd + ctrl - 4 : yabai -m window --space 4;
-cmd + ctrl - 5 : yabai -m window --space 5;
-cmd + ctrl - 6 : yabai -m window --space 6;
+alt + ctrl - 1 : yabai -m window --space 1;
+alt + ctrl - 2 : yabai -m window --space 2;
+alt + ctrl - 3 : yabai -m window --space 3;
+alt + ctrl - 4 : yabai -m window --space 4;
+alt + ctrl - 5 : yabai -m window --space 5;
+alt + ctrl - 6 : yabai -m window --space 6;
