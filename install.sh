@@ -167,8 +167,8 @@ install_tmuxinator () {
   # Using rbenv to manage ruby version for the root directory
   if !(command_exists rbenv); then
       doo brew install rbenv
-      doo rbenv install 2.6.3
-      doo rbenv local 2.6.3
+      doo rbenv install 2.6.10
+      doo rbenv local 2.6.10
   else
       installed 'rbenv'
   fi
