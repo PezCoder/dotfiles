@@ -103,8 +103,11 @@ set ts=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab                     " use spaces, not tab characters
-set relativenumber                " show relative line numbers
-set number
+" Disable numbers temporarily, Looks much cleaner this way
+" set relativenumber                " show relative line numbers
+" set number
+" set nu
+set nonu
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
@@ -894,3 +897,19 @@ vim.api.nvim_set_hl(0, 'LeapMatch', {
     nocombine = true,
 })
 -- }}}
+-- Copy file path with line range to clipboard in format: @File#L1-99
+vim.keymap.set("v", "<leader>cy", function()
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  local file_path = vim.fn.expand("%:.")
+  local result = string.format("@%s#L%d-%d", file_path, start_line, end_line)
+
+  vim.fn.setreg("+", result)
+  vim.notify(string.format("Copied: %s", result), vim.log.levels.INFO)
+
+  vim.cmd("normal! \027")
+end, { desc = "Copy file path with line range" })
