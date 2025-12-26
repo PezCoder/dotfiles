@@ -30,9 +30,9 @@ Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
-Plug 'w0rp/ale', {'do': ':!brew install languagetool'} " Asynchronous linting engine
+" Plug 'w0rp/ale', {'do': ':!brew install languagetool'} " REMOVED: Replaced with conform.nvim
 Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
+" Plug 'maximbaz/lightline-ale' " REMOVED: No longer needed without ALE
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
@@ -66,12 +66,13 @@ Plug 'mg979/vim-visual-multi', {'branch': 'master'} " Multi cursor support, with
 Plug 'ggandor/leap.nvim'
 
 " LSP & Completion --- {{{
-Plug 'neovim/nvim-lspconfig'              " LSP configuration
+" Plug 'neovim/nvim-lspconfig'            " REMOVED: Using native vim.lsp.config() (Neovim 0.11+)
 Plug 'saghen/blink.cmp'                   " Fast completion engine with native LSP support
-Plug 'nvim-tree/nvim-web-devicons'        " File type icons for completion menu
+Plug 'echasnovski/mini.icons'             " Automatic icons with ASCII fallback + colors
 Plug 'j-hui/fidget.nvim'                  " LSP progress notifications
 Plug 'mason-org/mason.nvim'               " LSP installer
-Plug 'mason-org/mason-lspconfig.nvim'     " Bridge mason & lspconfig
+" Plug 'mason-org/mason-lspconfig.nvim'   " REMOVED: Not needed with native vim.lsp.config()
+Plug 'stevearc/conform.nvim'              " Formatting (replaces ALE fixers)
 " }}}
 
 call plug#end()
@@ -328,8 +329,7 @@ let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'gitbranch', 'relativepath' ] ],
-      \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ], ['lineinfo'],
-      \              ['filetype'] ]
+      \   'right': [ ['lineinfo'], ['filetype'] ]
       \ },
       \
       \ 'inactive': {
@@ -346,21 +346,9 @@ let g:lightline = {
       \},
       \
       \ 'component_expand': {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_infos': 'lightline#ale#infos',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \
       \  'buffers': 'lightline#bufferline#buffers'
       \ },
       \ 'component_type': {
-      \  'linter_checking': 'right',
-      \  'linter_infos': 'right',
-      \  'linter_warnings': 'warning',
-      \  'linter_errors': 'error',
-      \  'linter_ok': 'success',
-      \
       \  'buffers': 'tabsel'
       \ }
       \ }
@@ -375,32 +363,9 @@ endif
 let g:highlightedyank_highlight_duration=250
 " }}}
 
-" ale --- {{{
-let g:ale_sign_column_always = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_filetype_changed = 0
-let g:ale_virtualtext_cursor = 'disabled' " Errors at the end of the line
-" By default it expects .eslintrc jo be at the root
-" For custom eslintrc use:
-" let g:ale_javascript_eslint_options = '--config ./config/eslint.config.js'
-" Auto fix linting errors on save
-let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
-let g:ale_javascript_flow_use_global = 1
-let g:ale_javascript_flow_use_home_config = 1
-let g:ale_fixers = {
-\   'typescript': ['prettier', 'eslint'],
-\   'typescriptreact': ['prettier', 'eslint'],
-\   'javascript': ['prettier', 'eslint'],
-\   'javascriptreact': ['prettier', 'eslint'],
-\   'scss': ['prettier'],
-\   'css': ['prettier'],
-\   'python': ['yapf'],
-\   'graphql': ['prettier']
-\}
-let g:ale_linters = {'javascript': ['flow']}
-let g:ale_linters_ignore = {'javascript': ['tsserver']}
-let g:ale_fix_on_save = 1
+" ALE REMOVED: Replaced with conform.nvim (see Lua config section for formatting setup)
+" conform.nvim handles: prettier, eslint --fix, yapf
+" Native LSP handles: diagnostics, completion, hover, go-to-definition
 " }}}
 
 " xolox/vim-notes --- {{{
@@ -911,13 +876,14 @@ end, { desc = "Copy file path with line range" })
 -- 1. Setup fidget.nvim for LSP progress notifications
 require('fidget').setup({})
 
--- 2. Setup file icons (for completion menu, file browsers, etc.)
-require('nvim-web-devicons').setup({
-  default = true,  -- Use default icon for unknown file types
+-- 2. Setup mini.icons with ASCII fallback (automatic icons + colors)
+require('mini.icons').setup({
+  style = 'ascii'  -- Automatic single-letter fallback, no manual maintenance
 })
 
 -- 3. Setup blink.cmp (CoC parity configuration)
 require('blink.cmp').setup({
+
   completion = {
     list = {
       max_items = 20,  -- Limit suggestions like CoC (not huge lists)
@@ -928,6 +894,24 @@ require('blink.cmp').setup({
     },
     menu = {
       auto_show = true,
+      draw = {
+        columns = {
+          { 'kind_icon', gap = 1 },
+          { 'label', 'label_description', gap = 1 }
+        },
+        components = {
+          kind_icon = {
+            text = function(ctx)
+              local icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+              return icon
+            end,
+            highlight = function(ctx)
+              local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+              return hl
+            end,
+          }
+        }
+      }
     },
     documentation = {
       auto_show = true,
@@ -963,11 +947,29 @@ require('blink.cmp').setup({
   },
 })
 
--- 4. Setup Mason (LSP installer)
+-- 4. Setup Mason (LSP binary installer only)
 require('mason').setup()
-require('mason-lspconfig').setup({
-  ensure_installed = { 'gopls', 'tsgo' },
-  automatic_installation = true,
+-- Note: mason-lspconfig removed - not needed with native vim.lsp.config()
+-- We use Mason ONLY to install LSP binaries (gopls, tsgo)
+-- Configuration is done via vim.lsp.config() below
+
+-- 4.5. Setup conform.nvim (Formatting - replaces ALE fixers)
+require('conform').setup({
+  formatters_by_ft = {
+    javascript = { 'prettier', 'eslint' },
+    javascriptreact = { 'prettier', 'eslint' },
+    typescript = { 'prettier', 'eslint' },
+    typescriptreact = { 'prettier', 'eslint' },
+    css = { 'prettier' },
+    scss = { 'prettier' },
+    python = { 'yapf' },
+    graphql = { 'prettier' },
+  },
+  -- Auto-format on save (replaces ALE's ale_fix_on_save)
+  format_on_save = {
+    timeout_ms = 500,
+    lsp_fallback = true,  -- Use LSP formatter if conform formatter not available
+  },
 })
 
 -- 5. Configure LSP servers using modern Neovim 0.11+ API
@@ -1047,20 +1049,44 @@ vim.lsp.enable({'tsgo', 'gopls'})
 -- Configure diagnostics display (show errors/warnings with underlines)
 vim.diagnostic.config({
   underline = true,  -- Show squiggly underlines under errors/warnings
-  virtual_text = {
-    severity = vim.diagnostic.severity.ERROR,  -- Only show inline text for errors (not warnings)
-    prefix = "●",  -- Icon before error message
-  },
+  virtual_text = false,  -- Disabled (using floating windows on CursorHold instead)
   signs = true,  -- Show signs in gutter (E, W, I, H)
   update_in_insert = false,  -- Don't update diagnostics while typing
   severity_sort = true,  -- Sort by severity (errors first)
   float = {
-    border = "rounded",  -- Rounded border for hover window
-    source = "always",  -- Always show which tool reported the error
+    border = "none",  -- No border for minimal look
+    header = "",  -- Remove "Diagnostics:" header
+    source = "if_many",  -- Only show source when multiple LSPs present
+    prefix = "",  -- Remove bullet/icon prefix
+    focusable = false,  -- Prevent cursor from entering float
+    pad_top = 1,  -- Vertical padding above
+    pad_bottom = 1,  -- Vertical padding below
+    -- Note: pad_left/pad_right not supported in Neovim API
   },
   loclist = {
     open = false,  -- Populate location list silently for ]w/[w navigation
   },
+})
+
+-- Auto-show diagnostic float when cursor pauses
+vim.api.nvim_create_augroup('DiagnosticFloat', { clear = true })
+vim.api.nvim_create_autocmd('CursorHold', {
+  group = 'DiagnosticFloat',
+  pattern = '*',
+  callback = function()
+    vim.diagnostic.open_float({
+      focusable = false,
+      scope = 'cursor',
+      close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter' }
+    })
+  end,
+})
+
+-- Auto-populate location list when diagnostics change
+vim.api.nvim_create_autocmd('DiagnosticChanged', {
+  callback = function()
+    vim.diagnostic.setloclist({ open = false })  -- Populate location list silently
+  end,
 })
 
 -- 6. LSP keybindings (applied to all filetypes with LSP attached)
