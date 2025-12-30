@@ -878,7 +878,7 @@ require('fidget').setup({})
 
 -- 2. Setup mini.icons with ASCII fallback (automatic icons + colors)
 require('mini.icons').setup({
-  style = 'ascii'  -- Automatic single-letter fallback, no manual maintenance
+  style = 'ascii'  -- Automatic single-letter fallback, works with any font
 })
 
 -- 3. Setup blink.cmp (CoC parity configuration)
@@ -903,7 +903,7 @@ require('blink.cmp').setup({
           kind_icon = {
             text = function(ctx)
               local icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
-              return icon
+              return icon .. ctx.icon_gap
             end,
             highlight = function(ctx)
               local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
