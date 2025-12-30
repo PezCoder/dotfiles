@@ -980,7 +980,7 @@ local capabilities = require('blink.cmp').get_lsp_capabilities()
 -- Uses relative path to run from detected root directory (provides Yarn PnP context)
 vim.lsp.config('tsgo', {
   cmd = {
-    "./.yarn/sdks/typescript-go/lib/tsgo",  -- Relative path (runs from root_dir)
+    "./.yarn/sdks/typescript-go/lib/tsgo",  -- Relative path from project root
     "--lsp",
     "--stdio",
   },
@@ -993,14 +993,12 @@ vim.lsp.config('tsgo', {
     'typescript.tsx',
   },
   root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
-  -- Merge blink.cmp capabilities with custom workspace settings
-  capabilities = (function()
-    local base_capabilities = require('blink.cmp').get_lsp_capabilities()
-    base_capabilities.workspace = vim.tbl_extend("force", base_capabilities.workspace or {}, {
-      didChangeWatchedFiles = { dynamicRegistration = false },  -- Prevents file watcher issues in monorepo
-    })
-    return base_capabilities
-  end)(),
+  capabilities = capabilities,  -- Use simple capabilities like gopls
+  on_attach = function(client, bufnr)
+    -- Disable tsgo formatting (use conform.nvim/prettier instead)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
   settings = {
     typescript = {
       preferences = {
@@ -1009,7 +1007,7 @@ vim.lsp.config('tsgo', {
       },
       tsserver = {
         useSyntaxServer = "auto",
-        maxTsServerMemory = 1024 * 24,  -- 24GB memory limit for large monorepo
+        maxTsServerMemory = 1024 * 32,  -- 32GB memory limit for large monorepo
         nodePath = "node",
         watchOptions = {
           excludeDirectories = { "**/node_modules", "**/.yarn", "**/.sarif" },  -- Improve performance
