@@ -1,4 +1,23 @@
 ## TODO
+- 20% of improvements to do - file:///Users/rahul.gupta/Downloads/neovim-optimization-report.html
+
+READ THIS:
+- I've spent 2-3 hours on making ctrl-space work & also padding stuff on c-i - Please DO NOT spend more time on this
+Know when to give up
+
+- Modern way to improve speed of huge UCTags (this is useful till the LSP is loading to make c-] jump faster)
+
+LSP setup leftover things (https://github.com/PezCoder/dotfiles/pull/3/changes)
+- Quitting vim takes forever now, have to force kill (Difficult to debug)
+- TSGO readiness live notifiication (does not exist yet in their LSP don't fire $/progress)
+- Minor - References don't show the live preview when going up & down in the location list
+- Minor UI: Leader improvements
+  - The width & height can be huge, make it limited
+  - Make it scrollable when it's large
+
+TMUX improvements
+- shows volta-shim for when i run claude, figure out why
+  - make the tmux window title automatic & accurate
 
 ### Fixes
 

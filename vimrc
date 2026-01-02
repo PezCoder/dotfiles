@@ -23,7 +23,7 @@ Plug 'tommcdo/vim-exchange'                   " Exchange two words highlights us
 Plug 'benmills/vimux'
 Plug 'StanAngeloff/php.vim'                   " syntax for php, fix some common bugs that occurs due to vim not knowing php syntax
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
+Plug 'ibhagwan/fzf-lua'
 Plug 'mhinz/vim-startify'
 Plug 'tpope/vim-rhubarb'                      " :Gbrowse
 Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
@@ -228,58 +228,6 @@ let g:php_html_load = 0
 
 " shumphrey/fugitive-gitlab.vim --- {{{
 let g:fugitive_gitlab_domains = ['https://gitlab.eng.roku.com']
-" }}}
-
-" fzf.vim --- {{{
-let g:fzf_tags_command = 'uctags -R'
-let g:fzf_layout = { 'down': '~25%' }
-" Empty value to disable preview window altogether
-let g:fzf_preview_window = ''
-nnoremap <silent> <C-p> :call FzfOmniFiles()<CR>
-" nnoremap <leader>/ :Ag<CR>
-nnoremap <silent> <leader>p :Buffers<CR>
-nnoremap <silent> <leader>l :BLines<CR>
-" Quick jump to function (uses :BTags to filter just the functions names)
-" nnoremap <silent> <leader>j :call fzf#vim#buffer_tags('', { 'options': ['--nth', '1,2', '--query', '^f$ '] })<CR>
-" Customize fzf colors to match your color scheme
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
-" fzf search on top of word search using ripgrep with :Find
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --ignore-case --glob "!.git/*" --color "always" '.shellescape(<q-args>).'| tr -d "\017"', 1, <bang>0)
-
-" TODO: This causes the FZF to lag when c-p is pressed in a big repository
-" where 'git status' is slow
-" Run FZF based on the cwd & git detection
-" 1. Runs :Files, If cwd is not a git repository
-" 2. Runs :GitFiles <cwd> If root is a git repository
-fun! FzfOmniFiles()
-  " Throws v:shell_error if is not a git directory
-  let git_status = system('git status')
-  if v:shell_error != 0
-    :Files
-  else
-    " Reference examples which made this happen:
-    " https://github.com/junegunn/fzf.vim/blob/master/doc/fzf-vim.txt#L209
-    " https://github.com/junegunn/fzf.vim/blob/master/doc/fzf-vim.txt#L290
-    " --exclude-standard - Respect gitignore
-    " --others - Show untracked git files
-    " dir: getcwd() - Shows file names relative to cwd
-    let git_files_cmd = ":GitFiles --exclude-standard --cached --others"
-    call fzf#vim#gitfiles('--exclude-standard --cached --others', {'dir': getcwd()})
-  endif
-endfun
 " }}}
 
 " dyng/ctrlsf.vim --- {{{
@@ -717,6 +665,60 @@ vim.cmd.colorscheme 'nordic'
 -- }}
 
 require 'colorizer'.setup()
+
+-- fzf-lua Configuration
+local fzf = require('fzf-lua')
+
+fzf.setup({
+  -- Use fzf-vim profile for better compatibility and simpler config
+  -- This auto-creates :Files, :Buffers, :BLines commands like fzf.vim
+  'fzf-vim',
+
+  -- Window configuration (floating, centered, minimal, modern)
+  winopts = {
+    width = 0.80,
+    border = 'single',      -- Single line border (non-rounded, straight)
+    preview = {
+      hidden = 'hidden',    -- No preview by default
+    },
+  },
+
+  -- Buffers configuration (clean display without file icons)
+  buffers = {
+    file_icons = false,                 -- Disable icons for cleaner display
+  },
+
+  -- Git files configuration (CRITICAL: match current behavior)
+  git = {
+    files = {
+      -- IMPORTANT: Include --others to show untracked files (matches fzf.vim)
+      -- Note: --cached is default but explicit for clarity
+      cmd = 'git ls-files --exclude-standard --cached --others',
+      git_icons = false,  -- Disable git status icons (avoids slow 'git status' in monorepos)
+    },
+  },
+
+  -- Nordic theme colors: Auto-generate from colorscheme
+  fzf_colors = true
+})
+
+-- Define smart file picker function (after setup)
+local function FzfOmniFilesLua()
+  local fzf = require('fzf-lua')
+  local path = require('fzf-lua.path')
+
+  -- Official fzf-lua method: path.is_git_repo (what fzf-lua uses internally)
+  if path.is_git_repo({}, true) then
+    fzf.git_files({ cwd = vim.fn.getcwd() })
+  else
+    fzf.files({ cwd = vim.fn.getcwd() })
+  end
+end
+
+-- Key mappings (must be after fzf-lua setup)
+vim.keymap.set('n', '<C-p>', FzfOmniFilesLua, { silent = true, desc = 'Find files (git-aware)' })
+vim.keymap.set('n', '<leader>p', '<cmd>Buffers<CR>', { silent = true, desc = 'Switch buffers' })
+vim.keymap.set('n', '<leader>l', '<cmd>BLines<CR>', { silent = true, desc = 'Search buffer lines' })
 
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
