@@ -15,7 +15,7 @@ Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'          " Gbrowse for gitlab
 Plug 'itchyny/vim-gitbranch'
-Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
+Plug 'windwp/nvim-autopairs' " Auto-close brackets with blink.cmp integration support
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'matze/vim-move'                         " Moves a block of code up or down
 Plug 'FooSoft/vim-argwrap'                    " Format arguments
@@ -230,11 +230,6 @@ let g:php_html_load = 0
 
 " shumphrey/fugitive-gitlab.vim --- {{{
 let g:fugitive_gitlab_domains = ['https://gitlab.eng.roku.com']
-" }}}
-
-" auto-pairs-gentle --- {{{
-" let g:AutoPairsMultilineClose = 0
-let g:AutoPairsUseInsertedCount = 1
 " }}}
 
 " fzf.vim --- {{{
@@ -732,6 +727,16 @@ endif
 
 require('auto-create-directory').setup()
 
+-- nvim-autopairs setup with blink.cmp integration
+require('nvim-autopairs').setup({
+  check_ts = true,  -- Use treesitter for better pair detection
+  ts_config = {
+    lua = {'string'},  -- Don't add pairs in lua string treesitter nodes
+    javascript = {'template_string'},
+    java = false,  -- Don't check treesitter on java
+  }
+})
+
 -- TODO: Move this to find_replace.lua
 function Sed(find, replace)
     local files = vim.fn.systemlist('git grep -l -- ' .. vim.fn.shellescape(find))
@@ -930,7 +935,14 @@ require('blink.cmp').setup({
     preset = 'none',  -- Start from scratch for full control
     ['<Tab>'] = { 'select_next', 'fallback' },      -- Navigate or insert tab
     ['<S-Tab>'] = { 'select_prev', 'fallback' },    -- Navigate backwards
-    ['<CR>'] = { 'accept', 'fallback' },            -- Accept or newline
+    ['<CR>'] = {
+      function(cmp)
+        if cmp.is_visible() then
+          return cmp.accept()
+        end
+      end,
+      'fallback'  -- Let nvim-autopairs handle <CR> when completion menu not visible
+    },
     ['<C-Space>'] = { 'show', 'hide' },             -- Manual trigger/toggle
     -- ['<C-e>'] = { 'hide', 'fallback' },
     ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },  -- Scroll docs
