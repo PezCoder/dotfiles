@@ -15,7 +15,7 @@ Plug 'tpope/vim-commentary'                   " Comment/uncomment plugin
 Plug 'tpope/vim-fugitive'
 Plug 'shumphrey/fugitive-gitlab.vim'          " Gbrowse for gitlab
 Plug 'itchyny/vim-gitbranch'
-Plug 'dimonomid/auto-pairs-gentle' " Trying this fork, for the bracket not able to autoclose in multiline
+Plug 'windwp/nvim-autopairs' " Auto-close brackets with blink.cmp integration support
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'matze/vim-move'                         " Moves a block of code up or down
 Plug 'FooSoft/vim-argwrap'                    " Format arguments
@@ -30,16 +30,16 @@ Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
-Plug 'w0rp/ale', {'do': ':!brew install languagetool'} " Asynchronous linting engine
 Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Pin the version because treesitter had a major upgarde after this which
+" requires updating the init configuration completely to be usable
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'tag': 'v0.9.3'}
 " rm -rf ~/.config/github-copilot/hosts.json to signout from copilot
 " Plug 'github/copilot.vim'
 Plug 'Exafunction/windsurf.vim', { 'branch': 'main' }
@@ -53,7 +53,7 @@ function! PostInstallCocNvim(info)
     CocInstall coc-tsserver coc-json coc-css coc-html coc-pyright coc-styled-components coc-docker coc-yaml coc-kotlin @yaegassy/coc-tailwindcss3
   endif
 endfunction
-Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': function('PostInstallCocNvim') }
+" Plug 'neoclide/coc.nvim', {'branch': 'release', 'do': function('PostInstallCocNvim') }  " Disabled: migrated to native LSP + blink.cmp
 
 Plug 'tpope/vim-sleuth'
 Plug 'voldikss/vim-floaterm', {'do': ':!brew install nnn'} " nnn coz it's fast
@@ -65,26 +65,15 @@ Plug 'dyng/ctrlsf.vim' " Text find, navigate & replace
 Plug 'mg979/vim-visual-multi', {'branch': 'master'} " Multi cursor support, with <c-n>, q to skip a word
 Plug 'ggandor/leap.nvim'
 
-" LSP --- {{{
-" " Manage LSP Servers from Neovim
-" Plug 'williamboman/mason.nvim'
-" Plug 'williamboman/mason-lspconfig.nvim'
-
-" " LSP Support
-" Plug 'neovim/nvim-lspconfig'
-" " Autocompletion
-" Plug 'hrsh7th/nvim-cmp'
-" Plug 'hrsh7th/cmp-nvim-lsp'
-" Plug 'L3MON4D3/LuaSnip'
-
-" Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v3.x'}
-" " --- }}}
-
-" telescope -- {{{
-" Plug 'nvim-lua/plenary.nvim'
-" Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.0' }
-" Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
-" -- }}}
+" LSP & Completion --- {{{
+" Plug 'neovim/nvim-lspconfig'            " REMOVED: Using native vim.lsp.config() (Neovim 0.11+)
+Plug 'mason-org/mason-lspconfig.nvim'   " REMOVED: Not needed with native vim.lsp.config()
+Plug 'saghen/blink.cmp'                   " Fast completion engine with native LSP support
+Plug 'echasnovski/mini.icons'             " Automatic icons with ASCII fallback + colors
+Plug 'j-hui/fidget.nvim'                  " LSP progress notifications
+Plug 'mason-org/mason.nvim'               " LSP installer
+Plug 'stevearc/conform.nvim', { 'do': 'npm install -g @fsouza/prettierd' }  " Formatting (replaces ALE fixers)
+" }}}
 
 call plug#end()
 " }}}
@@ -103,8 +92,11 @@ set ts=4
 set shiftwidth=4
 set softtabstop=4
 set expandtab                     " use spaces, not tab characters
-set relativenumber                " show relative line numbers
-set number
+" Disable numbers temporarily, Looks much cleaner this way
+" set relativenumber                " show relative line numbers
+" set number
+" set nu
+set nonu
 set showmatch                     " show bracket matches
 set ignorecase                    " ignore case in search
 set hlsearch                      " highlight all search matches
@@ -238,11 +230,6 @@ let g:php_html_load = 0
 let g:fugitive_gitlab_domains = ['https://gitlab.eng.roku.com']
 " }}}
 
-" auto-pairs-gentle --- {{{
-" let g:AutoPairsMultilineClose = 0
-let g:AutoPairsUseInsertedCount = 1
-" }}}
-
 " fzf.vim --- {{{
 let g:fzf_tags_command = 'uctags -R'
 let g:fzf_layout = { 'down': '~25%' }
@@ -336,9 +323,8 @@ let g:lightline = {
       \
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'readonly', 'gitbranch', 'relativepath', 'cocstatus' ] ],
-      \   'right': [ [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ], ['lineinfo'],
-      \              ['filetype'] ]
+      \             [ 'readonly', 'gitbranch', 'relativepath' ] ],
+      \   'right': [ ['lineinfo'], ['filetype'] ]
       \ },
       \
       \ 'inactive': {
@@ -347,8 +333,7 @@ let g:lightline = {
       \ },
       \
       \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name',
-      \   'cocstatus': 'coc#status'
+      \   'gitbranch': 'gitbranch#name'
       \ },
       \
       \ 'component': {
@@ -356,27 +341,13 @@ let g:lightline = {
       \},
       \
       \ 'component_expand': {
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_infos': 'lightline#ale#infos',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok',
-      \
       \  'buffers': 'lightline#bufferline#buffers'
       \ },
       \ 'component_type': {
-      \  'linter_checking': 'right',
-      \  'linter_infos': 'right',
-      \  'linter_warnings': 'warning',
-      \  'linter_errors': 'error',
-      \  'linter_ok': 'success',
-      \
       \  'buffers': 'tabsel'
       \ }
       \ }
 " }}}
-" Use autocmd to force lightline update.
-autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 
 " vim-highlightedyank --- {{{
 if !exists('##TextYankPost')
@@ -385,32 +356,7 @@ endif
 let g:highlightedyank_highlight_duration=250
 " }}}
 
-" ale --- {{{
-let g:ale_sign_column_always = 1
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_filetype_changed = 0
-let g:ale_virtualtext_cursor = 'disabled' " Errors at the end of the line
-" By default it expects .eslintrc jo be at the root
-" For custom eslintrc use:
-" let g:ale_javascript_eslint_options = '--config ./config/eslint.config.js'
-" Auto fix linting errors on save
-let g:ale_linter_aliases = {'jsx': ['css', 'javascript']}
-let g:ale_javascript_flow_use_global = 1
-let g:ale_javascript_flow_use_home_config = 1
-let g:ale_fixers = {
-\   'typescript': ['prettier', 'eslint'],
-\   'typescriptreact': ['prettier', 'eslint'],
-\   'javascript': ['prettier', 'eslint'],
-\   'javascriptreact': ['prettier', 'eslint'],
-\   'scss': ['prettier'],
-\   'css': ['prettier'],
-\   'python': ['yapf'],
-\   'graphql': ['prettier']
-\}
-let g:ale_linters = {'javascript': ['flow']}
-let g:ale_linters_ignore = {'javascript': ['tsserver']}
-let g:ale_fix_on_save = 1
+" Native LSP handles: diagnostics, completion, hover, go-to-definition
 " }}}
 
 " xolox/vim-notes --- {{{
@@ -422,67 +368,6 @@ cnoreabbrev note Note
 " Search in notes directory quickly
 nnoremap <silent> <leader>n :NV<CR>
 let g:nv_search_paths = g:notes_directories
-" }}}
-
-" neoclide/coc.nvim --- {{{
-" TODO look into these options to which one's are
-
-" Reference: https://github.com/neoclide/coc.nvim#example-vim-configuration
-" Use tab for trigger completion with characters ahead and navigate
-" NOTE: There's always complete item selected by default, you may want to enable
-" no select by `"suggest.noselect": true` in your configuration file
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1) :
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" Remap keys for gotos
-" Uses coc.nvim to go to a tag when c-]
-set tagfunc=CocTagFunc
-nmap <silent> gr <Plug>(coc-references)
-nmap <leader>rn <Plug>(coc-rename)
-" Overrides gt which is for tabs, I don't use tabs anymore but in case things
-" break for tabs, remove this
-nmap <silent> gt <Plug>(coc-type-definition)
-
-" Use <leader>i to show documentation under the cursor
-nnoremap <silent> <leader>i :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    " CocAction('doHover') used to hang, so changed this to async
-    call CocActionAsync('doHover')
-  endif
-endfunction
-
-" Insert mode - <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
-" Normal mode - <c-space> to trigger codaction that lets quick import & other
-" smart operations.
-nmap <c-space> <Plug>(coc-codeaction)
-
-" Show parameter signature help when in insert mode
-" TODO: Figure, why does it goes away
-" https://github.com/neoclide/coc.nvim/issues/2951
-" inoremap <silent><c-space> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
-
-" Use c-f & c-b to scroll up & down the documentation if it exists
-" https://github.com/neoclide/coc.nvim/issues/1841
-nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
 " }}}
 
 " voldikss/vim-floaterm --- {{{
@@ -771,6 +656,16 @@ endif
 
 require('auto-create-directory').setup()
 
+-- nvim-autopairs setup with blink.cmp integration
+require('nvim-autopairs').setup({
+  check_ts = true,  -- Use treesitter for better pair detection
+  ts_config = {
+    lua = {'string'},  -- Don't add pairs in lua string treesitter nodes
+    javascript = {'template_string'},
+    java = false,  -- Don't check treesitter on java
+  }
+})
+
 -- TODO: Move this to find_replace.lua
 function Sed(find, replace)
     local files = vim.fn.systemlist('git grep -l -- ' .. vim.fn.shellescape(find))
@@ -800,16 +695,16 @@ vim.api.nvim_command("command! -nargs=* Sed lua Sed(<f-args>)")
 local nordicPalette = require 'nordic.colors'
 local nordicOptions = require('nordic.config').options
 require 'nordic' .setup {
-    reduced_blue = false,
-    -- By default the cursorline & visual highlight was not visible
-    override = {
-        Visual = {
-            bg = nordicPalette.gray1,
-        },
-        CursorLine = {
-            bg = nordicPalette.gray1,
-        }
+  on_highlight = function(highlights, palette)
+    highlights.Visual = {
+      bg = palette.gray1,
     }
+    highlights.CursorLine = {
+      bg = palette.gray1,
+    }
+  end,
+
+  reduced_blue = false,
 }
 vim.cmd.colorscheme 'nordic'
 -- }}
@@ -894,3 +789,291 @@ vim.api.nvim_set_hl(0, 'LeapMatch', {
     nocombine = true,
 })
 -- }}}
+-- Copy file path with line range to clipboard in format: @File#L1-99
+vim.keymap.set("v", "<leader>cy", function()
+  local start_line = vim.fn.line("v")
+  local end_line = vim.fn.line(".")
+  if start_line > end_line then
+    start_line, end_line = end_line, start_line
+  end
+
+  local file_path = vim.fn.expand("%:.")
+  local result = string.format("@%s#L%d-%d", file_path, start_line, end_line)
+
+  vim.fn.setreg("+", result)
+  vim.notify(string.format("Copied: %s", result), vim.log.levels.INFO)
+
+  vim.cmd("normal! \027")
+end, { desc = "Copy file path with line range" })
+
+-- Go LSP Configuration --- {{{
+-- Based on LazyVim & community best practices
+
+-- 1. Setup fidget.nvim for LSP progress notifications
+require('fidget').setup({})
+
+-- 2. Setup mini.icons with ASCII fallback (automatic icons + colors)
+require('mini.icons').setup({
+  style = 'ascii'  -- Automatic single-letter fallback, works with any font
+})
+
+-- 3. Setup blink.cmp (CoC parity configuration)
+require('blink.cmp').setup({
+
+  completion = {
+    list = {
+      max_items = 20,  -- Limit suggestions like CoC (not huge lists)
+      selection = {
+        preselect = false,      -- Don't auto-select first item (CoC: "suggest.noselect": true)
+        auto_insert = true,    -- Don't auto-insert preview
+      },
+    },
+    menu = {
+      auto_show = true,
+      draw = {
+        columns = {
+          { 'kind_icon', gap = 1 },
+          { 'label', 'label_description', gap = 1 }
+        },
+        components = {
+          kind_icon = {
+            text = function(ctx)
+              local icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
+              return icon .. ctx.icon_gap
+            end,
+            highlight = function(ctx)
+              local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
+              return hl
+            end,
+          }
+        }
+      }
+    },
+    documentation = {
+      auto_show = true,
+      treesitter_highlighting = true,
+      -- auto_show_delay_ms = 500  -- Show docs with slight delay
+    },
+    ghost_text = {
+      enabled = false  -- Disabled (using Windsurf for AI completion)
+    },
+  },
+
+  -- Key mappings matching CoC behavior
+  keymap = {
+    preset = 'none',  -- Start from scratch for full control
+    ['<Tab>'] = { 'select_next', 'fallback' },      -- Navigate or insert tab
+    ['<S-Tab>'] = { 'select_prev', 'fallback' },    -- Navigate backwards
+    ['<CR>'] = {
+      function(cmp)
+        if cmp.is_visible() then
+          return cmp.accept()
+        end
+      end,
+      'fallback'  -- Let nvim-autopairs handle <CR> when completion menu not visible
+    },
+    -- ['<C-n>'] = { 'show', 'hide' },                 -- Manual trigger/toggle (freed up <C-Space> for code actions)
+    -- ['<C-e>'] = { 'hide', 'fallback' },
+    ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },  -- Scroll docs
+    ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },    -- Scroll docs
+  },
+
+  -- Sources (LSP, path, buffer - no snippets)
+  sources = {
+    default = { 'lsp', 'path', 'buffer' },
+  },
+
+  -- Snippets disabled (matching preference)
+  snippets = {
+    expand = function() end,
+    active = function() return false end,
+  },
+})
+
+-- 4. Setup Mason (LSP binary installer only)
+require('mason').setup()
+require("mason-lspconfig").setup {
+    ensure_installed = { "tsgo", "gopls" },
+
+   -- vim.lsp.config handles enabling automatically
+   -- if we don't do this we end up invoking 2 instances of the LSP server which is bad
+    automatic_enable = false
+}
+
+-- 4.5. Setup conform.nvim (Formatting - replaces ALE fixers)
+require('conform').setup({
+  formatters_by_ft = {
+    javascript = { 'prettierd' },
+    javascriptreact = { 'prettierd' },
+    typescript = { 'prettierd' },
+    typescriptreact = { 'prettierd' },
+    css = { 'prettierd' },
+    scss = { 'prettierd' },
+    graphql = { 'prettierd' },
+  },
+  -- Auto-format on save (replaces ALE's ale_fix_on_save)
+  format_on_save = {
+    timeout_ms = 1000,  -- Increased to prevent timeout in large files
+    lsp_fallback = true,  -- Use LSP formatter if conform formatter not available
+  },
+})
+
+-- 5. Configure LSP servers using modern Neovim 0.11+ API
+-- Get LSP capabilities from blink.cmp
+local capabilities = require('blink.cmp').get_lsp_capabilities()
+
+-- Helper: Determine tsgo binary path (web-ui Yarn SDK vs mason)
+local function get_tsgo_cmd()
+  -- Search upward from CWD for Yarn SDK binary (web-ui projects)
+  -- The ".;" pattern means "search in . and parent directories"
+  local yarn_tsgo = vim.fn.findfile(".yarn/sdks/typescript-go/lib/tsgo", ".;")
+
+  if yarn_tsgo ~= "" then
+    -- Found Yarn SDK version - use relative path (LSP will resolve from root_dir)
+    -- This version has telemetry and proper Yarn PnP context
+    return { "./.yarn/sdks/typescript-go/lib/tsgo", "--lsp", "--stdio" }
+  end
+
+  -- Fallback to mason-installed tsgo (other projects)
+  local mason_tsgo = vim.fn.expand("~/.local/share/nvim/mason/bin/tsgo")
+  return { mason_tsgo, "--lsp", "--stdio" }
+end
+
+-- Configure tsgo language server (auto-selects: web-ui Yarn SDK or mason binary)
+vim.lsp.config('tsgo', {
+  cmd = get_tsgo_cmd(),
+  filetypes = {
+    'javascript',
+    'javascriptreact',
+    'javascript.jsx',
+    'typescript',
+    'typescriptreact',
+    'typescript.tsx',
+  },
+  root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
+  capabilities = capabilities,  -- Use simple capabilities like gopls
+  on_attach = function(client, bufnr)
+    -- Show initialization notification
+    local fidget = require('fidget.progress')
+    local handle = fidget.handle.create({
+      title = "tsgo",
+      message = "Initialising...",
+      lsp_client = client,
+    })
+
+    -- Auto-dismiss after 2 seconds
+    vim.defer_fn(function()
+      if handle then
+        handle:finish()
+      end
+    end, 2000)
+
+    -- Disable tsgo formatting (use conform.nvim/prettier instead)
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+  end,
+  settings = {
+    typescript = {
+      preferences = {
+        importModuleSpecifier = "non-relative",  -- Use package names instead of relative paths
+        autoImportSpecifierExcludeRegexes = { "packages/", "^packages" },  -- Exclude packages from auto-import
+      },
+      tsserver = {
+        useSyntaxServer = "auto",
+        maxTsServerMemory = 1024 * 32,  -- 32GB memory limit for large monorepo
+        nodePath = "node",
+        watchOptions = {
+          excludeDirectories = { "**/node_modules", "**/.yarn", "**/.sarif" },  -- Improve performance
+          excludeFiles = { ".pnp.cjs" },  -- Exclude Yarn PnP file from watching
+        },
+      },
+    },
+  },
+})
+
+-- Configure gopls language server
+vim.lsp.config('gopls', {
+  capabilities = capabilities,
+  cmd = {
+    'gopls',
+    '-remote.debug=:0',
+  },
+  filetypes = { 'go', 'gomod', 'gosum', 'gotmpl', 'gohtmltmpl', 'gotexttmpl' },
+  root_markers = { 'go.work', 'go.mod', '.git', 'go.sum' },
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+        shadow = true,
+      },
+      staticcheck = true,
+      gofumpt = true,
+      usePlaceholders = true,
+      completeUnimported = true,
+    },
+  },
+})
+
+-- Enable both LSP servers
+vim.lsp.enable({'tsgo', 'gopls'})
+
+-- Configure diagnostics display (show errors/warnings with underlines)
+vim.diagnostic.config({
+  underline = true,  -- Show squiggly underlines under errors/warnings
+  virtual_text = false,  -- Disabled (using floating windows on CursorHold instead)
+  signs = true,  -- Show signs in gutter (E, W, I, H)
+  update_in_insert = false,  -- Don't update diagnostics while typing
+  severity_sort = true,  -- Sort by severity (errors first)
+  float = {
+    border = "none",  -- No border for minimal look
+    header = "",  -- Remove "Diagnostics:" header
+    source = "if_many",  -- Only show source when multiple LSPs present
+    prefix = "",  -- Remove bullet/icon prefix
+    focusable = false,  -- Prevent cursor from entering float
+  },
+  loclist = {
+    open = false,  -- Populate location list silently for ]w/[w navigation
+  },
+})
+
+-- Auto-show diagnostic float when cursor pauses
+vim.api.nvim_create_augroup('DiagnosticFloat', { clear = true })
+vim.api.nvim_create_autocmd('CursorHold', {
+  group = 'DiagnosticFloat',
+  pattern = '*',
+  callback = function()
+    vim.diagnostic.open_float({
+      focusable = false,
+      scope = 'cursor',
+      close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter' }
+    })
+  end,
+})
+
+-- Auto-populate location list when diagnostics change
+vim.api.nvim_create_autocmd('DiagnosticChanged', {
+  callback = function()
+    vim.diagnostic.setloclist({ open = false })  -- Populate location list silently
+  end,
+})
+
+-- 6. LSP keybindings (applied to all filetypes with LSP attached)
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    -- Enable LSP-based tag navigation (Ctrl-] uses LSP instead of ctags)
+    vim.bo[args.buf].tagfunc = 'v:lua.vim.lsp.tagfunc'
+
+    local opts = { buffer = args.buf, silent = true }
+
+    -- Navigation
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>i', vim.lsp.buf.hover, opts)
+
+    -- Actions
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)  -- Fallback
+    vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, opts)
+  end,
+})
