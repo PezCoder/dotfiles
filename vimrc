@@ -348,8 +348,6 @@ let g:lightline = {
       \ }
       \ }
 " }}}
-" Use autocmd to force lightline update.
-" autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()  " Disabled: CoC removed
 
 " vim-highlightedyank --- {{{
 if !exists('##TextYankPost')
@@ -371,71 +369,6 @@ cnoreabbrev note Note
 nnoremap <silent> <leader>n :NV<CR>
 let g:nv_search_paths = g:notes_directories
 " }}}
-
-" DISABLED: " neoclide/coc.nvim --- {{{
-" " Disable CoC globally (using native LSP instead)
-" let g:coc_start_at_startup = 0
-" 
-" " TODO look into these options to which one's are
-" 
-" " Reference: https://github.com/neoclide/coc.nvim#example-vim-configuration
-" " Use tab for trigger completion with characters ahead and navigate
-" " NOTE: There's always complete item selected by default, you may want to enable
-" " no select by `"suggest.noselect": true` in your configuration file
-" " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" " other plugin before putting this into your config
-" function! CheckBackspace() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
-" inoremap <silent><expr> <TAB>
-"       \ coc#pum#visible() ? coc#pum#next(1) :
-"       \ CheckBackspace() ? "\<Tab>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-" 
-" " Make <CR> to accept selected completion item or notify coc.nvim to format
-" " <C-g>u breaks current undo, please make your own choice
-" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#pum#confirm()
-"                               \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-" 
-" " Remap keys for gotos
-" " Uses coc.nvim to go to a tag when c-]
-" " set tagfunc=CocTagFunc
-" nmap <silent> gr <Plug>(coc-references)
-" nmap <leader>rn <Plug>(coc-rename)
-" " Overrides gt which is for tabs, I don't use tabs anymore but in case things
-" " break for tabs, remove this
-" nmap <silent> gt <Plug>(coc-type-definition)
-" 
-" " Use <leader>i to show documentation under the cursor
-" nnoremap <silent> <leader>i :call <SID>show_documentation()<CR>
-" function! s:show_documentation()
-"   if (index(['vim','help'], &filetype) >= 0)
-"     execute 'h '.expand('<cword>')
-"   else
-"     " CocAction('doHover') used to hang, so changed this to async
-"     call CocActionAsync('doHover')
-"   endif
-" endfunction
-" 
-" " Insert mode - <c-space> to trigger completion.
-" " inoremap <silent><expr> <c-space> coc#refresh()
-" " Normal mode - <c-space> to trigger codaction that lets quick import & other
-" " smart operations.
-" " Disabled for Go files (using native LSP instead)
-" " nmap <c-space> <Plug>(coc-codeaction)
-" 
-" " Show parameter signature help when in insert mode
-" " TODO: Figure, why does it goes away
-" " https://github.com/neoclide/coc.nvim/issues/2951
-" " inoremap <silent><c-space> <C-\><C-O>:call CocActionAsync('showSignatureHelp')<cr>
-" 
-" " Use c-f & c-b to scroll up & down the documentation if it exists
-" " https://github.com/neoclide/coc.nvim/issues/1841
-" nnoremap <expr><C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-" nnoremap <expr><C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-" " }}}
 
 " voldikss/vim-floaterm --- {{{
 nnoremap <silent> - :FileBrowser<CR>
