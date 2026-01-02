@@ -39,7 +39,9 @@ Plug 'xolox/vim-notes'
 Plug 'airblade/vim-gitgutter'
 Plug 'alok/notational-fzf-vim'
 Plug 'AlexvZyl/nordic.nvim', { 'branch': 'main' }
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+" Pin the version because treesitter had a major upgarde after this which
+" requires updating the init configuration completely to be usable
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate', 'tag': 'v0.9.3'}
 " rm -rf ~/.config/github-copilot/hosts.json to signout from copilot
 " Plug 'github/copilot.vim'
 Plug 'Exafunction/windsurf.vim', { 'branch': 'main' }
