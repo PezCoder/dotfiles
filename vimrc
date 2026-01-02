@@ -30,9 +30,7 @@ Plug 'tpope/vim-eunuch'                       " :Delete :Move :Rename
 Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
-" Plug 'w0rp/ale', {'do': ':!brew install languagetool'} " REMOVED: Replaced with conform.nvim
 Plug 'itchyny/lightline.vim'
-" Plug 'maximbaz/lightline-ale' " REMOVED: No longer needed without ALE
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
@@ -74,7 +72,7 @@ Plug 'saghen/blink.cmp'                   " Fast completion engine with native L
 Plug 'echasnovski/mini.icons'             " Automatic icons with ASCII fallback + colors
 Plug 'j-hui/fidget.nvim'                  " LSP progress notifications
 Plug 'mason-org/mason.nvim'               " LSP installer
-Plug 'stevearc/conform.nvim'              " Formatting (replaces ALE fixers)
+Plug 'stevearc/conform.nvim', { 'do': 'npm install -g @fsouza/prettierd' }  " Formatting (replaces ALE fixers)
 " }}}
 
 call plug#end()
@@ -360,8 +358,6 @@ endif
 let g:highlightedyank_highlight_duration=250
 " }}}
 
-" ALE REMOVED: Replaced with conform.nvim (see Lua config section for formatting setup)
-" conform.nvim handles: prettier, eslint --fix, yapf
 " Native LSP handles: diagnostics, completion, hover, go-to-definition
 " }}}
 
@@ -943,7 +939,7 @@ require('blink.cmp').setup({
       end,
       'fallback'  -- Let nvim-autopairs handle <CR> when completion menu not visible
     },
-    ['<C-Space>'] = { 'show', 'hide' },             -- Manual trigger/toggle
+    -- ['<C-n>'] = { 'show', 'hide' },                 -- Manual trigger/toggle (freed up <C-Space> for code actions)
     -- ['<C-e>'] = { 'hide', 'fallback' },
     ['<C-f>'] = { 'scroll_documentation_down', 'fallback' },  -- Scroll docs
     ['<C-b>'] = { 'scroll_documentation_up', 'fallback' },    -- Scroll docs
@@ -974,18 +970,17 @@ require("mason-lspconfig").setup {
 -- 4.5. Setup conform.nvim (Formatting - replaces ALE fixers)
 require('conform').setup({
   formatters_by_ft = {
-    javascript = { 'prettier', 'eslint' },
-    javascriptreact = { 'prettier', 'eslint' },
-    typescript = { 'prettier', 'eslint' },
-    typescriptreact = { 'prettier', 'eslint' },
-    css = { 'prettier' },
-    scss = { 'prettier' },
-    python = { 'yapf' },
-    graphql = { 'prettier' },
+    javascript = { 'prettierd' },
+    javascriptreact = { 'prettierd' },
+    typescript = { 'prettierd' },
+    typescriptreact = { 'prettierd' },
+    css = { 'prettierd' },
+    scss = { 'prettierd' },
+    graphql = { 'prettierd' },
   },
   -- Auto-format on save (replaces ALE's ale_fix_on_save)
   format_on_save = {
-    timeout_ms = 500,
+    timeout_ms = 1000,  -- Increased to prevent timeout in large files
     lsp_fallback = true,  -- Use LSP formatter if conform formatter not available
   },
 })
@@ -1102,9 +1097,6 @@ vim.diagnostic.config({
     source = "if_many",  -- Only show source when multiple LSPs present
     prefix = "",  -- Remove bullet/icon prefix
     focusable = false,  -- Prevent cursor from entering float
-    pad_top = 1,  -- Vertical padding above
-    pad_bottom = 1,  -- Vertical padding below
-    -- Note: pad_left/pad_right not supported in Neovim API
   },
   loclist = {
     open = false,  -- Populate location list silently for ]w/[w navigation
@@ -1144,13 +1136,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
     vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', '<leader>i', vim.lsp.buf.hover, opts)
 
     -- Actions
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set('n', '<c-space>', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)  -- Fallback
     vim.keymap.set('n', '<leader>f', vim.lsp.buf.format, opts)
   end,
 })
--- }}}
