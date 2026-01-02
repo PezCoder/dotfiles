@@ -70,7 +70,6 @@ Plug 'ggandor/leap.nvim'
 " Plug 'neovim/nvim-lspconfig'            " REMOVED: Using native vim.lsp.config() (Neovim 0.11+)
 Plug 'mason-org/mason-lspconfig.nvim'   " REMOVED: Not needed with native vim.lsp.config()
 Plug 'saghen/blink.cmp'                   " Fast completion engine with native LSP support
-Plug 'echasnovski/mini.icons'             " Automatic icons with ASCII fallback + colors
 Plug 'j-hui/fidget.nvim'                  " LSP progress notifications
 Plug 'mason-org/mason.nvim'               " LSP installer
 Plug 'stevearc/conform.nvim', { 'do': 'npm install -g @fsouza/prettierd' }  " Formatting (replaces ALE fixers)
@@ -820,11 +819,6 @@ end, { desc = "Copy file path with line range" })
 -- 1. Setup fidget.nvim for LSP progress notifications
 require('fidget').setup({})
 
--- 2. Setup mini.icons with ASCII fallback (automatic icons + colors)
-require('mini.icons').setup({
-  style = 'ascii'  -- Automatic single-letter fallback, works with any font
-})
-
 -- 3. Setup blink.cmp (CoC parity configuration)
 require('blink.cmp').setup({
 
@@ -842,18 +836,6 @@ require('blink.cmp').setup({
         columns = {
           { 'kind_icon', gap = 1 },
           { 'label', 'label_description', gap = 1 }
-        },
-        components = {
-          kind_icon = {
-            text = function(ctx)
-              local icon, _, _ = require('mini.icons').get('lsp', ctx.kind)
-              return icon .. ctx.icon_gap
-            end,
-            highlight = function(ctx)
-              local _, hl, _ = require('mini.icons').get('lsp', ctx.kind)
-              return hl
-            end,
-          }
         }
       }
     },
