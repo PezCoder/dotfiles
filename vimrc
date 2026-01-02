@@ -766,16 +766,16 @@ vim.api.nvim_command("command! -nargs=* Sed lua Sed(<f-args>)")
 local nordicPalette = require 'nordic.colors'
 local nordicOptions = require('nordic.config').options
 require 'nordic' .setup {
-    reduced_blue = false,
-    -- By default the cursorline & visual highlight was not visible
-    override = {
-        Visual = {
-            bg = nordicPalette.gray1,
-        },
-        CursorLine = {
-            bg = nordicPalette.gray1,
-        }
+  on_highlight = function(highlights, palette)
+    highlights.Visual = {
+      bg = palette.gray1,
     }
+    highlights.CursorLine = {
+      bg = palette.gray1,
+    }
+  end,
+
+  reduced_blue = false,
 }
 vim.cmd.colorscheme 'nordic'
 -- }}
