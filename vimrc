@@ -1025,6 +1025,21 @@ vim.lsp.config('tsgo', {
   root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
   capabilities = capabilities,  -- Use simple capabilities like gopls
   on_attach = function(client, bufnr)
+    -- Show initialization notification
+    local fidget = require('fidget.progress')
+    local handle = fidget.handle.create({
+      title = "tsgo",
+      message = "Initialising...",
+      lsp_client = client,
+    })
+
+    -- Auto-dismiss after 2 seconds
+    vim.defer_fn(function()
+      if handle then
+        handle:finish()
+      end
+    end, 2000)
+
     -- Disable tsgo formatting (use conform.nvim/prettier instead)
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
