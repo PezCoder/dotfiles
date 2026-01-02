@@ -994,14 +994,26 @@ require('conform').setup({
 -- Get LSP capabilities from blink.cmp
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 
--- Configure tsgo language server (custom binary from web-ui Yarn SDK)
--- Uses relative path to run from detected root directory (provides Yarn PnP context)
+-- Helper: Determine tsgo binary path (web-ui Yarn SDK vs mason)
+local function get_tsgo_cmd()
+  -- Search upward from CWD for Yarn SDK binary (web-ui projects)
+  -- The ".;" pattern means "search in . and parent directories"
+  local yarn_tsgo = vim.fn.findfile(".yarn/sdks/typescript-go/lib/tsgo", ".;")
+
+  if yarn_tsgo ~= "" then
+    -- Found Yarn SDK version - use relative path (LSP will resolve from root_dir)
+    -- This version has telemetry and proper Yarn PnP context
+    return { "./.yarn/sdks/typescript-go/lib/tsgo", "--lsp", "--stdio" }
+  end
+
+  -- Fallback to mason-installed tsgo (other projects)
+  local mason_tsgo = vim.fn.expand("~/.local/share/nvim/mason/bin/tsgo")
+  return { mason_tsgo, "--lsp", "--stdio" }
+end
+
+-- Configure tsgo language server (auto-selects: web-ui Yarn SDK or mason binary)
 vim.lsp.config('tsgo', {
-  cmd = {
-    "./.yarn/sdks/typescript-go/lib/tsgo",  -- Relative path from project root
-    "--lsp",
-    "--stdio",
-  },
+  cmd = get_tsgo_cmd(),
   filetypes = {
     'javascript',
     'javascriptreact',
