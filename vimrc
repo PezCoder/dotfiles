@@ -385,7 +385,7 @@ autocmd FileType floaterm tnoremap <buffer> <Esc> q
 
 " vim-gitgutter --- {{{
 " To update git signs almost immediately
-set updatetime=100
+set updatetime=500
 " don't setup any default mappings
 let g:gitgutter_map_keys = 0
 nmap ]g <Plug>(GitGutterNextHunk)
