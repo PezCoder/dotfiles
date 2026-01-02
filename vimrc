@@ -31,6 +31,7 @@ Plug 'qpkorr/vim-bufkill'
 Plug 'alvan/vim-closetag'
 Plug 'machakann/vim-highlightedyank'
 Plug 'itchyny/lightline.vim'
+Plug 'spywhere/lightline-lsp'
 Plug 'mengelbrecht/lightline-bufferline'
 Plug 'xolox/vim-misc'                         " Required by vim-notes
 Plug 'xolox/vim-notes'
@@ -313,6 +314,11 @@ nnoremap <silent> <leader>fa :ArgWrap<CR>
 " itchyny/lightline.vim --- {{{
 let g:lightline#bufferline#modified = ' ✎'
 set showtabline=2
+
+" spywhere/lightline-lsp --- {{{
+let g:lightline#lsp#indicator_errors = 'E:'
+" }}}
+
 let g:lightline = {
       \ 'colorscheme': 'nord',
       \
@@ -324,7 +330,7 @@ let g:lightline = {
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'gitbranch', 'relativepath' ] ],
-      \   'right': [ ['lineinfo'], ['filetype'] ]
+      \   'right': [ [ 'linter_errors' ], [ 'lineinfo' ], [ 'filetype' ] ]
       \ },
       \
       \ 'inactive': {
@@ -341,10 +347,12 @@ let g:lightline = {
       \},
       \
       \ 'component_expand': {
-      \  'buffers': 'lightline#bufferline#buffers'
+      \  'buffers': 'lightline#bufferline#buffers',
+      \  'linter_errors': 'lightline#lsp#errors'
       \ },
       \ 'component_type': {
-      \  'buffers': 'tabsel'
+      \  'buffers': 'tabsel',
+      \  'linter_errors': 'error'
       \ }
       \ }
 " }}}
