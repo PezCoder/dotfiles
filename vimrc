@@ -67,11 +67,11 @@ Plug 'ggandor/leap.nvim'
 
 " LSP & Completion --- {{{
 " Plug 'neovim/nvim-lspconfig'            " REMOVED: Using native vim.lsp.config() (Neovim 0.11+)
+Plug 'mason-org/mason-lspconfig.nvim'   " REMOVED: Not needed with native vim.lsp.config()
 Plug 'saghen/blink.cmp'                   " Fast completion engine with native LSP support
 Plug 'echasnovski/mini.icons'             " Automatic icons with ASCII fallback + colors
 Plug 'j-hui/fidget.nvim'                  " LSP progress notifications
 Plug 'mason-org/mason.nvim'               " LSP installer
-" Plug 'mason-org/mason-lspconfig.nvim'   " REMOVED: Not needed with native vim.lsp.config()
 Plug 'stevearc/conform.nvim'              " Formatting (replaces ALE fixers)
 " }}}
 
@@ -949,9 +949,13 @@ require('blink.cmp').setup({
 
 -- 4. Setup Mason (LSP binary installer only)
 require('mason').setup()
--- Note: mason-lspconfig removed - not needed with native vim.lsp.config()
--- We use Mason ONLY to install LSP binaries (gopls, tsgo)
--- Configuration is done via vim.lsp.config() below
+require("mason-lspconfig").setup {
+    ensure_installed = { "tsgo", "gopls" },
+
+   -- vim.lsp.config handles enabling automatically
+   -- if we don't do this we end up invoking 2 instances of the LSP server which is bad
+    automatic_enable = false
+}
 
 -- 4.5. Setup conform.nvim (Formatting - replaces ALE fixers)
 require('conform').setup({
