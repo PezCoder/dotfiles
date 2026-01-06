@@ -496,7 +496,7 @@ command! ZoomToggle call s:ZoomToggle()
 nmap <leader>ev :botright vnew ~/.vimrc<cr>
 
 " Quick open todo.md
-nmap <leader>et :botright vnew ~/Downloads/workspace/dotfiles/docs/todo.md<cr>
+nmap <leader>et :botright vnew ~/Downloads/workspaces/dotfiles/docs/todo.md<cr>
 
 " Casing made easy
 nnoremap <c-u> gUiw

@@ -1,4 +1,9 @@
 ## TODO
+
+- Annoyances - 
+  - gr references didn't work on CaseOverview
+  - The bottom bar keeps showing up after gr  & global ssearch 
+  - │method textDocument/codeAction is not supported by any of the servers registered for the current buffer in /toolkit/case-details/CaseRightSideBar.tsx for completion of RightSidebarSection
 - 20% of improvements to do - file:///Users/rahul.gupta/Downloads/neovim-optimization-report.html
 
 READ THIS:
